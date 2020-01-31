@@ -16,87 +16,33 @@ Justin T. Chiu
 TODO
 \end{abstract}
 
-\section{Problem Statement}
-\begin{comment}
-NOTE on RE vs KBP: KBP focuses on modeling the full database, whereas
-in RE the emphasis is on explaining extractions.
-KBP usually has a more complicated model over the KB,
-while RE sometimes makes simplifying assumptions and could make a poor
-KBP system.
-Example: if triple double appears in text and someone scored < 10 PTS,
-then it's more likely they more likely had > 10 REB.
-The difference between RE and KBP is subtle. Both fall under
-information extraction, and the models may overlap in many ways.
-In fact, latent variable model approaches to RE are usually able to perform KBP as well.
-However, the focus is usually not on having good aggregate extraction metrics,
-but rather about identifying where facts are in text.
-This leads to simplifying assumptions in the model of the KB itself.
-On the other hand, KBP moves the difficulty from explaining extractions to
-faithfully modeling the KB.
-Typically this results in a challenging inference task, as the structure
-of the KB may be very complex.
-\end{comment}
+\section{Problem Setup}
+We apply hidden markov models (HMMs) to language modeling,
+where we would like to model sentences $\bx_{1:T}$.
+The generative process of an HMM is as follows:
+For each $t \in [T]$
+\begin{enumerate}
+\item Choose $z_t \mid z_{t-1} \sim \Cat(\cdot)$
+\item Choose $x_t \mid z_t \sim \Cat(\cdot)$
+\end{enumerate}
+with $p(z_1 \mid z_0) = p(z_1)$.
 
-Knowledge base population (KBP) is the task of converting information
-conveyed in natural language into a structured representation,
-such as a knowledge base (KB) consisting of keys and values.
-By removing the noise inherent in natural language,
-KBP systems produce information in a representation that is amenable to computation.
+This gives the following joint distribution:
+\begin{align*}
+\log p_\theta(x_{1:T}, z_{1:T}) &= \sum_t \log p_\theta(x_t, z_t \mid z_{t-1})\\
+&= \sum_t \log p_\theta(x_t\mid z_t) + \log p_\theta(z_t \mid z_{t-1})
+\end{align*}
 
-We extend the population task to both filling in the values of a KB
-as well as providing a justification or `rationale' for the values.
-We use these rationales to bias the model away from
-relying on spurious correlations that may hurt generalization,
-and provide human-checkable predictions.
-%( garbage collection )
+\section{Parameter estimation}
 
-However, deciding what constitutes a rationale and
-obtaining supervision for that specific definition is expensive.
-For every definition, supervision must be 
-obtained by having annotators consider many KB and text pairs.
-This prevents one from iterating quickly in the space of rationale designs.
-We therefore propose a definition of a rationale
-and accompanying model that is able to produce rationales without supervision.
+\subsection{Gradient of evidence}
+\subsection{}
 
-\begin{comment}
-(Move or delete later)
-A \textit{mention} is a surface realization of an abstract object in text.
-In relation extraction we justify extractions by identifying fact mentions.
-As text is noisy, the realization of a fact may be difficult to locate.
-We focus on locating fact mentions at the word level by identifying
-individual words as value mentions, rather than entity or type mentions.
-We define a `word-level' decision, value, or process as pertaining to individual words,
-while `sequence-level' refers to a single decision, value, or process for a whole sequence.
-%(Why? Justify with generative model)
-\end{comment}
 
-\begin{comment}
-Note on related work:
-Except for \citet{zeng2018copy}, prior work has either assumed that the locations of
-entities and values are given as input features or that the locations of entities and values
-are observed at training time.
-\end{comment}
+\subsubsection{Very high training loss}
+Surrogate loss is a loose bound, but that is ok.
+We proved gradient estimator is correct.
 
-The problem description is as follows:
-Given a text $x = x_1, \ldots, x_{I}$ of length $I$
-and the keys of an aligned KB $k = \set{k_j}_{j=1}^J$,
-we model the values $v = \set{v_j}_{j=1}^J$.
-Each $(k_j,v_j)$ pair is referred to as a record.
-We must additionally produce a rationale for each record.
-
-\begin{comment}
-Modeling only the KB $(k,v)$ given the text $x$
-is not sufficient, as our goal is to locate fact mentions.
-We assume the KB contains many more facts than those mentioned in the text.
-This fits many scenarios in real world applications:
-We may have many entity and type key pairs in our KB,
-but a summary may discuss only a small, salient subset of players and statistics.
-We therefore propose a model that first identifies words as value mentions,
-aligns those mentions to an entity and relation type in order to obtain a fact, 
-and then aggregates word-level decisions into a sequence-level decision to resolve conflicts.
-%We choose to identify value mentions as the location of a fact as entity mentions
-%may be obscured through coreference and relation types may not be mentioned explicitly.
-\end{comment}
 
 Consider the following example:
 Let our KB consist of information about a basketball game,
