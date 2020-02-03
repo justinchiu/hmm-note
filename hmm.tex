@@ -18,25 +18,30 @@ TODO
 
 \section{Problem Setup}
 We apply hidden markov models (HMMs) to language modeling,
-where we would like to model sentences $\bx_{1:T}$.
+where we would like to model sentences $x_{1:T}$.
 The generative process of an HMM is as follows:
-For each $t \in [T]$
 \begin{enumerate}
-\item Choose $z_t \mid z_{t-1} \sim \Cat(\cdot)$
-\item Choose $x_t \mid z_t \sim \Cat(\cdot)$
+\item Choose an initial state $z_0 \sim \Cat()$
+\item For each time $t \in \set{1, \ldots, T}$ choose a state
+$z_t \mid z_{t-1} \sim \Cat()$
+\item For each time $t \in \set{0, \ldots, T}$ choose a word
+$x_t \mid z_t \sim \Cat()$.
 \end{enumerate}
-with $p(z_1 \mid z_0) = p(z_1)$.
 
 This gives the following joint distribution:
 \begin{align*}
-\log p_\theta(x_{1:T}, z_{1:T}) &= \sum_t \log p_\theta(x_t, z_t \mid z_{t-1})\\
-&= \sum_t \log p_\theta(x_t\mid z_t) + \log p_\theta(z_t \mid z_{t-1})
+\log p_\theta(x_{0:T}, z_{0:T}) &= \log p_\theta(x_0, z_0) + \sum_{t=1}^T \log p_\theta(x_t, z_t \mid z_{t-1})\\
 \end{align*}
 
 \section{Parameter estimation}
-We maximize the evidence $\log p(x_{1:T} = \log \sum_{z_{1:T}} p(x_{1:T})$.
+We maximize the evidence of the observed sentences $\log p(x_{0:T} = \log \sum_{z_{0:T}} p(x_{1:T}, z_{0:T})$.
 
 \subsection{Gradient of evidence}
+Let $\psi_0(z_0, z_1) = \log p(x_{0:1}, z_{0:1})$ and $\psi_t(z_{t}, z_{t+1}) = \log p(x_{t+1}, z_{t+1} \mid z_{t})$ for $t \in \set{1, \ldots, T-1}$.
+After conditioning on the observed $x_{0:T}$, we can express the evidence as the following:
+$Z_x = \log p(x_{0:T}) = \sum_{t=0}^{T-1} \psi_t(z_t, z_{t+1})$
+where $Z_x$ is the clamped partition function.
+
 \subsection{}
 
 
