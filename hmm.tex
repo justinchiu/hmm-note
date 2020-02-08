@@ -18,32 +18,54 @@ TODO
 
 \section{Problem Setup}
 We apply hidden markov models (HMMs) to language modeling,
-where we would like to model sentences $x_{1:T}$.
+where we would like to model sentences $\bx_{1:T}$.
 The generative process of an HMM is as follows:
 \begin{enumerate}
-\item Choose an initial state $z_0 \sim \Cat()$
+\item Choose an initial state $z_0 \sim \Cat(\nu), \nu \in \R^K$
 \item For each time $t \in \set{1, \ldots, T}$ choose a state
-$z_t \mid z_{t-1} \sim \Cat()$
+$z_t \mid z_{t-1}=i \sim \Cat(\theta_{i\cdot}), \theta \in \R^{K \times K}$
 \item For each time $t \in \set{0, \ldots, T}$ choose a word
-$x_t \mid z_t \sim \Cat()$.
+$x_t \mid z_t=j \sim \Cat(\phi_{j\cdot}), \phi \in \R^{V \times K}$.
 \end{enumerate}
 
 This gives the following joint distribution:
 \begin{align*}
-\log p_\theta(x_{0:T}, z_{0:T})
+\log p_\theta(\bx_{0:T}, \bz_{0:T})
 &= \log p_\theta(x_0, z_0) + \sum_{t=1}^T \log p_\theta(x_t, z_t \mid z_{t-1})\\
 \end{align*}
 
 \section{Parameter estimation}
 We maximize the evidence of the observed sentences
-$\log p(x_{0:T} = \log \sum_{z_{0:T}} p(x_{1:T}, z_{0:T})$.
+$\log p(\bx_{0:T}) = \log \sum_{\bz_{0:T}} p(\bx_{1:T}, \bz_{0:T})$.
 
 \subsection{Gradient of evidence}
-Let $\psi_0(z_0, z_1) = \log p(x_{0:1}, z_{0:1})$ and
+Let $\psi_0(z_0, z_1) = \log p(\bx_{0:1}, \bz_{0:1})$ and
 $\psi_t(z_{t}, z_{t+1}) = \log p(x_{t+1}, z_{t+1} \mid z_{t})$ for $t \in \set{1, \ldots, T-1}$.
-After conditioning on the observed $x_{0:T}$, we can express the evidence as the following:
-$Z_x = \log p(x_{0:T}) = \sum_{t=0}^{T-1} \psi_t(z_t, z_{t+1})$
-where $Z_x$ is the clamped partition function.
+Additionally, let $\oplus$ and $\otimes$ be addition and multiplication in the log semiring.
+After conditioning on the observed $\bx_{0:T}$, we can express the evidence as the following:
+$$A_x = \log p(\bx_{0:T}) = \bigoplus_{\bz_{0:T}}\bigotimes_{t=0}^{T-1} \psi_t(z_t, z_{t+1})$$
+where $A_\bx$ is the clamped log partition function.
+
+We show that the gradient of the log partition function with respect to the $\psi_t(z_t, z_{t+1})$
+is the first moment (a well-known result of the log cumulant generating function
+and exponential family distributions). Given the value of the derivative
+$\frac{\partial A_\bx}{\partial \psi_t(z_t, z_{t+1})}$,
+we can then apply the chain rule to compute the total derivative with respect to
+downstream parameters. For example, the gradient with respect to the transition matrix
+of the HMM is given by
+$$\frac{\partial A_\bx}{\partial \theta_{ij}}
+= \sum_t \frac{\partial A_\bx}{\partial \psi_t(i,j)}
+\frac{\partial \psi_t(i,j)}{\partial \theta_{ij}}$$
+
+Recall that the gradient of logaddexp is
+$$\frac{\partial}{\partial x} x \oplus y
+= \frac{\partial}{\partial x} \log e^x + e^ y = \frac{e^x}{e^x + e^y}.$$
+The gradient of the clamped log partition function $A_\bx$ is given by
+\begin{align*}
+\frac{\partial A_\bx}{\partial \psi_t(i,j)}
+&= \frac{\partial}{\partial \psi_t(i,j)} \bigoplus_{\bz_{0:T}} \bigotimes_t \psi_t(z_t, z_{t+1})\\
+&= \frac{\partial}{\partial \psi_t(i,j)} \bigoplus_{\bz_{0:T}} \bigotimes_t \psi_t(z_t, z_{t+1})\\
+\end{align*} 
 
 \subsection{}
 
