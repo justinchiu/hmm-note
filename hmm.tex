@@ -57,15 +57,24 @@ $$\frac{\partial A_\bx}{\partial \theta_{ij}}
 = \sum_t \frac{\partial A_\bx}{\partial \psi_t(i,j)}
 \frac{\partial \psi_t(i,j)}{\partial \theta_{ij}}$$
 
-Recall that the gradient of logaddexp is
+Recall that the gradient of logaddexp (plus in the log semiring) is
 $$\frac{\partial}{\partial x} x \oplus y
-= \frac{\partial}{\partial x} \log e^x + e^ y = \frac{e^x}{e^x + e^y}.$$
+= \frac{\partial}{\partial x} \log e^x + e^ y = \frac{e^x}{e^x + e^y},$$
+while the gradient of addition (times in the log semiring) is
+$$\frac{\partial}{\partial x} x \otimes y = 1.$$
 The gradient of the clamped log partition function $A_\bx$ is given by
 \begin{align*}
 \frac{\partial A_\bx}{\partial \psi_t(i,j)}
-&= \frac{\partial}{\partial \psi_t(i,j)} \bigoplus_{\bz_{0:T}} \bigotimes_t \psi_t(z_t, z_{t+1})\\
-&= \frac{\partial}{\partial \psi_t(i,j)} \bigoplus_{\bz_{0:T}} \bigotimes_t \psi_t(z_t, z_{t+1})\\
+&= \frac{\partial}{\partial \psi_t(i,j)} \bigoplus_{\bz_{0:T}}
+    \bigotimes_{t'} \psi_{t'}(z_{t'}, z_{t'+1})\\
+&= \left(\bigoplus_{\bz_{0:T}:z_t = i, z_{t+1} = j} 
+    \bigotimes_{t'} \psi_{t'}(z_{t}', z_{t'+1})\right)
+    \frac{\partial}{\partial \psi_t(i,j)}\left(\bigotimes_{t'} \psi_{t'}(z_{t}', z_{t'+1})\right) - A_\bx\\
+&= \left(\bigoplus_{\bz_{0:T}:z_t = i, z_{t+1} = j} 
+    \bigotimes_{t'} \psi_{t'}(z_{t}', z_{t'+1})\right)
+    - A_\bx
 \end{align*} 
+which are edge marginals obtained via the forward-backward algorithm.
 
 \subsection{}
 
@@ -73,6 +82,11 @@ The gradient of the clamped log partition function $A_\bx$ is given by
 \subsubsection{Very high training loss}
 Surrogate loss is a loose bound, but that is ok.
 We proved gradient estimator is correct.
+
+\section{Cloned HMM (CHMM)}
+
+
+
 
 %\bibliography{bib}
 %\bibliographystyle{acl_natbib}
