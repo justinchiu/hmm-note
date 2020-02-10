@@ -205,11 +205,11 @@
   "hmm.tex" 1580357421 17031 770978677173aacf1e1e9616c383b91d ""
   "mystyle.sty" 1580357420 3349 b89b32c3c1439ee0580096258db8c09d ""
   (generated)
+  "hmm.out.ps"
+  "hmm.log"
   "hmm.dvi"
   "hmm.aux"
-  "hmm.log"
-  "hmm.out.ps"
-["pdflatex"] 1581313931 "hmm.tex" "hmm.pdf" "hmm" 1581313931
+["pdflatex"] 1581314636 "hmm.tex" "hmm.pdf" "hmm" 1581314637
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm" 1480098698 1124 14ccf5552bc7f77ca02a8a402bea8bfb ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy7.tfm" 1480098698 1120 7f9f170e8aa57527ad6c49feafd45d54 ""
@@ -424,10 +424,10 @@
   "/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1526780433 2803735 8410db0ed74a2504fc3708922651cf03 ""
   "/usr/local/texlive/2018/texmf-var/web2c/pdftex/pdflatex.fmt" 1526780453 4219895 d646d013bf99294ff1d974bf7a525ca5 ""
   "/usr/local/texlive/2018/texmf.cnf" 1526780430 455 5b996dcaa0eb4ef14a83b026bc0a008c ""
-  "hmm.aux" 1581313931 1842 d09e7c7b8d899c09ab7ec2e2db142a98 ""
-  "hmm.tex" 1581313922 3487 38ead7b34c85378a1b02f877c489469c ""
+  "hmm.aux" 1581314637 1691 ae2247840db50b8649a4f7e42f6348e4 ""
+  "hmm.tex" 1581314630 3471 b9ed9723ff52815259e67105a5184223 ""
   "mystyle.sty" 1580357420 3349 b89b32c3c1439ee0580096258db8c09d ""
   (generated)
-  "hmm.pdf"
   "hmm.log"
+  "hmm.pdf"
   "hmm.aux"
