@@ -16,29 +16,33 @@ Justin T. Chiu
 TODO
 \end{abstract}
 
+\section{Introduction}
+TODO
+
 \section{Problem Setup}
 We apply hidden markov models (HMMs) to language modeling,
-where we would like to model sentences $\bx_{1:T}$.
+where we would like to model sentences $\bx_{0:T}$.
 The generative process of an HMM is as follows:
 \begin{enumerate}
 \item Choose an initial state $z_0 \sim \Cat(\nu), \nu \in \R^K$
 \item For each time $t \in \set{1, \ldots, T}$ choose a state
-$z_t \mid z_{t-1}=i \sim \Cat(\theta_{i\cdot}), \theta \in \R^{K \times K}$
+$z_t \mid z_{t-1} \sim \Cat(\theta_{z_{t-1}}), \theta \in \R^{K \times K}$
 \item For each time $t \in \set{0, \ldots, T}$ choose a word
-$x_t \mid z_t=j \sim \Cat(\phi_{j\cdot}), \phi \in \R^{V \times K}$.
+$x_t \mid z_t \sim \Cat(\phi_{z_t}), \phi \in \R^{K \times V}$.
 \end{enumerate}
 
 This gives the following joint distribution:
-\begin{align*}
+\begin{equation}
 \log p_\theta(\bx_{0:T}, \bz_{0:T})
-&= \log p_\theta(x_0, z_0) + \sum_{t=1}^T \log p_\theta(x_t, z_t \mid z_{t-1})\\
-\end{align*}
+= \log p_\theta(x_0, z_0) + \sum_{t=1}^T \log p_\theta(x_t, z_t \mid z_{t-1})\\
+\end{equation}
 
 \section{Parameter estimation}
 We maximize the evidence of the observed sentences
-$\log p(\bx_{0:T}) = \log \sum_{\bz_{0:T}} p(\bx_{1:T}, \bz_{0:T})$.
+$\log p(\bx_{0:T}) = \log \sum_{\bz_{0:T}} p(\bx_{1:T}, \bz_{0:T})$
+via gradient ascent.
 
-\subsection{Gradient of evidence}
+\subsection{Gradient of the evidence}
 Let $\psi_0(z_0, z_1) = \log p(\bx_{0:1}, \bz_{0:1})$ and
 $\psi_t(z_{t}, z_{t+1}) = \log p(x_{t+1}, z_{t+1} \mid z_{t})$ for $t \in \set{1, \ldots, T-1}$.
 Additionally, let $\oplus$ and $\otimes$ be addition and multiplication in the log semiring.
@@ -47,8 +51,8 @@ $$A_x = \log p(\bx_{0:T}) = \bigoplus_{\bz_{0:T}}\bigotimes_{t=0}^{T-1} \psi_t(z
 where $A_\bx$ is the clamped log partition function.
 
 We show that the gradient of the log partition function with respect to the $\psi_t(z_t, z_{t+1})$
-is the first moment (a well-known result of the log cumulant generating function
-and exponential family distributions). Given the value of the derivative
+is the first moment (a general result for the cumulant generating function
+of exponential family distributions). Given the value of the derivative
 $\frac{\partial A_\bx}{\partial \psi_t(z_t, z_{t+1})}$,
 we can then apply the chain rule to compute the total derivative with respect to
 downstream parameters. For example, the gradient with respect to the transition matrix
@@ -57,33 +61,58 @@ $$\frac{\partial A_\bx}{\partial \theta_{ij}}
 = \sum_t \frac{\partial A_\bx}{\partial \psi_t(i,j)}
 \frac{\partial \psi_t(i,j)}{\partial \theta_{ij}}$$
 
-Recall that the gradient of logaddexp (plus in the log semiring) is
+Recall that the derivative of logaddexp ($\oplus$ in the log semiring) is
 $$\frac{\partial}{\partial x} x \oplus y
-= \frac{\partial}{\partial x} \log e^x + e^ y = \frac{e^x}{e^x + e^y},$$
-while the gradient of addition (times in the log semiring) is
+= \frac{\partial}{\partial x} \log e^x + e^ y
+= \frac{e^x}{e^x + e^y}
+= \exp(x - (x \oplus y))
+,$$
+while the derivative of addition ($\otimes$ in the log semiring) is
 $$\frac{\partial}{\partial x} x \otimes y = 1.$$
-The gradient of the clamped log partition function $A_\bx$ is given by
+The derivative of the clamped log partition function $A_\bx$ is given by
 \begin{align*}
 \frac{\partial A_\bx}{\partial \psi_t(i,j)}
 &= \frac{\partial}{\partial \psi_t(i,j)} \bigoplus_{\bz_{0:T}}
     \bigotimes_{t'} \psi_{t'}(z_{t'}, z_{t'+1})\\
-&= \left(\bigoplus_{\bz_{0:T}:z_t = i, z_{t+1} = j} 
-    \bigotimes_{t'} \psi_{t'}(z_{t}', z_{t'+1})\right)
-    \frac{\partial}{\partial \psi_t(i,j)}\left(\bigotimes_{t'} \psi_{t'}(z_{t}', z_{t'+1})\right) - A_\bx\\
-&= \left(\bigoplus_{\bz_{0:T}:z_t = i, z_{t+1} = j} 
-    \bigotimes_{t'} \psi_{t'}(z_{t}', z_{t'+1})\right)
-    - A_\bx
+&= \frac{\partial}{\partial \psi_t(i,j)} \left(
+        \left(\bigoplus_{\bz_{0:T}:z_t = i, z_{t+1} = j}
+        \bigotimes_{t'} \psi_{t'}(z_{t'}, z_{t'+1})\right)
+        \bigoplus
+        \left(\bigoplus_{\bz_{0:T}:z_t \ne i, z_{t+1} \ne j}
+        \bigotimes_{t'} \psi_{t'}(z_{t'}, z_{t'+1})\right)
+    \right)\\
+&= \exp\left(\left(\bigoplus_{\bz_{0:T}:z_t = i, z_{t+1} = j} 
+    \bigotimes_{t'} \psi_{t'}(z_{t'}, z_{t'+1})\right)
+    \frac{\partial}{\partial \psi_t(i,j)}\left(\bigotimes_{t'} \psi_{t'}(z_{t'}, z_{t'+1})\right)
+    - A_\bx\right)\\
+&= \exp\left(\left(\bigoplus_{\bz_{0:T}:z_t = i, z_{t+1} = j} 
+    \bigotimes_{t'} \psi_{t'}(z_{t'}, z_{t'+1})\right)
+    - A_\bx\right)
 \end{align*} 
 which is the edge marginal for $z_t, z_{t+1}$ obtained via the forward-backward algorithm.
+The second equality is a result of the associativity of $\oplus$,
+while the third and fourth equalities are applications of the derivatives
+derived above.
 
 \subsubsection{Very high training loss}
-Surrogate loss is a loose bound, but that is ok.
+It is okay if the surrogate loss is a loose bound.
 We proved gradient estimator is correct.
+This just means that the ELBO under a pairwise approximation is loose.
 
 \section{Cloned HMM (CHMM)}
+Inspired by \citet{dedieu2019learning},
+we introduce a sparse emission constraint that allows us to
+efficiently compute derivatives in large state spaces.
+We constrain each word $x$ to be emit only by $z \in \mcC_x \subset \mcZ$:
+\begin{equation}
+p(x \mid z) \propto \begin{cases}
+\phi_{z,x} & z \in \mcC_x \\
+0 & \textrm{otherwise}
+\end{cases}
+\end{equation}
+When conditioning on 
 
-
-%\bibliography{bib}
-%\bibliographystyle{acl_natbib}
+\bibliographystyle{plainnat}
+\bibliography{bib}
 
 \end{document}
