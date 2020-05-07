@@ -256,9 +256,10 @@ but the number of states (and states per word) increases?
 Analysis 1: Is there a performance difference between neural / scalar parameterization,
 and is it consistent across state sizes?
 
-Discussion 1: Easier when working with sparsity constraints to not instantiate the
-full model during training, which makes working with a neural parameterization
+Discussion 1: Memory savings when working with state dropout to not instantiate the
+full matrices during training, which makes working with a neural parameterization
 beneficial.
+
 %\paragraph{}
 
 %\subsection{POS Induction}
