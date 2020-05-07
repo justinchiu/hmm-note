@@ -101,7 +101,8 @@ p(z_t \mid z_{t-1}) &\propto e^{\phi_{z_tz_{t-1}}}\\
 p(x_t \mid z_t) &\propto e^{\phi_{x_tz_t}}
 \end{aligned}
 \end{equation}
-where each $\phi \in \mathbb{R}$ may be parameterized by a scalar or a neural network for parameter sharing.
+where each $\phi_{z_0},\phi_{z_tz_{t-1}},\phi_{x_tz_t} \in \mathbb{R}$
+may be parameterized by a scalar or a neural network.
 
 \section{Model}
 For language modeling, we are interested in the distribution over the observed words
@@ -251,7 +252,13 @@ Graph 1: Show performance improves as we increase the total number of states
 Analysis 1: How does state usage change as clusters remain constant
 but the number of states (and states per word) increases?
 
+\paragraph{Parameterization ablation}
+Analysis 1: Is there a performance difference between neural / scalar parameterization,
+and is it consistent across state sizes?
 
+Discussion 1: Easier when working with sparsity constraints to not instantiate the
+full model during training, which makes working with a neural parameterization
+beneficial.
 %\paragraph{}
 
 %\subsection{POS Induction}
