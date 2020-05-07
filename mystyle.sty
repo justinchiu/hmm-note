@@ -2,20 +2,8 @@
 
 \ProvidesPackage{mystyle}[preamble]
 
-\usepackage[margin=1in]{geometry}
-
-% ToC
-\usepackage{blindtext} 
-\usepackage[linktocpage]{hyperref}
-\usepackage{bookmark}
-\usepackage{titlesec}
-
-% bib
-\usepackage[round]{natbib}
-
 % Math Imports
 \usepackage{amsmath, amssymb, bm, fancyhdr, sectsty, dsfont, mathtools}
-\usepackage{booktabs}
 
 % Tikz
 \usepackage{tikz}
@@ -26,11 +14,6 @@
 \pgfdeclarelayer{background}
 \pgfdeclarelayer{foreground}
 \pgfsetlayers{background,main,foreground}
-
-\usepackage{wrapfig}
-\usepackage{comment}
-\usepackage{subcaption}
-\usepackage{titling}
 
 % Symbols
 \newcommand\ind{\protect\mathpalette{\protect\independenT}{\perp}}
@@ -103,24 +86,6 @@
 
 \DeclareMathOperator*{\argmin}{argmin}
 \DeclareMathOperator*{\argmax}{argmax}
-
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{\slshape \leftmark}
-\fancyhead[R]{\slshape Justin Chiu}
-\fancyfoot[C]{\bfseries \thepage}
-\renewcommand{\headrulewidth}{0.5pt}
-\renewcommand{\footrulewidth}{0.5pt}
-
-\fancypagestyle{plain}{%
-\fancyhf{} % clear all header and footer fields
-\fancyhead[L]{\slshape \leftmark}
-\fancyhead[R]{\slshape Justin Chiu}
-\fancyfoot[C]{\bfseries \thepage} % except the center
-\renewcommand{\headrulewidth}{0.5pt}
-\renewcommand{\footrulewidth}{0.5pt}
-}
 
 \endinput
 
