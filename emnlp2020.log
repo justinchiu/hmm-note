@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  7 MAY 2020 18:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  7 MAY 2020 19:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1026,11 +1026,11 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 353.
  )
 (\end occurred when \iffalse on line 352 was incomplete) 
 Here is how much of TeX's memory you used:
- 23935 strings out of 492649
- 481354 string characters out of 6129607
+ 23938 strings out of 492649
+ 481378 string characters out of 6129607
  618524 words of memory out of 5000000
  27204 multiletter control sequences out of 15000+600000
- 31018 words of font info for 132 fonts, out of 8000000 for 9000
+ 31137 words of font info for 134 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,15n,84p,1012b,341s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/201
@@ -1052,7 +1052,7 @@ s/symbols/msbm10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/helvet
 ic/uhvb8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmb8a.
 pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/
 local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on emnlp2020.pdf (4 pages, 187568 bytes).
+Output written on emnlp2020.pdf (4 pages, 187600 bytes).
 PDF statistics:
  178 PDF objects out of 1000 (max. 8388607)
  136 compressed objects within 2 object streams

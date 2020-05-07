@@ -187,7 +187,7 @@ where $k$ is the number of nonzero elements of $\mathbf{b}_\mcC, \forall \mcC$.
 
 \subsection{Learning}
 We optimize the evidence of observed sentences $\log p(\bx) = \log \sum_\bz p(\bx,\bz)$
-by marginalizing over latent states $\bz$ via gradient ascent.
+by first marginalizing over latent states $\bz$ then performing gradient ascent.
 The emission sparsity constraints we introduce as well as state dropout
 allow us to both perform marginalization
 and compute the gradient of the evidence efficiently.
