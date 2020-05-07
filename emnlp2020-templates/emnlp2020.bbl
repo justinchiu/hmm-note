@@ -1,0 +1,18 @@
+\begin{thebibliography}{2}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{Brown et~al.(1992)Brown, deSouza, Mercer, Pietra, and
+  Lai}]{brown1992}
+Peter~F. Brown, Peter~V. deSouza, Robert~L. Mercer, Vincent J.~Della Pietra,
+  and Jenifer~C. Lai. 1992.
+\newblock Class-based n-gram models of natural language.
+\newblock \emph{Comput. Linguist.}, 18(4):467–479.
+
+\bibitem[{Dedieu et~al.(2019)Dedieu, Gothoskar, Swingle, Lehrach,
+  Lázaro-Gredilla, and George}]{dedieu2019learning}
+Antoine Dedieu, Nishad Gothoskar, Scott Swingle, Wolfgang Lehrach, Miguel
+  Lázaro-Gredilla, and Dileep George. 2019.
+\newblock \href {http://arxiv.org/abs/1905.00507} {Learning higher-order
+  sequential structure with cloned hmms}.
+
+\end{thebibliography}
