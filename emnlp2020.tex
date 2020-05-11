@@ -183,7 +183,7 @@ We utilize state dropout on top of the Brown emission sparsity constraint,
 subsampling states of size $n$ for each partition during training.
 
 We also consider unstructured dropout
-which samples elements of masks iid $b_{z_0}, b_{z_tz_{t-1}}\overset{iid}{\sim} \Bern(p)$
+which samples elements of masks $b_{z_0}, b_{z_tz_{t-1}}\overset{iid}{\sim} \Bern(p)$
 for all $z_0, z_t, z_{t-1}\in\mcZ$, yielding
 \begin{equation}
 \label{eqn:unstructured_dropout}
@@ -194,7 +194,8 @@ p(z_t \mid z_{t-1}) &\propto b_{z_tz_{t-1}}e^{\phi_{z_tz_{t-1}}}.
 \end{equation}
 Unstructured dropout results in sparsity patterns that are
 more difficult to take advantage of than state dropout,
-since there is variance in the number of masked states that can emit a word.
+since there is variance in the number of nonzero elements
+in a mask.
 (Fix wording)
 
 We find that state dropout has similar regularization effect as unstructured dropout,
