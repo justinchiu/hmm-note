@@ -115,17 +115,14 @@ We outline several techniques to manage the computational complexity of marginal
 \subsection{Sparse Emission HMMs}
 We introduce a sparse emission constraint that allows us to
 efficiently perform conditional inference in large state spaces.
-(TODO: clarify difference in related work. should we also run this as a baseline?
-intuition: not enough parameter sharing if each state only emits a single word.
-can we prove that you need more states if the emission distribution is overconstrained?)
+%(TODO: clarify difference in related work. should we also run this as a baseline?
+%intuition: not enough parameter sharing if each state only emits a single word.
+%can we prove that you need more states if the emission distribution is overconstrained?)
 Inspired by Cloned HMMs \citep{dedieu2019learning},
 we constrain each word $x$ to be emit only by $z \in \mcC_x \subset \mcZ$:
 \begin{equation}
 \label{eqn:sparse_emission}
-p(x \mid z) \propto \begin{cases}
-e^{\phi_{zx}} & z \in \mcC_x \\
-0 & \textrm{otherwise}
-\end{cases}
+p(x \mid z) \propto 1(z \in \mcC_x)e^{\phi_{zx}}
 \end{equation}
 This allows us to perform marginalization as follows
 \begin{equation}
@@ -142,6 +139,8 @@ p(\bx) &= \sum_{z_0} p(z_0)p(x_0 \mid z_0)
 \end{aligned}
 \end{equation}
 which takes $O(T \max_x(|\mcC_x|)^2)$ computation.
+We choose sets $\mcC_x$ such that $\forall x, |\mcC_x| = k$
+due to convenience of implementation.
 
 We experiment with two constraint sets, both of which are specified 
 as hyperparameters and remain fixed for a given model.
@@ -152,38 +151,56 @@ to assign all words in a given Brown cluster the same subset of states.
 This constraint set is advantageous, as it admits further optimizations
 that we discuss below.
 
+
 \subsection{State Dropout}
 We introduce a variant of dropout called state dropout that operates on the
 start and transition distributions.
-The goal of state dropout is to reduce the complexity of marginalization in a manner
+The goal of state dropout is to encourage usage of the full state space in HMMs
+as well as to reduce the complexity of marginalization in a manner
 identical to the sparse emission constraints.
 
-State dropout samples a mask over state partitions
+State dropout samples a mask over states
 $\mathbf{b}_\mcC \in \set{0,1}^{|\mcC|}$ for each partition $\mcC \subset \mcZ$,
-such that each sampled $|\mathbf{b}_\mcC| = k$.
-(TODO: Mention multivariate hypergeometric?)
+such that each sampled $|\mathbf{b}_\mcC| = n$.
+%(TODO: Mention multivariate hypergeometric?)
 We only apply this if the $\mcC_x$ are disjoint partitions,
 as with the Brown constraint set.
 
 Let $\mathbf{b}$ be the concatenation of the $\mathbf{b}_\mcC$ for all partitions $\mcC$,
-such that $\mathbf{b}_z = 1$ if $\mathbf{b}_{\mcC z} = 1$, where $z \in \mcC$.
+such that $b_z = 1$ if $b_{\mcC z} = 1$, where $z \in \mcC$.
 The start and transition distributions with dropout are given by
 \begin{equation}
 \label{eqn:state_dropout}
 \begin{aligned}
-p(z_0) &\propto \begin{cases}
-e^{\phi_{z_0}} & \mathbf{b}_{z_0} = 1\\
-0 & \textrm{otherwise}\\
-\end{cases}\\
-p(z_t \mid z_{t-1}) &\propto \begin{cases}
-e^{\phi_{z_tz_{t-1}}} & \mathbf{b}_{z_t} = 1 \wedge \mathbf{b}_{z_{t-1}} = 1\\
-0 & \textrm{otherwise}
-\end{cases}
+p(z_0) &\propto b_{z_0}e^{\phi_{z_0}}\\
+p(z_t \mid z_{t-1}) &\propto b_{z_t}b_{z_{t-1}}e^{\phi_{z_tz_{t-1}}}
 \end{aligned}
 \end{equation}
 
-Marginalizing over $\bz$ with state dropout requires $O(Tk^2)$ computation,
-where $k$ is the number of nonzero elements of $\mathbf{b}_\mcC, \forall \mcC$.
+Marginalizing over $\bz$ with state dropout requires $O(Tn^2)$ computation,
+where $n$ is the number of nonzero elements of $\mathbf{b}_\mcC, \forall \mcC$.
+We utilize state dropout on top of the Brown emission sparsity constraint,
+subsampling states of size $n$ for each partition during training.
+
+We also consider unstructured dropout
+which samples elements of masks iid $b_{z_0}, b_{z_tz_{t-1}}\overset{iid}{\sim} \Bern(p)$
+for all $z_0, z_t, z_{t-1}\in\mcZ$, yielding
+\begin{equation}
+\label{eqn:unstructured_dropout}
+\begin{aligned}
+p(z_0) &\propto b_{z_0}e^{\phi_{z_0}}\\
+p(z_t \mid z_{t-1}) &\propto b_{z_tz_{t-1}}e^{\phi_{z_tz_{t-1}}}.
+\end{aligned}
+\end{equation}
+Unstructured dropout results in sparsity patterns that are
+more difficult to take advantage of than state dropout,
+since there is variance in the number of masked states that can emit a word.
+(Fix wording)
+
+We find that state dropout has similar regularization effect as unstructured dropout,
+but additionally yields computational benefits.
+
+% interaction with brown
 
 \subsection{Learning}
 We optimize the evidence of observed sentences $\log p(\bx) = \log \sum_\bz p(\bx,\bz)$
@@ -193,47 +210,158 @@ allow us to both perform marginalization
 and compute the gradient of the evidence efficiently.
 
 \section{Experiments}
+We evaluate the HMM on two language modeling datasets.
+
 \subsection{Language Modeling}
-\subsubsection{Datasets}
-\paragraph{Penn Treebank}
-\paragraph{WikiText-2}
-\subsubsection{Baselines}
+\paragraph{Datasets}
+The two datasets we used are the \texttt{Penn Treebank} \citep{ptb}
+and \texttt{wikitext2} \citep{wikitext}.
+\texttt{Penn Treebank} contains 929k tokens in the training corpus,
+with a vocabulary size of 10k.
+\texttt{Wikitext2} contains 2M tokens in the training corpus,
+with a vocabulary size of 33k.
+Both datasets contain inter-sentence dependencies,
+due to the use of un-shuffled documents.
 
-\subsubsection{Results}
-Only PTB results for now.
+\paragraph{Implementation}
+We train two-layer LSTM recurrent neural networks with 256 or 512 units,
+as well as two-layer feed-forward neural networks with 256 or 512 units.
+The HMMs we train follow the sparsity constraints outlined in the previous
+section with a dropout rate of 0.5,
+and we vary the total number of states as well as states per word.
+We optimize all models with AdamW \citep{adamw}.
+See Appendix \ref{sec:hyperparams} for the hyperparameters for all models.
+
+\subsection{Results}
+% Only PTB results for now.
+We report validation (TODO: will include test) perplexities 
+for \texttt{Penn Treebank} in Table \ref{tbl:ppl-ptb} and for 
+\texttt{wikitext2} in Table \ref{tbl:ppl-wikitext2}.
+The HMMs in all cases outperform the feedforward models (FF),
+but underperform the recurrent LSTMs.
+
+% transition?
+
+\begin{table}[!t]
+\centering
+\caption{\label{tbl:ppl-ptb}
+Perplexities on the \texttt{Penn Treebank} dataset.
+The FF model is a 256-dim 2-layer feedforward neural network
+with a window of 4 previous tokens with 0.3 dropout.
+The LSTM is a 256-dim 2-layer recurrent neural network with 0.3 dropout.
+The HMM is a 32k-state HMM with 0.5 state dropout.
+}
+\begin{tabular}{llll}
+\toprule
+Model & Num Params & Valid PPL & Test PPL\\
+\midrule
+FF    &            & 160         & -       \\
+LSTM  &            & 90          & -       \\
+HMM   &            & 124         & -       \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[!t]
+\centering
+\caption{\label{tbl:ppl-wikitext2}
+Perplexities on the \texttt{wikitext2} dataset.
+The FF model is a 256-dim 2-layer feedforward neural network
+with a window of 4 previous tokens with 0.3 dropout.
+The LSTM is a 256-dim 2-layer recurrent neural network with 0.3 dropout.
+The HMM is a 32k-state HMM with 0.5 state dropout.
+}
+\begin{tabular}{llll}
+\toprule
+Model & Num params & Valid PPL & Test PPL\\
+\midrule
+FF    &            & 209       & -       \\
+LSTM  &            & 125       & -       \\
+HMM   &            & 167       & -       \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \paragraph{Sparse emission constraint ablation}
-Graph 1: Show Brown generalizes better than uniform in small model,
-smaller performance relative loss than uniform compared to exact HMM.
+We ablate the emission sparsity constraints in Table \ref{tbl:ppl-assn-ablation},
+and find that the Brown emission constraints outperforms the uniform emission constraints
+in all models.
+
+Analysis
 \begin{itemize}
-\item Uniform, no dropout, 1k states (vary states per word)
-\item Brown, no dropout, 1k states (vary states per word)
-\item No sparsity, no dropout, 1k states
+\item Hypothesis: Brown Cluster assigns words that are emit in similar contexts.
+Uniform assignment with too few states per word will not group words together
+resulting in needing more states.
+\item Evidence: check entropy of emission distribution / Uniform should be lower entropy.
+\item Conclusion: 
 \end{itemize}
 
-Graph 2: Show Brown continues to generalize better than uniform in larger states.
-\begin{itemize}
-\item Uniform, 16k states (vary states per word), unstructured dropout
-\item Brown, 16k states (vary states per word), unstructured dropout
-\end{itemize}
+\begin{table}[!t]
+\centering
+\caption{\label{tbl:ppl-assn-ablation}
+The perplexities for the different emission sparsity constraints
+in a 1024 state HMM as well as larger HMMs for which exact
+inference without sparsity is too expensive.
+The quantities $|\mcZ|$ and $k$ are the number of hidden
+states and the number of states per word respectively.
+The HMMs with 1024 states do not have any dropout,
+while the 8k and 16k state HMMs have unstructured dropout.
+}
+
+\begin{tabular}{llll}
+\toprule
+Constraint & $|\mcZ|$ & $k$    & Valid PPL\\
+\midrule
+Uniform    & 1024     & 32     & -\\
+Brown      & 1024     & 32     & -\\
+None       & 1024     & 1024   & -\\
+\midrule 
+Uniform    & 8k       & 128    & 150\\
+Brown      & 8k       & 128    & 142\\
+Uniform    & 16k      & 128    & 146\\
+Brown      & 16k      & 128    & 134\\
+\bottomrule
+\end{tabular}
+\end{table}
+
 
 \paragraph{Dropout ablation}
-Graph 1: Show dropout helps but variants don't affect performance too much.
+Graph 1: Show dropout helps but variants don't affect performance too much,
+and encourages better state usage (vs no dropout).
 Justify state dropout as the one with simplest implementation.
 \begin{itemize}
-\item Brown + unstructured dropout
-\item Brown + state dropout
+\item Brown 16k 128 + unstructured dropout: ppl and state usage
+\item Brown 16k 128 + state dropout
+\item Brown 16k 128 + no dropout
 \end{itemize}
 
 Analysis 1: Discuss what happens with just state dropout, without partitioning.
 
-\paragraph{Effective compute ($k$) ablation}
-Graph 1: Fix the total number of states and examine sensitivity
-to the number of brown clusters / states per word.
-\begin{itemize}
-\item 16k states, 32 clusters
-\item 16k states, 64 clusters
-\item 16k states, 128 clusters
-\end{itemize}
+\paragraph{States per word ($k$) ablation}
+We next examine the sensitivity of HMMs to the number of Brown clusters.
+
+\begin{table}[!t]
+\centering
+\caption{\label{tbl:ppl-spw-ablation}
+The perplexities for HMMs with 16k states
+and different numbers of Brown clusters
+for constraining the emission distribution of the HMMs.
+$|\mcZ|$ is the total number of hidden states.
+All models have 0.5 state dropout.
+}
+
+\begin{tabular}{llll}
+\toprule
+$|\mcZ|$ & Num clusters & Valid PPL\\
+\midrule
+16k      & 32           & 136\\
+16k      & 64           & 137\\
+16k      & 128          & 133\\
+16k      & 256          & 137\\
+\bottomrule
+\end{tabular}
+\end{table}
+
 
 \paragraph{Weight tying ablation}
 Analysis 1: Discuss performance using different tying methods
@@ -246,7 +374,7 @@ Graph 1: Show performance improves as we increase the total number of states
 \begin{itemize}
 \item Brown HMM + state dropout, 16k, 128 clusters
 \item Brown HMM + state dropout, 32k, 128 clusters
-\item Brown HMM + state dropout, 64k, 128 clusters
+\item Brown HMM + state dropout, 65k, 128 clusters
 \end{itemize}
 
 Analysis 1: How does state usage change as clusters remain constant
@@ -260,6 +388,8 @@ Discussion 1: Memory savings when working with state dropout to not instantiate 
 full matrices during training, which makes working with a neural parameterization
 beneficial.
 
+\subsection{Error analysis}
+\paragraph{}
 %\paragraph{}
 
 %\subsection{POS Induction}
@@ -272,6 +402,13 @@ TBD
 \bibliography{anthology,emnlp2020}
 
 \appendix
+
+\section{Hyperparameters}
+\label{sec:hyperparams}
+LSTM
+\begin{itemize}
+\item 2 layers
+\end{itemize}
 
 \section{Parameter estimation}
 We maximize the evidence of the observed sentences
@@ -316,7 +453,7 @@ while the derivative of addition ($\otimes$ in the log semiring) is
 \frac{\partial}{\partial x} x \otimes y = 1
 \end{equation}
 
-(TODO name variables to make this readable in 2col format)
+%(TODO name variables to make this readable in 2col format)
 The derivative of the clamped log partition function $A_\bx$ is given by
 \begin{align*}
 &\frac{\partial A_\bx}{\partial \psi_t(i,j)}\\

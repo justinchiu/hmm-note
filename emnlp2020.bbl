@@ -1,4 +1,4 @@
-\begin{thebibliography}{2}
+\begin{thebibliography}{5}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{Brown et~al.(1992)Brown, deSouza, Mercer, Pietra, and
@@ -14,5 +14,23 @@ Antoine Dedieu, Nishad Gothoskar, Scott Swingle, Wolfgang Lehrach, Miguel
   Lázaro-Gredilla, and Dileep George. 2019.
 \newblock \href {http://arxiv.org/abs/1905.00507} {Learning higher-order
   sequential structure with cloned hmms}.
+
+\bibitem[{Loshchilov and Hutter(2017)}]{adamw}
+Ilya Loshchilov and Frank Hutter. 2017.
+\newblock \href {http://arxiv.org/abs/1711.05101} {Fixing weight decay
+  regularization in adam}.
+\newblock \emph{CoRR}, abs/1711.05101.
+
+\bibitem[{Marcus et~al.(1993)Marcus, Santorini, and Marcinkiewicz}]{ptb}
+Mitchell~P. Marcus, Beatrice Santorini, and Mary~Ann Marcinkiewicz. 1993.
+\newblock \href {https://www.aclweb.org/anthology/J93-2004} {Building a large
+  annotated corpus of {E}nglish: The {P}enn {T}reebank}.
+\newblock \emph{Computational Linguistics}, 19(2):313--330.
+
+\bibitem[{Merity et~al.(2016)Merity, Xiong, Bradbury, and Socher}]{wikitext}
+Stephen Merity, Caiming Xiong, James Bradbury, and Richard Socher. 2016.
+\newblock \href {http://arxiv.org/abs/1609.07843} {Pointer sentinel mixture
+  models}.
+\newblock \emph{CoRR}, abs/1609.07843.
 
 \end{thebibliography}
