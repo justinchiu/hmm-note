@@ -199,7 +199,7 @@ in a mask.
 (Fix wording)
 
 We find that state dropout has similar regularization effect as unstructured dropout,
-but additionally yields computational benefits.
+but additionally yields computational benefits as described above.
 
 % interaction with brown
 
@@ -241,7 +241,7 @@ for \texttt{Penn Treebank} in Table \ref{tbl:ppl-ptb} and for
 The HMMs in all cases outperform the feedforward models (FF),
 but underperform the recurrent LSTMs.
 
-In the following sections, we analyze and ablate the model.
+In the following sections, we ablate and analyze the HMMs on \texttt{Penn Treebank}.
 
 % transition?
 
@@ -288,17 +288,35 @@ HMM   &            & 167       & -       \\
 \paragraph{Sparse emission constraint ablation}
 We ablate the emission sparsity constraints in Table \ref{tbl:ppl-assn-ablation},
 and find that the Brown emission constraints outperforms the uniform emission constraints
-in all models.
+in all model sizes.
 
-Analysis
-\begin{itemize}
-\item Hypothesis: Brown Cluster assigns words that are emit in similar contexts.
-Uniform assignment with too few states per word will not group words together
-resulting in needing more states.
-\item Evidence: check entropy of emission distribution / Uniform should be lower entropy.
-\item Conclusion: Suboptimal assignments lead to needing more states
-to achieve the same performance.
-\end{itemize}
+One explanation for the relative benefit of Brown emission constraints over uniform
+is due to the nature of Brown clusters.
+The goal of Brown clustering is to place two words in the same cluster
+if they are used in the same context.
+In Table \#, we observe that the entropy of the emission distribution
+for models with uniform emission
+constraints is lower than models with brown constraints.
+This implies that since the uniform models are less likely to place words that appear in
+similar contexts together the burden of modeling ambiguity is pushed onto
+the transition distribution.
+
+% explain why this hurts the model? or is it already clear
+% compare entropies to exact 1k HMM.
+% probably find that brown is closer to exact. does this hold true for the 4 brown cluster HMM?
+
+% Include separate table with emission and transition entropies
+% am i computing those correctly?
+
+%Analysis
+%\begin{itemize}
+%\item Hypothesis: Brown Cluster assigns words that are emit in similar contexts.
+%Uniform assignment with too few states per word will not group words together
+%resulting in needing more states.
+%\item Evidence: check entropy of emission distribution / Uniform should be lower entropy.
+%\item Conclusion: Suboptimal assignments lead to needing more states
+%to achieve the same performance.
+%\end{itemize}
 
 \begin{table}[!t]
 \centering
@@ -316,9 +334,9 @@ while the 8k and 16k state HMMs have unstructured dropout.
 \toprule
 Constraint & $|\mcZ|$ & $k$    & Valid PPL\\
 \midrule
-Uniform    & 1024     & 32     & -\\
-Brown      & 1024     & 32     & -\\
-None       & 1024     & 1024   & -\\
+Uniform    & 1k       & 32     & -\\
+Brown      & 1k       & 32     & -\\
+None       & 1k       & 1k     & -\\
 \midrule 
 Uniform    & 8k       & 128    & 150\\
 Brown      & 8k       & 128    & 142\\
@@ -346,9 +364,15 @@ Get numbers or just handwaive?
 Consider exact inference (in constrained model) this work.
 )
 
-\paragraph{States per word ($k$) ablation}
-We next examine the sensitivity of HMMs to the number of Brown clusters.
-Table \ref{tbl:ppl-spw-ablation}.
+\paragraph{Number of Brown clusters}
+We next examine the sensitivity of HMMs to the number of Brown clusters
+in Table \ref{tbl:ppl-spw-ablation}.
+We find that models at with 16k or 32k total states
+are not sensitive to the number of Brown clusters
+in the range where marginalization is computationally feasible.
+This contrasts with the observation that the number of Brown clusters
+influenced performance at 1k total states.
+% FILL IN HERE, reconcile differences
 
 \begin{table}[!t]
 \centering
@@ -400,6 +424,8 @@ beneficial.
 \subsection{Error analysis}
 \paragraph{}
 %\paragraph{}
+
+\section{Discussion}
 
 %\subsection{POS Induction}
 %\subsection{Word sense induction}

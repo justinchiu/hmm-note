@@ -373,8 +373,6 @@ INPUT /usr/local/texlive/2018/texmf-dist/fonts/vf/adobe/times/ptmb7t.vf
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/vf/adobe/courier/pcrr7t.vf
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/courier/pcrr8r.tfm
-INPUT /usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/omsptm.fd
-INPUT /usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/omsptm.fd
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/public/latex-fonts/lasy10.tfm
@@ -396,6 +394,8 @@ INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbsy10.tfm
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy7.tfm
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/public/latex-fonts/lasyb10.tfm
+INPUT /usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/omsptm.fd
+INPUT /usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/omsptm.fd
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/vf/adobe/courier/pcrr7t.vf
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/courier/pcrr8r.tfm
 INPUT emnlp2020.bbl
