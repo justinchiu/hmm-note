@@ -182,7 +182,7 @@ where $n$ is the number of nonzero elements of $\mathbf{b}_\mcC, \forall \mcC$.
 We utilize state dropout on top of the Brown emission sparsity constraint,
 subsampling states of size $n$ for each partition during training.
 
-We also consider unstructured dropout
+We also consider unstructured dropout with rate $p$
 which samples elements of masks $b_{z_0}, b_{z_tz_{t-1}}\overset{iid}{\sim} \Bern(p)$
 for all $z_0, z_t, z_{t-1}\in\mcZ$, yielding
 \begin{equation}
@@ -327,6 +327,7 @@ Brown      & 16k      & 128    & 134\\
 \bottomrule
 \end{tabular}
 \end{table}
+
 
 
 \paragraph{Dropout analysis}
