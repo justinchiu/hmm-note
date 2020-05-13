@@ -380,14 +380,13 @@ Brown      & 16k      & -      & - \\
 
 
 \paragraph{Dropout analysis}
-Graph 1: Show dropout helps but variants don't affect performance too much,
-and encourages better state usage (vs no dropout).
-Justify state dropout as the one with simplest implementation.
-\begin{itemize}
-\item Brown 16k 128 + unstructured dropout: ppl and state usage
-\item Brown 16k 128 + state dropout
-\item Brown 16k 128 + no dropout
-\end{itemize}
+The effect of the different dropout strategies and rates is 
+shown in Table~\ref{tbl:dropout}.
+We found that state dropout outperformed unstructured dropout overall.
+This in addition to the computational benefits afforded by state dropout
+led us to prefer this strategy.
+
+One hypothesis 
 
 Analysis 1: Discuss what happens with just state dropout, without partitioning.
 (Too much variance in gradient estimator, would require variance reduction.
@@ -407,8 +406,10 @@ All models were HMMs with Brown cluster emission constraints,
 \toprule
 Dropout type & $p$  & Valid PPL & State occupancy\\
 \midrule 
+Unstructured & 0.25 & -         & - \\
 Unstructured & 0.5  & -         & - \\
 Unstructured & 0.75 & -         & - \\
+State        & 0.25 & -         & - \\
 State        & 0.5  & -         & - \\
 State        & 0.75 & -         & - \\
 \bottomrule
