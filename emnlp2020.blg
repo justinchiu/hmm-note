@@ -8,45 +8,49 @@ Reallocated glb_str_end (elt_size=4) to 20 items from 10.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Database file #1: anthology.bib
 Database file #2: emnlp2020.bib
+A bad cross reference---entry "mikolov-2011"
+refers to entry "conf/interspeech/2011", which doesn't exist
+Warning--I didn't find a database entry for "conf/interspeech/2011"
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
-You've used 5 entries,
+You've used 6 entries,
             3571 wiz_defined-function locations,
-            729 strings with 6444 characters,
-and the built_in function-call counts, 3663 in all, are:
-= -- 293
-> -- 209
-< -- 1
-+ -- 65
-- -- 60
-* -- 271
-:= -- 587
-add.period$ -- 19
-call.type$ -- 5
-change.case$ -- 45
-chr.to.int$ -- 5
-cite$ -- 5
-duplicate$ -- 230
-empty$ -- 250
-format.name$ -- 77
-if$ -- 781
+            738 strings with 6751 characters,
+and the built_in function-call counts, 4646 in all, are:
+= -- 378
+> -- 259
+< -- 2
++ -- 81
+- -- 75
+* -- 338
+:= -- 724
+add.period$ -- 24
+call.type$ -- 6
+change.case$ -- 57
+chr.to.int$ -- 6
+cite$ -- 6
+duplicate$ -- 296
+empty$ -- 321
+format.name$ -- 95
+if$ -- 1006
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 49
-newline$ -- 28
-num.names$ -- 20
-pop$ -- 100
+missing$ -- 62
+newline$ -- 33
+num.names$ -- 24
+pop$ -- 129
 preamble$ -- 1
-purify$ -- 40
+purify$ -- 49
 quote$ -- 0
-skip$ -- 165
+skip$ -- 211
 stack$ -- 0
-substring$ -- 107
-swap$ -- 120
-text.length$ -- 0
+substring$ -- 146
+swap$ -- 158
+text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 45
+type$ -- 54
 warning$ -- 0
-while$ -- 18
+while$ -- 23
 width$ -- 0
-write$ -- 65
+write$ -- 79
+(There was 1 error message)

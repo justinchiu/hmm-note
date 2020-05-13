@@ -23,14 +23,16 @@
 \newlabel{eqn:sparse_marginalization}{{4}{1}{Sparse Emission HMMs}{equation.3.4}{}}
 \citation{ptb}
 \citation{wikitext}
+\citation{mikolov-2011}
 \citation{adamw}
 \newlabel{eqn:state_dropout}{{5}{2}{State Dropout}{equation.3.5}{}}
 \newlabel{eqn:unstructured_dropout}{{6}{2}{State Dropout}{equation.3.6}{}}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{tbl:ppl-ptb}{{1}{3}{Perplexities on the \texttt {Penn Treebank} dataset. The FF model is a 256-dim 2-layer feedforward neural network with a window of 4 previous tokens with 0.3 dropout. The LSTM is a 256-dim 2-layer recurrent neural network with 0.3 dropout. The HMM is a 32k-state HMM with 0.5 state dropout. \relax }{table.caption.3}{}}
+\newlabel{tbl:ppl-ptb}{{1}{3}{Perplexities on the \texttt {Penn Treebank} dataset. The FF model is a 256-dim 2-layer feedforward neural network with a window of 4 previous tokens with 0.3 dropout. The LSTM is a 256-dim 2-layer recurrent neural network with 0.3 dropout. The HMM is a 64k-state HMM with 0.5 state dropout. \relax }{table.caption.3}{}}
 \newlabel{tbl:ppl-wikitext2}{{2}{3}{Perplexities on the \texttt {wikitext2} dataset. The FF model is a 256-dim 2-layer feedforward neural network with a window of 4 previous tokens with 0.3 dropout. The LSTM is a 256-dim 2-layer recurrent neural network with 0.3 dropout. The HMM is a 32k-state HMM with 0.5 state dropout. \relax }{table.caption.4}{}}
-\newlabel{tbl:ppl-assn-ablation}{{3}{3}{The perplexities for the different emission sparsity constraints in a 1024 state HMM as well as larger HMMs for which exact inference without sparsity is too expensive. The quantities $|\mcZ |$ and $k$ are the number of hidden states and the number of states per word respectively. The HMMs with 1024 states do not have any dropout, while the 8k and 16k state HMMs have unstructured dropout. \relax }{table.caption.6}{}}
-\newlabel{tbl:ppl-spw-ablation}{{4}{3}{The perplexities for HMMs with 16k states and different numbers of Brown clusters for constraining the emission distribution of the HMMs. $|\mcZ |$ is the total number of hidden states. All models have 0.5 state dropout. \relax }{table.caption.9}{}}
+\newlabel{tbl:ppl-assn-ablation}{{3}{3}{The perplexities for the different emission sparsity constraints in a 1024 state HMM as well as larger HMMs for which exact inference without sparsity is too expensive. The quantities $|\mcZ |$ and $k$ are the number of hidden states and the number of states per word respectively. The HMMs with 1024 states do not have any dropout, while the 8k and 16k state HMMs have unstructured dropout at a rate of 0.5. \relax }{table.caption.6}{}}
+\newlabel{tbl:entropy}{{4}{3}{The average entropies of the the emission and transition distributions for HMMs with uniform and Brown cluster emission constraints. All models have $k=128$ states per word and use unstructured dropout with a rate of $p=0.5$. \relax }{table.caption.7}{}}
+\newlabel{tbl:dropout}{{5}{3}{State occupancies for the dropout strategies and rates. All models were HMMs with Brown cluster emission constraints, 16k total states, and 128 states per word (and therefore 128 Brown clusters). \relax }{table.caption.9}{}}
 \bibstyle{acl_natbib}
 \bibdata{anthology,emnlp2020}
 \bibcite{brown1992}{{1}{1992}{{Brown et~al.}}{{Brown, deSouza, Mercer, Pietra, and Lai}}}
@@ -38,8 +40,11 @@
 \bibcite{adamw}{{3}{2017}{{Loshchilov and Hutter}}{{}}}
 \bibcite{ptb}{{4}{1993}{{Marcus et~al.}}{{Marcus, Santorini, and Marcinkiewicz}}}
 \bibcite{wikitext}{{5}{2016}{{Merity et~al.}}{{Merity, Xiong, Bradbury, and Socher}}}
+\bibcite{mikolov-2011}{{6}{2011}{{Mikolov et~al.}}{{Mikolov, Deoras, Kombrink, Burget, and Cernock\IeC {\'y}}}}
+\newlabel{tbl:ppl-spw-ablation}{{6}{4}{The perplexities for HMMs with 16k states and different numbers of Brown clusters for constraining the emission distribution of the HMMs. $|\mcZ |$ is the total number of hidden states. All models have 0.5 state dropout. \relax }{table.caption.11}{}}
+\newlabel{tbl:ppl-states-ablation}{{7}{4}{The perplexities for HMMs with 128 Brown clusters for constraining the emission distribution of the HMMs. $|\mcZ |$ is the total number of hidden states. All models have 0.5 state dropout. \relax }{table.caption.14}{}}
 \newlabel{sec:hyperparams}{{A}{4}{Hyperparameters}{appendix.A}{}}
-\newlabel{eqn:evidence}{{7}{4}{Gradient of the evidence}{equation.B.7}{}}
-\newlabel{eqn:lse_derivative}{{8}{4}{Gradient of the evidence}{equation.B.8}{}}
+\newlabel{eqn:evidence}{{7}{5}{Gradient of the evidence}{equation.B.7}{}}
+\newlabel{eqn:lse_derivative}{{8}{5}{Gradient of the evidence}{equation.B.8}{}}
 \newlabel{eqn:plus_derivative}{{9}{5}{Gradient of the evidence}{equation.B.9}{}}
 \newlabel{sec:supplemental}{{C}{5}{Supplemental Material}{appendix.C}{}}

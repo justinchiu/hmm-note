@@ -1,4 +1,4 @@
-\begin{thebibliography}{5}
+\begin{thebibliography}{6}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{Brown et~al.(1992)Brown, deSouza, Mercer, Pietra, and
@@ -32,5 +32,15 @@ Stephen Merity, Caiming Xiong, James Bradbury, and Richard Socher. 2016.
 \newblock \href {http://arxiv.org/abs/1609.07843} {Pointer sentinel mixture
   models}.
 \newblock \emph{CoRR}, abs/1609.07843.
+
+\bibitem[{Mikolov et~al.(2011)Mikolov, Deoras, Kombrink, Burget, and
+  Cernocký}]{mikolov-2011}
+Tomas Mikolov, Anoop Deoras, Stefan Kombrink, Lukás Burget, and Jan Cernocký.
+  2011.
+\newblock \href
+  {http://dblp.uni-trier.de/db/conf/interspeech/interspeech2011.html#MikolovDKBC11}
+  {Empirical evaluation and combination of advanced language modeling
+  techniques.}
+\newblock In \emph{INTERSPEECH}, pages 605--608. ISCA.
 
 \end{thebibliography}

@@ -183,7 +183,7 @@ We utilize state dropout on top of the Brown emission sparsity constraint,
 subsampling states of size $n$ for each partition during training.
 
 We also consider unstructured dropout with rate $p$
-which samples elements of masks $b_{z_0}, b_{z_tz_{t-1}}\overset{iid}{\sim} \Bern(p)$
+which samples elements of masks $b_{z_0}, b_{z_tz_{t-1}}\overset{iid}{\sim} \Bern(1-p)$
 for all $z_0, z_t, z_{t-1}\in\mcZ$, yielding
 \begin{equation}
 \label{eqn:unstructured_dropout}
@@ -198,8 +198,9 @@ since there is variance in the number of nonzero elements
 in a mask.
 (Fix wording)
 
-We find that state dropout has similar regularization effect as unstructured dropout,
-but additionally yields computational benefits as described above.
+We find that models with state dropout
+generalize better than models with unstructured dropout,
+and additionally have computational benefits as described above.
 
 % interaction with brown
 
@@ -219,8 +220,12 @@ The two datasets we used are the \texttt{Penn Treebank} \citep{ptb}
 and \texttt{wikitext2} \citep{wikitext}.
 \texttt{Penn Treebank} contains 929k tokens in the training corpus,
 with a vocabulary size of 10k.
+We use the preprocessing from \citet{mikolov-2011},
+which lowercases all words and substitutes words outside of the vocabulary
+with unks. 
 \texttt{Wikitext2} contains 2M tokens in the training corpus,
 with a vocabulary size of 33k.
+Casing is preserved, and all words outside the vocab are unked.
 Both datasets contain inter-sentence dependencies,
 due to the use of un-shuffled documents.
 
@@ -241,7 +246,9 @@ for \texttt{Penn Treebank} in Table \ref{tbl:ppl-ptb} and for
 The HMMs in all cases outperform the feedforward models (FF),
 but underperform the recurrent LSTMs.
 
-In the following sections, we ablate and analyze the HMMs on \texttt{Penn Treebank}.
+
+
+In the remainder of this section we ablate and analyze the HMMs on \texttt{Penn Treebank}.
 
 % transition?
 
@@ -252,15 +259,15 @@ Perplexities on the \texttt{Penn Treebank} dataset.
 The FF model is a 256-dim 2-layer feedforward neural network
 with a window of 4 previous tokens with 0.3 dropout.
 The LSTM is a 256-dim 2-layer recurrent neural network with 0.3 dropout.
-The HMM is a 32k-state HMM with 0.5 state dropout.
+The HMM is a 64k-state HMM with 0.5 state dropout.
 }
 \begin{tabular}{llll}
 \toprule
 Model & Num Params & Valid PPL & Test PPL\\
 \midrule
-FF    &            & 160         & -       \\
-LSTM  &            & 90          & -       \\
-HMM   &            & 124         & -       \\
+FF    & 2.8M       & 160         & -       \\
+LSTM  & 3.6M       & 90          & -       \\
+HMM   & 140.9M     & 124         & -       \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -291,15 +298,17 @@ and find that the Brown emission constraints outperforms the uniform emission co
 in all model sizes.
 
 One explanation for the relative benefit of Brown emission constraints over uniform
-is due to the nature of Brown clusters.
+is due to the effect of Brown clusters.
 The goal of Brown clustering is to place two words in the same cluster
 if they are used in the same context.
-In Table \#, we observe that the entropy of the emission distribution
+In Table \ref{tbl:entropy}, we observe that the entropy of the emission distribution
 for models with uniform emission
-constraints is lower than models with brown constraints.
-This implies that since the uniform models are less likely to place words that appear in
-similar contexts together the burden of modeling ambiguity is pushed onto
-the transition distribution.
+constraints is lower than models with brown constraints,
+and the entropy of the transition distributions is higher.
+This implies that the burden of modeling ambiguity is pushed onto
+the transition distribution,
+since the uniform models are less likely to place words that appear in
+similar contexts together.
 
 % explain why this hurts the model? or is it already clear
 % compare entropies to exact 1k HMM.
@@ -327,7 +336,8 @@ inference without sparsity is too expensive.
 The quantities $|\mcZ|$ and $k$ are the number of hidden
 states and the number of states per word respectively.
 The HMMs with 1024 states do not have any dropout,
-while the 8k and 16k state HMMs have unstructured dropout.
+while the 8k and 16k state HMMs have unstructured dropout
+at a rate of 0.5.
 }
 
 \begin{tabular}{llll}
@@ -338,14 +348,35 @@ Uniform    & 1k       & 32     & -\\
 Brown      & 1k       & 32     & -\\
 None       & 1k       & 1k     & -\\
 \midrule 
-Uniform    & 8k       & 128    & 150\\
-Brown      & 8k       & 128    & 142\\
-Uniform    & 16k      & 128    & 146\\
-Brown      & 16k      & 128    & 134\\
+Uniform    & 8k       & 128    & 150*\\
+Brown      & 8k       & 128    & 142*\\
+Uniform    & 16k      & 128    & 146*\\
+Brown      & 16k      & 128    & 134*\\
 \bottomrule
 \end{tabular}
 \end{table}
 
+\begin{table}[!t]
+\centering
+\caption{\label{tbl:entropy}
+The average entropies of the the emission and
+transition distributions for HMMs
+with uniform and Brown cluster emission constraints.
+All models have $k=128$ states per word
+and use unstructured dropout with a rate of $p=0.5$.
+}
+
+\begin{tabular}{llll}
+\toprule
+Constraint & $|\mcZ|$ & H(emit)& H(transition)\\
+\midrule 
+Uniform    & 8k       & -      & - \\
+Brown      & 8k       & -      & - \\
+Uniform    & 16k      & -      & - \\
+Brown      & 16k      & -      & - \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 
 \paragraph{Dropout analysis}
@@ -363,6 +394,26 @@ Analysis 1: Discuss what happens with just state dropout, without partitioning.
 Get numbers or just handwaive?
 Consider exact inference (in constrained model) this work.
 )
+
+\begin{table}[!t]
+\centering
+\caption{\label{tbl:dropout}
+State occupancies for the dropout strategies and rates.
+All models were HMMs with Brown cluster emission constraints,
+16k total states, and 128 states per word (and therefore 128 Brown clusters).
+}
+
+\begin{tabular}{llll}
+\toprule
+Dropout type & $p$  & Valid PPL & State occupancy\\
+\midrule 
+Unstructured & 0.5  & -         & - \\
+Unstructured & 0.75 & -         & - \\
+State        & 0.5  & -         & - \\
+State        & 0.75 & -         & - \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \paragraph{Number of Brown clusters}
 We next examine the sensitivity of HMMs to the number of Brown clusters
@@ -403,15 +454,32 @@ in terms of number of parameters.
 Discuss relative parameter inefficiency compared to LSTM / FF.
 
 \paragraph{State size ablation}
-Graph 1: Show performance improves as we increase the total number of states
-\begin{itemize}
-\item Brown HMM + state dropout, 16k, 128 clusters
-\item Brown HMM + state dropout, 32k, 128 clusters
-\item Brown HMM + state dropout, 65k, 128 clusters
-\end{itemize}
+We find that as we increase the number of total states
+while keeping the Brown clusters fixed,
+performance improves up until we have 65k states.
 
 Analysis 1: How does state usage change as clusters remain constant
 but the number of states (and states per word) increases?
+
+\begin{table}[!t]
+\centering
+\caption{\label{tbl:ppl-states-ablation}
+The perplexities for HMMs with 128 Brown clusters
+for constraining the emission distribution of the HMMs.
+$|\mcZ|$ is the total number of hidden states.
+All models have 0.5 state dropout.
+}
+
+\begin{tabular}{llll}
+\toprule
+$|\mcZ|$ & Num clusters & Valid PPL\\
+\midrule
+16k      & 128          & 133\\
+32k      & 256          & 126\\
+65k      & 512          & 124\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \paragraph{Parameterization ablation}
 Analysis 1: Is there a performance difference between neural / scalar parameterization,
