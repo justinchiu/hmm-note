@@ -111,7 +111,7 @@ where $H$ is the dimension of the state and word embeddings.
 Such a parameterization represents the states and words with embeddings,
 and implicitly parameterizes the transition and emission distributions
 by modeling those matrices as a function of the embeddings.
-We use the same residual network from \citet{kim2019cpcfg} to parameterize conditional distributions.
+We use a residual network as in \citet{kim2019cpcfg} to parameterize conditional distributions.
 
 \section{Model}
 For language modeling, we are interested in the distribution over the observed words
@@ -409,8 +409,10 @@ We found that state dropout outperformed unstructured dropout overall.
 This in addition to the computational benefits afforded by state dropout
 led us to prefer this strategy.
 
-Unstructured dropout was very sensitive to batching strategies.
-We observed a large gap 
+Unstructured dropout was sensitive to batching strategies.
+We observed a larger gap between training and validation perplexities
+with the unshuffled batching strategy,
+whereas unstructured dropout appeared to be robust to the batching strategy.
 
 Analysis 1: Discuss what happens with just state dropout, without partitioning.
 (Too much variance in gradient estimator, would require variance reduction.
