@@ -283,14 +283,15 @@ The FF model is a 256-dim 2-layer feedforward neural network
 with a window of 4 previous tokens with 0.3 dropout.
 The LSTM is a 256-dim 2-layer recurrent neural network with 0.3 dropout.
 The HMM is a 64k-state HMM with 0.5 state dropout.
+The unshuffled batching strategy was used for all models in this table.
 }
 \begin{tabular}{llll}
 \toprule
 Model & Num Params & Valid PPL & Test PPL\\
 \midrule
-FF    & 2.8M       & 160         & -       \\
-LSTM  & 3.6M       & 90          & -       \\
-HMM   & 140.9M     & 124         & -       \\
+FF    & 2.8M       & 164         & -       \\
+LSTM  & 3.6M       & 97          & -       \\
+HMM   & 140.9M     & 125         & -       \\
 \bottomrule
 \end{tabular}
 \end{table}

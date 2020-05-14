@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  14 MAY 2020 09:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  14 MAY 2020 09:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1050,19 +1050,20 @@ Underfull \hbox (badness 2809) in paragraph at lines 228--240
  []
 
 [2]
-Underfull \hbox (badness 1708) in paragraph at lines 286--286
+Underfull \hbox (badness 1708) in paragraph at lines 287--287
 []\OT1/ptm/m/n/10 Table 1: |[][] Per-plex-i-ties on the \OT1/pcr/m/n/10 Penn Tr
 eebank
  []
 
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <7> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 364.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 365.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <5> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 364.
-[3] (./emnlp2020.bbl
-Underfull \vbox (badness 1087) has occurred while \output is active []
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 365.
 
- [4]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [3]
+(./emnlp2020.bbl [4]
 Underfull \hbox (badness 1264) in paragraph at lines 25--29
 []\OT1/ptm/m/n/10 Ilya Loshchilov and Frank Hut-ter. 2017.  [][]Fix-ing
  []
@@ -1079,15 +1080,15 @@ Underfull \hbox (badness 1147) in paragraph at lines 44--51
  []
 
 )
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 540.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 541.
 
  (/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 540.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 541.
 
-Overfull \hbox (14.96109pt too wide) detected at line 610
+Overfull \hbox (14.96109pt too wide) detected at line 611
 []
  []
 
@@ -1095,24 +1096,24 @@ Overfull \hbox (14.96109pt too wide) detected at line 610
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [5]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 620.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 621.
 
 [6
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 620.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 621.
  (./emnlp2020.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 620.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 620.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 621.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 621.
 Package rerunfilecheck Info: File `emnlp2020.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 620.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 621.
  )
 (\end occurred when \iffalse on line 352 was incomplete) 
 Here is how much of TeX's memory you used:
  24165 strings out of 492649
  484647 string characters out of 6129607
- 622672 words of memory out of 5000000
+ 622744 words of memory out of 5000000
  27372 multiletter control sequences out of 15000+600000
  36866 words of font info for 171 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1137,7 +1138,7 @@ r/ucrr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/helvetic/uhvb8
 a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></us
 r/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/te
 xlive/2018/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on emnlp2020.pdf (6 pages, 210619 bytes).
+Output written on emnlp2020.pdf (6 pages, 210684 bytes).
 PDF statistics:
  237 PDF objects out of 1000 (max. 8388607)
  192 compressed objects within 2 object streams
