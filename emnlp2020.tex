@@ -61,6 +61,8 @@ todo
 
 todo
 
+\section{Related work}
+Todo
 
 \section{Background}
 We focus on language modeling,
@@ -137,7 +139,8 @@ This allows us to perform marginalization as follows
 \begin{equation}
 \label{eqn:sparse_marginalization}
 \begin{aligned}
-p(\bx) &= \sum_{z_0} p(z_0)p(x_0 \mid z_0)
+&p(\bx)\\
+&= \sum_{z_0} p(z_0)p(x_0 \mid z_0)
     \sum_{z_1}p(z_1\mid z_0)p(x_1 \mid z_1)\\
     &\qquad\cdots
     \sum_{z_T}p(z_T \mid z_{T-1})p(x_T \mid z_T)\\
