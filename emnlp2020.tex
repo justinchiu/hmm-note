@@ -104,6 +104,15 @@ p(x_t \mid z_t) &\propto e^{\phi_{x_tz_t}}
 where each $\phi_{z_0},\phi_{z_tz_{t-1}},\phi_{x_tz_t} \in \mathbb{R}$
 may be parameterized by a scalar or a neural network.
 
+A scalar parameterization would result in $O(|\mcZ|^2 + |\mcZ||\mcX|)$ parameters,
+since the transition and emission matrices must be explicitly represented.
+A compact neural parameterization may take as few as $O(H(|\mcZ| + |\mcX|))$ parameters,
+where $H$ is the dimension of the state and word embeddings.
+Such a parameterization represents the states and words with embeddings,
+and implicitly parameterizes the transition and emission distributions
+by modeling those matrices as a function of the embeddings.
+We use the same residual network from \citet{kim2019cpcfg} to parameterize conditional distributions.
+
 \section{Model}
 For language modeling, we are interested in the distribution over the observed words
 obtained by marginalizing over the latent states $p(\bx) = \sum_{\bz}p(\bx,\bz)$.
@@ -240,13 +249,18 @@ See Appendix \ref{sec:hyperparams} for the hyperparameters for all models.
 
 \subsection{Results}
 % Only PTB results for now.
-We report validation (TODO: will include test) perplexities 
+We report (TODO: will include test) perplexities 
 for \texttt{Penn Treebank} in Table \ref{tbl:ppl-ptb} and for 
 \texttt{wikitext2} in Table \ref{tbl:ppl-wikitext2}.
+
 The HMMs in all cases outperform the feedforward models (FF),
 but underperform the recurrent LSTMs.
-
-
+Since the HMMs require parameters linear in the number of hidden states,
+we find that the performance of the HMMs scales poorly compared to the other models
+which only require parameters that scale linearly with the vocbaulary size.
+Although explicitly representing and summing over the hidden states
+allows us to explicitly capture uncertainty in the hidden state,
+it proves to be a limiting factor in terms of performance.
 
 In the remainder of this section we ablate and analyze the HMMs on \texttt{Penn Treebank}.
 
@@ -386,8 +400,6 @@ We found that state dropout outperformed unstructured dropout overall.
 This in addition to the computational benefits afforded by state dropout
 led us to prefer this strategy.
 
-One hypothesis 
-
 Analysis 1: Discuss what happens with just state dropout, without partitioning.
 (Too much variance in gradient estimator, would require variance reduction.
 Get numbers or just handwaive?
@@ -404,7 +416,7 @@ All models were HMMs with Brown cluster emission constraints,
 
 \begin{tabular}{llll}
 \toprule
-Dropout type & $p$  & Valid PPL & State occupancy\\
+Dropout type & $p$  & Valid PPL & Occupancy\\
 \midrule 
 Unstructured & 0.25 & -         & - \\
 Unstructured & 0.5  & -         & - \\

@@ -1,4 +1,4 @@
-\begin{thebibliography}{6}
+\begin{thebibliography}{7}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{Brown et~al.(1992)Brown, deSouza, Mercer, Pietra, and
@@ -14,6 +14,12 @@ Antoine Dedieu, Nishad Gothoskar, Scott Swingle, Wolfgang Lehrach, Miguel
   Lázaro-Gredilla, and Dileep George. 2019.
 \newblock \href {http://arxiv.org/abs/1905.00507} {Learning higher-order
   sequential structure with cloned hmms}.
+
+\bibitem[{Kim et~al.(2019)Kim, Dyer, and Rush}]{kim2019cpcfg}
+Yoon Kim, Chris Dyer, and Alexander~M. Rush. 2019.
+\newblock \href {http://arxiv.org/abs/1906.10225} {Compound probabilistic
+  context-free grammars for grammar induction}.
+\newblock \emph{CoRR}, abs/1906.10225.
 
 \bibitem[{Loshchilov and Hutter(2017)}]{adamw}
 Ilya Loshchilov and Frank Hutter. 2017.
@@ -41,6 +47,6 @@ Tomas Mikolov, Anoop Deoras, Stefan Kombrink, Lukás Burget, and Jan Cernocký.
   {http://dblp.uni-trier.de/db/conf/interspeech/interspeech2011.html#MikolovDKBC11}
   {Empirical evaluation and combination of advanced language modeling
   techniques.}
-\newblock In \emph{INTERSPEECH}, pages 605--608. ISCA.
+\newblock pages 605--608.
 
 \end{thebibliography}
