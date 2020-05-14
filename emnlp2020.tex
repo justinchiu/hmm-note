@@ -236,7 +236,7 @@ with unks.
 with a vocabulary size of 33k.
 Casing is preserved, and all words outside the vocab are unked.
 Both datasets contain inter-sentence dependencies,
-due to the use of un-shuffled documents.
+due to the use of documents consisting of more than a single sentence.
 
 \paragraph{Implementation}
 We train two-layer LSTM recurrent neural networks with 256 or 512 units,
@@ -245,11 +245,20 @@ The HMMs we train follow the sparsity constraints outlined in the previous
 section with a dropout rate of 0.5,
 and we vary the total number of states as well as states per word.
 We optimize all models with AdamW \citep{adamw}.
+
+We experimented with a couple batching strategies:
+On \texttt{Penn Treebank},
+the first strategy discarded the inter-sentence dependencies and shuffled all sentences,
+and the second treated the corpus as a single flat document without shuffling.
+On \texttt{Wikitext2}, we either shuffled at the document level or treated the corpus as a
+single document.
+Prior work on both corpuses treated the corpora as single documents.
+
 See Appendix \ref{sec:hyperparams} for the hyperparameters for all models.
 
 \subsection{Results}
 % Only PTB results for now.
-We report (TODO: will include test) perplexities 
+We report perplexities 
 for \texttt{Penn Treebank} in Table \ref{tbl:ppl-ptb} and for 
 \texttt{wikitext2} in Table \ref{tbl:ppl-wikitext2}.
 
@@ -399,6 +408,9 @@ shown in Table~\ref{tbl:dropout}.
 We found that state dropout outperformed unstructured dropout overall.
 This in addition to the computational benefits afforded by state dropout
 led us to prefer this strategy.
+
+Unstructured dropout was very sensitive to batching strategies.
+We observed a large gap 
 
 Analysis 1: Discuss what happens with just state dropout, without partitioning.
 (Too much variance in gradient estimator, would require variance reduction.
