@@ -62,7 +62,49 @@ todo
 todo
 
 \section{Related work}
-Todo
+%\paragraph{Observed language models}
+Practitioners have used neural models
+to improve language modeling performance by utilizing
+architectures that capture long-range dependencies,
+moving from feedforward architectures \citep{bengio2003nlm}
+to recurrent neural networks \citep{mikolov2010rnn,zaremba2014lstm,merity2017awdlstm}
+as well as transformer-based architectures \citep{radford2019language}.
+
+%\paragraph{Latent lms}
+A recent line of work has investigated the inclusion of latent variables 
+in language models, opting to either introduce a latent variable
+at the sequence \citep{bowman2015vae} or element level \citep{chung2015vrnn},
+with the aim of learning interpretable latent spaces.
+Due to a lack of conjugacy,
+exact inference is intractable in many latent variable sequence models,
+especially those with large state spaces. 
+We limit our focus to models that permit exact inference,
+and in particular models with discrete latent variables.
+
+% Neural parameterizations of classical LVMs
+Recent work has demonstrated improvements in tractable discrete latent variable models,
+such as hidden Markov models (HMMs) and probabilistic context free grammars,
+through neural parameterizations of
+conditional distributions \citep{tran2016hmm,kim2019cpcfg}.
+In the case of context free grammars,
+\citet{kim2019cpcfg} found that incorporating 
+a compound mixture led to performance improvements,
+which allowed for potentially infinitely many states
+while sacrificing exact inference.
+
+%\paragraph{Scaling HMMs}
+An alternative method for increasing the size of the state space that
+also retains tractability of exact inference was presented in the
+experiments by \citet{dedieu2019learning},
+which introduced sparsity constraints in the emission distribution of an HMM.
+The sparsity constraints allowed them to train a 30k state HMM on
+character-level language modeling.
+
+%\paragraph{Models with Sparsity}
+
+
+%\paragraph{Interpretability}
+
 
 \section{Background}
 We focus on language modeling,
@@ -116,7 +158,8 @@ by modeling those matrices as a function of the embeddings.
 We use a residual network as in \citet{kim2019cpcfg} to parameterize conditional distributions.
 
 \section{Model}
-For language modeling, we are interested in the distribution over the observed words
+For language modeling with an HMM,
+we are interested in the distribution over the observed words
 obtained by marginalizing over the latent states $p(\bx) = \sum_{\bz}p(\bx,\bz)$.
 This sum can be computed in time $O(T|\mcZ|^2)$ via dynamic programming,
 which becomes prohibitive if the number of latent states $|\mcZ|$ is large.

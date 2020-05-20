@@ -1,5 +1,19 @@
-\begin{thebibliography}{7}
+\begin{thebibliography}{15}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{Bengio et~al.(2003)Bengio, Ducharme, Vincent, and
+  Janvin}]{bengio2003nlm}
+Yoshua Bengio, R\'{e}jean Ducharme, Pascal Vincent, and Christian Janvin. 2003.
+\newblock A neural probabilistic language model.
+\newblock \emph{J. Mach. Learn. Res.}, 3(null):1137–1155.
+
+\bibitem[{Bowman et~al.(2015)Bowman, Vilnis, Vinyals, Dai, J{\'{o}}zefowicz,
+  and Bengio}]{bowman2015vae}
+Samuel~R. Bowman, Luke Vilnis, Oriol Vinyals, Andrew~M. Dai, Rafal
+  J{\'{o}}zefowicz, and Samy Bengio. 2015.
+\newblock \href {http://arxiv.org/abs/1511.06349} {Generating sentences from a
+  continuous space}.
+\newblock \emph{CoRR}, abs/1511.06349.
 
 \bibitem[{Brown et~al.(1992)Brown, deSouza, Mercer, Pietra, and
   Lai}]{brown1992}
@@ -7,6 +21,14 @@ Peter~F. Brown, Peter~V. deSouza, Robert~L. Mercer, Vincent J.~Della Pietra,
   and Jenifer~C. Lai. 1992.
 \newblock Class-based n-gram models of natural language.
 \newblock \emph{Comput. Linguist.}, 18(4):467–479.
+
+\bibitem[{Chung et~al.(2015)Chung, Kastner, Dinh, Goel, Courville, and
+  Bengio}]{chung2015vrnn}
+Junyoung Chung, Kyle Kastner, Laurent Dinh, Kratarth Goel, Aaron~C. Courville,
+  and Yoshua Bengio. 2015.
+\newblock \href {http://arxiv.org/abs/1506.02216} {A recurrent latent variable
+  model for sequential data}.
+\newblock \emph{CoRR}, abs/1506.02216.
 
 \bibitem[{Dedieu et~al.(2019)Dedieu, Gothoskar, Swingle, Lehrach,
   Lázaro-Gredilla, and George}]{dedieu2019learning}
@@ -33,6 +55,12 @@ Mitchell~P. Marcus, Beatrice Santorini, and Mary~Ann Marcinkiewicz. 1993.
   annotated corpus of {E}nglish: The {P}enn {T}reebank}.
 \newblock \emph{Computational Linguistics}, 19(2):313--330.
 
+\bibitem[{Merity et~al.(2017)Merity, Keskar, and Socher}]{merity2017awdlstm}
+Stephen Merity, Nitish~Shirish Keskar, and Richard Socher. 2017.
+\newblock \href {http://arxiv.org/abs/1708.02182} {Regularizing and optimizing
+  {LSTM} language models}.
+\newblock \emph{CoRR}, abs/1708.02182.
+
 \bibitem[{Merity et~al.(2016)Merity, Xiong, Bradbury, and Socher}]{wikitext}
 Stephen Merity, Caiming Xiong, James Bradbury, and Richard Socher. 2016.
 \newblock \href {http://arxiv.org/abs/1609.07843} {Pointer sentinel mixture
@@ -48,5 +76,34 @@ Tomas Mikolov, Anoop Deoras, Stefan Kombrink, Lukás Burget, and Jan Cernocký.
   {Empirical evaluation and combination of advanced language modeling
   techniques.}
 \newblock pages 605--608.
+
+\bibitem[{Mikolov et~al.(2010)Mikolov, Karafiát, Burget, Cernocký, and
+  Khudanpur}]{mikolov2010rnn}
+Tomas Mikolov, Martin Karafiát, Lukás Burget, Jan Cernocký, and Sanjeev
+  Khudanpur. 2010.
+\newblock \href
+  {http://dblp.uni-trier.de/db/conf/interspeech/interspeech2010.html#MikolovKBCK10}
+  {Recurrent neural network based language model.}
+\newblock pages 1045--1048.
+
+\bibitem[{Radford et~al.(2019)Radford, Wu, Child, Luan, Amodei, and
+  Sutskever}]{radford2019language}
+Alec Radford, Jeff Wu, Rewon Child, David Luan, Dario Amodei, and Ilya
+  Sutskever. 2019.
+\newblock Language models are unsupervised multitask learners.
+
+\bibitem[{Tran et~al.(2016)Tran, Bisk, Vaswani, Marcu, and
+  Knight}]{tran2016hmm}
+Ke~M. Tran, Yonatan Bisk, Ashish Vaswani, Daniel Marcu, and Kevin Knight. 2016.
+\newblock \href {http://arxiv.org/abs/1609.09007} {Unsupervised neural hidden
+  markov models}.
+\newblock \emph{CoRR}, abs/1609.09007.
+
+\bibitem[{Zaremba et~al.(2014)Zaremba, Sutskever, and
+  Vinyals}]{zaremba2014lstm}
+Wojciech Zaremba, Ilya Sutskever, and Oriol Vinyals. 2014.
+\newblock \href {http://arxiv.org/abs/1409.2329} {Recurrent neural network
+  regularization}.
+\newblock \emph{CoRR}, abs/1409.2329.
 
 \end{thebibliography}

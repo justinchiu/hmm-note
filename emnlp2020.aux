@@ -16,37 +16,53 @@
 \gdef\HyperFirstAtBeginDocument#1{#1}
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{bengio2003nlm}
+\citation{mikolov2010rnn,zaremba2014lstm,merity2017awdlstm}
+\citation{radford2019language}
+\citation{bowman2015vae}
+\citation{chung2015vrnn}
+\citation{tran2016hmm,kim2019cpcfg}
 \citation{kim2019cpcfg}
 \citation{dedieu2019learning}
+\citation{kim2019cpcfg}
 \newlabel{param}{{2}{1}{Hidden Markov Models}{equation.3.2}{}}
+\citation{dedieu2019learning}
 \citation{brown1992}
-\citation{ptb}
-\citation{wikitext}
-\citation{mikolov-2011}
-\citation{adamw}
 \newlabel{eqn:sparse_emission}{{3}{2}{Sparse Emission HMMs}{equation.4.3}{}}
 \newlabel{eqn:sparse_marginalization}{{4}{2}{Sparse Emission HMMs}{equation.4.4}{}}
 \newlabel{eqn:state_dropout}{{5}{2}{State Dropout}{equation.4.5}{}}
 \newlabel{eqn:unstructured_dropout}{{6}{2}{State Dropout}{equation.4.6}{}}
+\citation{ptb}
+\citation{wikitext}
+\citation{mikolov-2011}
+\citation{adamw}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{tbl:ppl-ptb}{{1}{3}{Perplexities on the \texttt {Penn Treebank} dataset. The FF model is a 256-dim 2-layer feedforward neural network with a window of 4 previous tokens with 0.3 dropout. The LSTM is a 256-dim 2-layer recurrent neural network with 0.3 dropout. The HMM is a 64k-state HMM with 0.5 state dropout. The unshuffled batching strategy was used for all models in this table. \relax }{table.caption.3}{}}
 \newlabel{tbl:ppl-wikitext2}{{2}{3}{Perplexities on the \texttt {wikitext2} dataset. The FF model is a 256-dim 2-layer feedforward neural network with a window of 4 previous tokens with 0.3 dropout. The LSTM is a 256-dim 2-layer recurrent neural network with 0.3 dropout. The HMM is a 32k-state HMM with 0.5 state dropout. \relax }{table.caption.4}{}}
-\newlabel{tbl:ppl-assn-ablation}{{3}{3}{The perplexities for the different emission sparsity constraints in a 1024 state HMM as well as larger HMMs for which exact inference without sparsity is too expensive. The quantities $|\mcZ |$ and $k$ are the number of hidden states and the number of states per word respectively. The HMMs with 1024 states do not have any dropout, while the 8k and 16k state HMMs have unstructured dropout at a rate of 0.5. \relax }{table.caption.6}{}}
-\bibstyle{acl_natbib}
-\bibdata{anthology,emnlp2020}
+\newlabel{tbl:ppl-assn-ablation}{{3}{4}{The perplexities for the different emission sparsity constraints in a 1024 state HMM as well as larger HMMs for which exact inference without sparsity is too expensive. The quantities $|\mcZ |$ and $k$ are the number of hidden states and the number of states per word respectively. The HMMs with 1024 states do not have any dropout, while the 8k and 16k state HMMs have unstructured dropout at a rate of 0.5. \relax }{table.caption.6}{}}
 \newlabel{tbl:entropy}{{4}{4}{The average entropies of the the emission and transition distributions for HMMs with uniform and Brown cluster emission constraints. All models have $k=128$ states per word and use unstructured dropout with a rate of $p=0.5$. \relax }{table.caption.7}{}}
 \newlabel{tbl:dropout}{{5}{4}{State occupancies for the dropout strategies and rates. All models were HMMs with Brown cluster emission constraints, 16k total states, and 128 states per word (and therefore 128 Brown clusters). \relax }{table.caption.9}{}}
 \newlabel{tbl:ppl-spw-ablation}{{6}{4}{The perplexities for HMMs with 16k states and different numbers of Brown clusters for constraining the emission distribution of the HMMs. $|\mcZ |$ is the total number of hidden states. All models have 0.5 state dropout. \relax }{table.caption.11}{}}
-\newlabel{tbl:ppl-states-ablation}{{7}{4}{The perplexities for HMMs with 128 Brown clusters for constraining the emission distribution of the HMMs. $|\mcZ |$ is the total number of hidden states. All models have 0.5 state dropout. \relax }{table.caption.14}{}}
-\bibcite{brown1992}{{1}{1992}{{Brown et~al.}}{{Brown, deSouza, Mercer, Pietra, and Lai}}}
-\bibcite{dedieu2019learning}{{2}{2019}{{Dedieu et~al.}}{{Dedieu, Gothoskar, Swingle, Lehrach, L\IeC {\'a}zaro-Gredilla, and George}}}
-\bibcite{kim2019cpcfg}{{3}{2019}{{Kim et~al.}}{{Kim, Dyer, and Rush}}}
-\bibcite{adamw}{{4}{2017}{{Loshchilov and Hutter}}{{}}}
-\bibcite{ptb}{{5}{1993}{{Marcus et~al.}}{{Marcus, Santorini, and Marcinkiewicz}}}
-\bibcite{wikitext}{{6}{2016}{{Merity et~al.}}{{Merity, Xiong, Bradbury, and Socher}}}
-\bibcite{mikolov-2011}{{7}{2011}{{Mikolov et~al.}}{{Mikolov, Deoras, Kombrink, Burget, and Cernock\IeC {\'y}}}}
+\bibstyle{acl_natbib}
+\bibdata{anthology,emnlp2020}
+\bibcite{bengio2003nlm}{{1}{2003}{{Bengio et~al.}}{{Bengio, Ducharme, Vincent, and Janvin}}}
+\bibcite{bowman2015vae}{{2}{2015}{{Bowman et~al.}}{{Bowman, Vilnis, Vinyals, Dai, J{\'{o}}zefowicz, and Bengio}}}
+\bibcite{brown1992}{{3}{1992}{{Brown et~al.}}{{Brown, deSouza, Mercer, Pietra, and Lai}}}
+\bibcite{chung2015vrnn}{{4}{2015}{{Chung et~al.}}{{Chung, Kastner, Dinh, Goel, Courville, and Bengio}}}
+\bibcite{dedieu2019learning}{{5}{2019}{{Dedieu et~al.}}{{Dedieu, Gothoskar, Swingle, Lehrach, L\IeC {\'a}zaro-Gredilla, and George}}}
+\bibcite{kim2019cpcfg}{{6}{2019}{{Kim et~al.}}{{Kim, Dyer, and Rush}}}
+\bibcite{adamw}{{7}{2017}{{Loshchilov and Hutter}}{{}}}
+\bibcite{ptb}{{8}{1993}{{Marcus et~al.}}{{Marcus, Santorini, and Marcinkiewicz}}}
+\bibcite{merity2017awdlstm}{{9}{2017}{{Merity et~al.}}{{Merity, Keskar, and Socher}}}
+\bibcite{wikitext}{{10}{2016}{{Merity et~al.}}{{Merity, Xiong, Bradbury, and Socher}}}
+\bibcite{mikolov-2011}{{11}{2011}{{Mikolov et~al.}}{{Mikolov, Deoras, Kombrink, Burget, and Cernock\IeC {\'y}}}}
+\bibcite{mikolov2010rnn}{{12}{2010}{{Mikolov et~al.}}{{Mikolov, Karafi\IeC {\'a}t, Burget, Cernock\IeC {\'y}, and Khudanpur}}}
+\bibcite{radford2019language}{{13}{2019}{{Radford et~al.}}{{Radford, Wu, Child, Luan, Amodei, and Sutskever}}}
+\bibcite{tran2016hmm}{{14}{2016}{{Tran et~al.}}{{Tran, Bisk, Vaswani, Marcu, and Knight}}}
+\bibcite{zaremba2014lstm}{{15}{2014}{{Zaremba et~al.}}{{Zaremba, Sutskever, and Vinyals}}}
+\newlabel{tbl:ppl-states-ablation}{{7}{5}{The perplexities for HMMs with 128 Brown clusters for constraining the emission distribution of the HMMs. $|\mcZ |$ is the total number of hidden states. All models have 0.5 state dropout. \relax }{table.caption.14}{}}
 \newlabel{sec:hyperparams}{{A}{5}{Hyperparameters}{appendix.A}{}}
-\newlabel{eqn:evidence}{{7}{5}{Gradient of the evidence}{equation.B.7}{}}
-\newlabel{eqn:lse_derivative}{{8}{5}{Gradient of the evidence}{equation.B.8}{}}
-\newlabel{eqn:plus_derivative}{{9}{5}{Gradient of the evidence}{equation.B.9}{}}
+\newlabel{eqn:evidence}{{7}{6}{Gradient of the evidence}{equation.B.7}{}}
+\newlabel{eqn:lse_derivative}{{8}{6}{Gradient of the evidence}{equation.B.8}{}}
+\newlabel{eqn:plus_derivative}{{9}{6}{Gradient of the evidence}{equation.B.9}{}}
 \newlabel{sec:supplemental}{{C}{6}{Supplemental Material}{appendix.C}{}}
