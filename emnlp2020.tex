@@ -75,10 +75,14 @@ A recent line of work has investigated the inclusion of latent variables
 in language models, opting to either introduce a latent variable
 at the sequence \citep{bowman2015vae} or element level \citep{chung2015vrnn},
 with the aim of learning interpretable latent spaces.
-Due to a lack of conjugacy,
-exact inference is intractable in many latent variable sequence models,
+However, the inclusion of latent variables complicates training
+and the performance of latent variable models has not been able to match
+that of fully observed models.
+
+To make matters worse,
+exact inference itself is intractable in many latent variable sequence models,
 especially those with large state spaces. 
-We limit our focus to models that permit exact inference,
+We therefore limit our focus to models that permit exact inference,
 and in particular models with discrete latent variables.
 
 % Neural parameterizations of classical LVMs
@@ -96,13 +100,19 @@ while sacrificing exact inference.
 An alternative method for increasing the size of the state space that
 also retains tractability of exact inference was presented in the
 experiments by \citet{dedieu2019learning},
-which introduced sparsity constraints in the emission distribution of an HMM.
-The sparsity constraints allowed them to train a 30k state HMM on
-character-level language modeling.
+which introduced a sparsity constraint in the emission distribution of an HMM.
+The constraint they applied allowed each state to emit only a single element,
+which allowed them to train a 30k state HMM on character-level language modeling.
+This particular constraint is problematic for language modeling at the word level,
+as the size of the vocabulary for a given corpus may be greater than 30k,
+leaving only a single state per word.
+
+Other investigations into improving the performance of HMMs
+involve relaxing independence or modeling assumptions \citep{buys2018hmm}
+to resemble a recurrent neural network, or through model combination
+with a recurrent neural network \citep{krakovna2016hmm}.
 
 %\paragraph{Models with Sparsity}
-
-
 %\paragraph{Interpretability}
 
 

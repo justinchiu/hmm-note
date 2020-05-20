@@ -1,4 +1,4 @@
-\begin{thebibliography}{15}
+\begin{thebibliography}{17}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{Bengio et~al.(2003)Bengio, Ducharme, Vincent, and
@@ -22,6 +22,10 @@ Peter~F. Brown, Peter~V. deSouza, Robert~L. Mercer, Vincent J.~Della Pietra,
 \newblock Class-based n-gram models of natural language.
 \newblock \emph{Comput. Linguist.}, 18(4):467–479.
 
+\bibitem[{Buys et~al.(2018)Buys, Bisk, and Choi}]{buys2018hmm}
+Jan Buys, Yonatan Bisk, and Yejin Choi. 2018.
+\newblock Bridging hmms and rnns through architectural transformations.
+
 \bibitem[{Chung et~al.(2015)Chung, Kastner, Dinh, Goel, Courville, and
   Bengio}]{chung2015vrnn}
 Junyoung Chung, Kyle Kastner, Laurent Dinh, Kratarth Goel, Aaron~C. Courville,
@@ -42,6 +46,11 @@ Yoon Kim, Chris Dyer, and Alexander~M. Rush. 2019.
 \newblock \href {http://arxiv.org/abs/1906.10225} {Compound probabilistic
   context-free grammars for grammar induction}.
 \newblock \emph{CoRR}, abs/1906.10225.
+
+\bibitem[{Krakovna and Doshi-Velez(2016)}]{krakovna2016hmm}
+Viktoriya Krakovna and Finale Doshi-Velez. 2016.
+\newblock \href {http://arxiv.org/abs/1606.05320} {Increasing the
+  interpretability of recurrent neural networks using hidden markov models}.
 
 \bibitem[{Loshchilov and Hutter(2017)}]{adamw}
 Ilya Loshchilov and Frank Hutter. 2017.
