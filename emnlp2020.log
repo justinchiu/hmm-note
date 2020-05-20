@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  20 MAY 2020 12:37
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  20 MAY 2020 13:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1139,7 +1139,7 @@ r/ucrr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/helvetic/uhvb8
 a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></us
 r/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/te
 xlive/2018/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on emnlp2020.pdf (6 pages, 217480 bytes).
+Output written on emnlp2020.pdf (6 pages, 217472 bytes).
 PDF statistics:
  295 PDF objects out of 1000 (max. 8388607)
  249 compressed objects within 3 object streams
