@@ -72,16 +72,15 @@ as well as transformer-based architectures \citep{radford2019language}.
 
 %\paragraph{Latent lms}
 A recent line of work has investigated the inclusion of latent variables 
-in language models, opting to either introduce a latent variable
-at the sequence \citep{bowman2015vae} or element level \citep{chung2015vrnn},
+in sequence models \citep{bowman2015vae,kimg2019urnng},
 with the aim of learning interpretable latent spaces.
-However, the inclusion of latent variables complicates training
+However, the inclusion of latent variables often complicates training
 and the performance of latent variable models has not been able to match
 that of fully observed models.
 
 To make matters worse,
 exact inference itself is intractable in many latent variable sequence models,
-especially those with large state spaces. 
+especially those with continuous state spaces. 
 We therefore limit our focus to models that permit exact inference,
 and in particular models with discrete latent variables.
 
@@ -110,7 +109,7 @@ leaving only a single state per word.
 In this work, we build off of \citet{dedieu2019learning} 
 to examine whether HMMs with tens of thousands of states
 are effective language models.
-We demonstrate that {\color{red}TBD}.
+We demonstrate that {\color{red}TBD: LM PPL, POS induction}.
 
 % Insert somewhere
 Other investigations into improving the performance of HMMs

@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex emnlp2020"] 1589995396 "emnlp2020.aux" "emnlp2020.bbl" "emnlp2020" 1590093276
+["bibtex emnlp2020"] 1590093768 "emnlp2020.aux" "emnlp2020.bbl" "emnlp2020" 1590093769
   "./acl_natbib.bst" 1571355934 47585 c671f071a8f3957857acb307a7173505 ""
-  "anthology.bib" 1589995123 10993 71ec70d2c64b8d2ccdbb7f658a42072c ""
-  "emnlp2020.aux" 1590093276 5942 ea07b1ec15f7e724464125f83e77b3c6 ""
+  "anthology.bib" 1590093707 11644 8ea052b571ddf9c00afdb5f9536e8e46 ""
+  "emnlp2020.aux" 1590093768 5826 ac43eda44693d3a24839ba05c245c207 ""
   "emnlp2020.bib" 1571355934 1974 4d7084b2f3a55753e2f48da8052bb437 ""
   (generated)
   "emnlp2020.blg"
   "emnlp2020.bbl"
-["pdflatex"] 1590093276 "emnlp2020.tex" "emnlp2020.pdf" "emnlp2020" 1590093276
+["pdflatex"] 1590093768 "emnlp2020.tex" "emnlp2020.pdf" "emnlp2020" 1590093769
   "/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1480098688 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -251,11 +251,11 @@
   "/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1526780433 2803735 8410db0ed74a2504fc3708922651cf03 ""
   "/usr/local/texlive/2018/texmf-var/web2c/pdftex/pdflatex.fmt" 1526780453 4219895 d646d013bf99294ff1d974bf7a525ca5 ""
   "/usr/local/texlive/2018/texmf.cnf" 1526780430 455 5b996dcaa0eb4ef14a83b026bc0a008c ""
-  "emnlp2020.aux" 1590093276 5942 ea07b1ec15f7e724464125f83e77b3c6 ""
-  "emnlp2020.bbl" 1589995396 5208 c700fde262ecc4e743e9de71f19cbfea "bibtex emnlp2020"
-  "emnlp2020.out" 1590093276 0 d41d8cd98f00b204e9800998ecf8427e ""
+  "emnlp2020.aux" 1590093768 5826 ac43eda44693d3a24839ba05c245c207 ""
+  "emnlp2020.bbl" 1590093768 4856 4f7c6378185ba20a39a1af6dec39af89 "bibtex emnlp2020"
+  "emnlp2020.out" 1590093768 0 d41d8cd98f00b204e9800998ecf8427e ""
   "emnlp2020.sty" 1577480256 22046 23868bb911b26009f0fd06fe069f4c26 ""
-  "emnlp2020.tex" 1590093272 26259 4cbcf1ecf350f2a468453cd4a29739ad ""
+  "emnlp2020.tex" 1590093765 26206 b310c9e4c2a572bb7bfb2df24dff7c91 ""
   "mystyle.sty" 1589172837 2609 09d39ed3f6ce64fa300c0c4029da8fd8 ""
   (generated)
   "emnlp2020.log"

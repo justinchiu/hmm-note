@@ -1,4 +1,4 @@
-\begin{thebibliography}{17}
+\begin{thebibliography}{16}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{Bengio et~al.(2003)Bengio, Ducharme, Vincent, and
@@ -25,14 +25,6 @@ Peter~F. Brown, Peter~V. deSouza, Robert~L. Mercer, Vincent J.~Della Pietra,
 \bibitem[{Buys et~al.(2018)Buys, Bisk, and Choi}]{buys2018hmm}
 Jan Buys, Yonatan Bisk, and Yejin Choi. 2018.
 \newblock Bridging hmms and rnns through architectural transformations.
-
-\bibitem[{Chung et~al.(2015)Chung, Kastner, Dinh, Goel, Courville, and
-  Bengio}]{chung2015vrnn}
-Junyoung Chung, Kyle Kastner, Laurent Dinh, Kratarth Goel, Aaron~C. Courville,
-  and Yoshua Bengio. 2015.
-\newblock \href {http://arxiv.org/abs/1506.02216} {A recurrent latent variable
-  model for sequential data}.
-\newblock \emph{CoRR}, abs/1506.02216.
 
 \bibitem[{Dedieu et~al.(2019)Dedieu, Gothoskar, Swingle, Lehrach,
   Lázaro-Gredilla, and George}]{dedieu2019learning}
