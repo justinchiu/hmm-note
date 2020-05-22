@@ -65,6 +65,8 @@ INPUT /usr/local/texlive/2018/texmf-dist/tex/latex/microtype/microtype.cfg
 INPUT /usr/local/texlive/2018/texmf-dist/tex/latex/microtype/microtype.cfg
 INPUT mystyle.sty
 INPUT mystyle.sty
+INPUT /usr/local/texlive/2018/texmf-dist/tex/latex/comment/comment.sty
+INPUT /usr/local/texlive/2018/texmf-dist/tex/latex/comment/comment.sty
 INPUT /usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsmath.sty
 INPUT /usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsmath.sty
 INPUT /usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amstext.sty
@@ -408,7 +410,6 @@ INPUT ./emnlp2020.out
 INPUT ./emnlp2020.out
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
-INPUT /usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx6.pfb
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
 INPUT /usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
