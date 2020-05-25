@@ -72,7 +72,7 @@ as well as transformer-based architectures \citep{radford2019language}.
 
 %\paragraph{Latent lms}
 A recent line of work has investigated the inclusion of latent variables 
-in sequence models \citep{bowman2015vae,kimg2019urnng},
+in sequence models \citep{bowman2015vae,kim2019urnng},
 with the aim of learning interpretable latent spaces.
 However, the inclusion of latent variables often complicates training
 and the performance of latent variable models has not been able to match
@@ -108,8 +108,13 @@ leaving only a single state per word.
 
 In this work, we build off of \citet{dedieu2019learning} 
 to examine whether HMMs with tens of thousands of states
-are effective language models.
-We demonstrate that {\color{red}TBD: LM PPL, POS induction}.
+can serve as effective language models.
+We introduce a new sparsity constraint and a variant of dropout
+for HMMs that allows us to efficiently train with a large number of states.
+With these techniques, we demonstrate that the performance of HMMs scales with the
+size of the state space, but does not reach the performance of recurrent neural networks
+but exceeds that of n-gram models.
+{\color{red}TODO: LM PPL, POS induction}
 
 % Insert somewhere
 Other investigations into improving the performance of HMMs
@@ -129,8 +134,8 @@ an element of the finite vocabulary $\mcX$.
 \subsection{Hidden Markov Models}
 Hidden Markov Models (HMMs) specify a joint distribution over 
 the observed words $\bx$ and discrete latent states $\bz = \set{z_0, \ldots, z_T}$,
-each $z_t$ from finite set $\mcZ$,
-with the following generative process:
+with each $z_t$ from finite set $\mcZ$.
+The model is defined by the following generative process:
 For every time step $t \in \set{0,\ldots,T}$, choose a state given the previous state
 $z_t \mid z_{t-1}$ from the transition distribution $p(z_t \mid z_{t-1})$,
 where the first state $z_0$ is chosen from the starting distribution $p(z_0)$.
@@ -178,7 +183,7 @@ obtained by marginalizing over the latent states $p(\bx) = \sum_{\bz}p(\bx,\bz)$
 This sum can be computed in time $O(T|\mcZ|^2)$ via dynamic programming,
 which becomes prohibitive if the number of latent states $|\mcZ|$ is large.
 However, in order to increase the capacity of HMMs, we must consider large $\mcZ$.
-We outline several techniques to manage the computational complexity of marginalization in HMMs.  
+We outline two techniques to manage the computational complexity of marginalization in HMMs.  
 
 \subsection{Sparse Emission HMMs}
 We introduce a sparse emission constraint that allows us to
@@ -251,7 +256,7 @@ where $n$ is the number of nonzero elements of $\mathbf{b}_\mcC, \forall \mcC$.
 We utilize state dropout on top of the Brown emission sparsity constraint,
 subsampling states of size $n$ for each partition during training.
 
-We also consider unstructured dropout with rate $p$
+We also consider unstructured dropout with rate $p$,
 which samples elements of masks $b_{z_0}, b_{z_tz_{t-1}}\overset{iid}{\sim} \Bern(1-p)$
 for all $z_0, z_t, z_{t-1}\in\mcZ$, yielding
 \begin{equation}
@@ -327,7 +332,7 @@ but underperform the recurrent LSTMs.
 Since the HMMs require parameters linear in the number of hidden states,
 we find that the performance of the HMMs scales poorly compared to the other models
 which only require parameters that scale linearly with the vocbaulary size.
-Although explicitly representing and summing over the hidden states
+Although representing and summing over the hidden states
 allows us to explicitly capture uncertainty in the hidden state,
 it proves to be a limiting factor in terms of performance.
 
@@ -343,7 +348,6 @@ The FF model is a 256-dim 2-layer feedforward neural network
 with a window of 4 previous tokens with 0.3 dropout.
 The LSTM is a 256-dim 2-layer recurrent neural network with 0.3 dropout.
 The HMM is a 64k-state HMM with 0.5 state dropout.
-The unshuffled batching strategy was used for all models in this table.
 }
 \begin{tabular}{llll}
 \toprule
@@ -351,7 +355,8 @@ Model & Num Params & Valid PPL & Test PPL\\
 \midrule
 FF    & 2.8M       & 164         & -       \\
 LSTM  & 3.6M       & 97          & -       \\
-HMM   & 140.9M     & 125         & -       \\
+HMM   & 19.8M      & 122         & -       \\
+HMM   & 7.7M       & 125         & -       \\
 \bottomrule
 \end{tabular}
 \end{table}

@@ -1,4 +1,4 @@
-\begin{thebibliography}{16}
+\begin{thebibliography}{17}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{Bengio et~al.(2003)Bengio, Ducharme, Vincent, and
@@ -33,11 +33,19 @@ Antoine Dedieu, Nishad Gothoskar, Scott Swingle, Wolfgang Lehrach, Miguel
 \newblock \href {http://arxiv.org/abs/1905.00507} {Learning higher-order
   sequential structure with cloned hmms}.
 
-\bibitem[{Kim et~al.(2019)Kim, Dyer, and Rush}]{kim2019cpcfg}
-Yoon Kim, Chris Dyer, and Alexander~M. Rush. 2019.
+\bibitem[{Kim et~al.(2019{\natexlab{a}})Kim, Dyer, and Rush}]{kim2019cpcfg}
+Yoon Kim, Chris Dyer, and Alexander~M. Rush. 2019{\natexlab{a}}.
 \newblock \href {http://arxiv.org/abs/1906.10225} {Compound probabilistic
   context-free grammars for grammar induction}.
 \newblock \emph{CoRR}, abs/1906.10225.
+
+\bibitem[{Kim et~al.(2019{\natexlab{b}})Kim, Rush, Yu, Kuncoro, Dyer, and
+  Melis}]{kim2019urnng}
+Yoon Kim, Alexander~M. Rush, Lei Yu, Adhiguna Kuncoro, Chris Dyer, and
+  G{\'{a}}bor Melis. 2019{\natexlab{b}}.
+\newblock \href {http://arxiv.org/abs/1904.03746} {Unsupervised recurrent
+  neural network grammars}.
+\newblock \emph{CoRR}, abs/1904.03746.
 
 \bibitem[{Krakovna and Doshi-Velez(2016)}]{krakovna2016hmm}
 Viktoriya Krakovna and Finale Doshi-Velez. 2016.
