@@ -128,12 +128,12 @@ with a recurrent neural network \citep{krakovna2016hmm}.
 \section{Background}
 We focus on language modeling,
 where we learn a distribution over sequences of tokens
-at the word level $\bx = \set{x_0, \ldots, x_T}$, with each token $x_t$
+at the word level $\bx = \langle x_0, \ldots, x_T \rangle$, with each token $x_t$
 an element of the finite vocabulary $\mcX$.
 
 \subsection{Hidden Markov Models}
 Hidden Markov Models (HMMs) specify a joint distribution over 
-the observed words $\bx$ and discrete latent states $\bz = \set{z_0, \ldots, z_T}$,
+the observed words $\bx$ and discrete latent states $\bz = \langle z_0, \ldots, z_T \rangle$,
 with each $z_t$ from finite set $\mcZ$.
 The model is defined by the following generative process:
 For every time step $t \in \set{0,\ldots,T}$, choose a state given the previous state
@@ -275,7 +275,25 @@ We find that models with state dropout
 generalize better than models with unstructured dropout,
 and additionally have computational benefits as described above.
 
-\subsection{Learning}
+\subsection{Part of speech tagging}
+We extend the above HMM to part of speech (POS) tagging.
+In addition to the words $\bx$,
+we model the tags $\by = \langle y_0, \ldots, y_T\rangle,y_t \in \mcY$.
+We introduce the following change to the HMM's generative process:
+at every timestep $t$, the model chooses a state $z_t \mid z_{t-1}$ 
+and emits a word $x_t \mid z_t$ and tag $y_t \mid z_t$ independently given the state.
+This yields the following joint distribution
+\begin{equation}
+\begin{aligned}
+p(\bx, \by, \bz)
+&= p(z_0)p(x_0 \mid z_0)p(y_0 \mid z_0)\\
+&\quad \prod_{t=1}^T p(x_t\mid z_t)p(y_t \mid z_t)p(z_t \mid z_{t-1})
+\end{aligned}
+\end{equation}
+
+% Give intuition for this model?
+
+\subsection{Learning and inference}
 We optimize the evidence of observed sentences $\log p(\bx) = \log \sum_\bz p(\bx,\bz)$
 by first marginalizing over latent states $\bz$ then performing gradient ascent.
 The emission sparsity constraints we introduce as well as state dropout
