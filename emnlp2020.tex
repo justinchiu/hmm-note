@@ -177,8 +177,8 @@ by modeling those matrices as a function of the embeddings.
 We use a residual network as in \citet{kim2019cpcfg} to parameterize conditional distributions.
 
 \section{Model}
-For language modeling with an HMM,
-we are interested in the distribution over the observed words
+For sequence modeling with an HMM,
+we are interested in the distribution over the observed
 obtained by marginalizing over the latent states $p(\bx) = \sum_{\bz}p(\bx,\bz)$.
 This sum can be computed in time $O(T|\mcZ|^2)$ via dynamic programming,
 which becomes prohibitive if the number of latent states $|\mcZ|$ is large.
@@ -192,7 +192,7 @@ efficiently perform conditional inference in large state spaces.
 %intuition: not enough parameter sharing if each state only emits a single word.
 %can we prove that you need more states if the emission distribution is overconstrained?)
 Inspired by Cloned HMMs \citep{dedieu2019learning},
-we constrain each word $x$ to be emit only by $z \in \mcC_x \subset \mcZ$:
+we constrain each observation $x$ to be emit only by $z \in \mcC_x \subset \mcZ$:
 \begin{equation}
 \label{eqn:sparse_emission}
 p(x \mid z) \propto 1(z \in \mcC_x)e^{\phi_{zx}}
@@ -219,12 +219,11 @@ due to convenience of implementation.
 We experiment with two constraint sets, both of which are specified 
 as hyperparameters and remain fixed for a given model.
 The first constraint set is obtained by sampling subsets of
-states for each word i.i.d. from a uniform distribution over subsets.
+states for each element of $\mcX$ i.i.d. from a uniform distribution over subsets.
 The second constraint set uses Brown Clusters \citep{brown1992}
 to assign all words in a given Brown cluster the same subset of states.
 This constraint set is advantageous, as it admits further optimizations
 that we discuss below.
-
 
 \subsection{State Dropout}
 We introduce a variant of dropout called state dropout that operates on the
@@ -275,8 +274,6 @@ in a mask.
 We find that models with state dropout
 generalize better than models with unstructured dropout,
 and additionally have computational benefits as described above.
-
-% interaction with brown
 
 \subsection{Learning}
 We optimize the evidence of observed sentences $\log p(\bx) = \log \sum_\bz p(\bx,\bz)$
