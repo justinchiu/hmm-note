@@ -291,7 +291,7 @@ p(\bx, \by, \bz)
 \end{aligned}
 \end{equation}
 
-% Give intuition for this model?
+(Give intuition for this model)
 
 \subsection{Learning and inference}
 We optimize the evidence of observed sentences $\log p(\bx) = \log \sum_\bz p(\bx,\bz)$
@@ -299,6 +299,8 @@ by first marginalizing over latent states $\bz$ then performing gradient ascent.
 The emission sparsity constraints we introduce as well as state dropout
 allow us to both perform marginalization
 and compute the gradient of the evidence efficiently.
+
+(Inference in POS model)
 
 \section{Experiments}
 We evaluate the HMM on two language modeling datasets.
