@@ -67,8 +67,8 @@ providing one of the simplest latent variable models for sequential data.
 HMMs have been applied to many time-series problems, such as those that
 can be found in bioinformatics, reinforcement learning, and natural language processing.
 For the task of language modeling,
-HMMs were explored in work by \citet{kuhn1994hmmlm}
-but were not not reconsidered until recently \citep{krakovna2016hmm,dedieu2019learning}.
+HMMs were explored in work by \citet{kuhn1994hmmlm,huang2011thesis}
+but were not revisited until recently \citep{krakovna2016hmm,dedieu2019learning}.
 Instead, language models modeled the observed words using n-gram models, 
 feedforward neural networks \citep{bengio2003nlm},
 and eventually recurrent neural networks \citep{mikolov2010rnn,zaremba2014lstm,merity2017awdlstm}
@@ -118,6 +118,7 @@ Both of these works used latent variables with relatively small state spaces,
 as the goal of both was structure induction rather than language modeling itself.
 We extend the neural parameterization to much larger state space models.
 
+
 % Prior work has tried large state spaces with scalar parameterizations.
 We also draw inspiration from the experiments by \citet{dedieu2019learning},
 who proposed to introduce sparsity constraints in the 
@@ -130,6 +131,15 @@ where the vocabulary size is much larger.
 We build on their work by proposing a sparsity constraint based on
 Brown clustering \citep{brown1992} which allows us to extend their
 work to vocabularies that are larger than the state space.
+
+% State splitting / refinement
+Another approach to scaling to larger state spaces is to initialize
+with a small state space then grow the state space via a split-merge process
+\citep{petrov2006splitmerge,huang2011thesis}.
+In particular, \citet{huang2011thesis} learn an HMM for language modeling
+via this process.
+This is an avenue for future work, as we focus on fixed-size state spaces
+for simplicity.
 
 % Refer to model combination paper, such as kj
 Other investigations into improving the performance of HMMs
@@ -195,7 +205,6 @@ We use a residual network as in \citet{kim2019cpcfg} to parameterize conditional
 
 \begin{figure}[t]
 % purpose: show that both models we consider are literally HMMs
-\label{fig:hmm}
 \centering
 \begin{subfigure}[t]{0.4\textwidth}
 \centering
@@ -240,6 +249,7 @@ We use a residual network as in \citet{kim2019cpcfg} to parameterize conditional
 \caption{}
 \end{subfigure}
 \caption{
+\label{fig:hmm}
 The HMMs for (a) language modeling and (b) part-of-speech tagging.
 We have the words $x_t$, the states $z_t$, and the tags $y_t$.
 }
@@ -407,7 +417,7 @@ and additionally have computational benefits as described above.
 We extend the above HMM to part of speech (POS) tagging.
 In addition to the words $\bx$,
 we model the tags $\by = \langle y_0, \ldots, y_T\rangle,y_t \in \mcY$.
-We introduce the following change to the HMM's generative process:
+We introduce the following change to the HMM language model's generative process:
 at every timestep $t$, the model chooses a state $z_t \mid z_{t-1}$ 
 and emits a word $x_t \mid z_t$ and tag $y_t \mid z_t$ independently given the state.
 This yields the following joint distribution
@@ -419,7 +429,9 @@ p(\bx, \by, \bz)
 \end{aligned}
 \end{equation}
 
-(Give intuition for this model)
+In Figure~\ref{fig:hmm}, we see that this model remains in the family of HMMs.
+The same parameterization, word emission constraints, and state dropout are applied to this model,
+while the tag emission distribution is unconstrained.
 
 \subsection{Learning and inference}
 We optimize the evidence of observed sentences $\log p(\bx) = \log \sum_\bz p(\bx,\bz)$

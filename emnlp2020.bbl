@@ -1,4 +1,4 @@
-\begin{thebibliography}{18}
+\begin{thebibliography}{20}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{Bengio et~al.(2003)Bengio, Ducharme, Vincent, and
@@ -30,6 +30,12 @@ Zoubin Ghahramani and Michael~I. Jordan. 1997.
 \newblock \href {https://doi.org/10.1023/A:1007425814087} {Factorial hidden
   markov models}.
 \newblock \emph{Mach. Learn.}, 29(2–3):245–273.
+
+\bibitem[{Huang(2011)}]{huang2011thesis}
+Zhongqiang Huang. 2011.
+\newblock \href {https://drum.lib.umd.edu/handle/1903/12295} {\emph{Modeling
+  Dependencies in Natural Languages with Latent Variables}}.
+\newblock Ph.D. thesis, University of Maryland.
 
 \bibitem[{Kim et~al.(2019)Kim, Dyer, and Rush}]{kim2019cpcfg}
 Yoon Kim, Chris Dyer, and Alexander~M. Rush. 2019.
@@ -98,6 +104,13 @@ Anjan Nepal and Alexander Yates. 2013.
 \newblock Factorial hidden markov models for learning representations of
   natural language.
 \newblock \emph{CoRR}, abs/1312.6168.
+
+\bibitem[{Petrov et~al.(2006)Petrov, Barrett, Thibaux, and
+  Klein}]{petrov2006splitmerge}
+Slav Petrov, Leon Barrett, Romain Thibaux, and Dan Klein. 2006.
+\newblock \href {https://doi.org/10.3115/1220175.1220230} {Learning accurate,
+  compact, and interpretable tree annotation}.
+\newblock page 433–440.
 
 \bibitem[{Radford et~al.(2019)Radford, Wu, Child, Luan, Amodei, and
   Sutskever}]{radford2019language}
