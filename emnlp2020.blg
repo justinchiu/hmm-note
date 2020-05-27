@@ -10,48 +10,49 @@ Database file #1: anthology.bib
 Database file #2: emnlp2020.bib
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
 Warning--empty booktitle in buys2018hmm
+Warning--empty journal in kuhn1994hmmlm
 Warning--empty journal in mikolov-2011
 Warning--empty journal in mikolov2010rnn
 Warning--empty journal in radford2019language
-You've used 17 entries,
+You've used 18 entries,
             3571 wiz_defined-function locations,
-            805 strings with 8707 characters,
-and the built_in function-call counts, 12185 in all, are:
-= -- 993
-> -- 666
-< -- 6
-+ -- 208
-- -- 189
-* -- 871
-:= -- 1877
-add.period$ -- 64
-call.type$ -- 17
-change.case$ -- 148
-chr.to.int$ -- 17
-cite$ -- 21
-duplicate$ -- 791
-empty$ -- 845
-format.name$ -- 248
-if$ -- 2641
+            813 strings with 8964 characters,
+and the built_in function-call counts, 12993 in all, are:
+= -- 1064
+> -- 699
+< -- 7
++ -- 218
+- -- 198
+* -- 924
+:= -- 1990
+add.period$ -- 68
+call.type$ -- 18
+change.case$ -- 156
+chr.to.int$ -- 18
+cite$ -- 23
+duplicate$ -- 845
+empty$ -- 905
+format.name$ -- 260
+if$ -- 2827
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 163
-newline$ -- 85
-num.names$ -- 68
-pop$ -- 362
+missing$ -- 172
+newline$ -- 90
+num.names$ -- 72
+pop$ -- 385
 preamble$ -- 1
-purify$ -- 131
+purify$ -- 138
 quote$ -- 0
-skip$ -- 583
+skip$ -- 629
 stack$ -- 0
-substring$ -- 365
-swap$ -- 394
-text.length$ -- 2
+substring$ -- 404
+swap$ -- 423
+text.length$ -- 3
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 153
-warning$ -- 4
-while$ -- 60
+type$ -- 162
+warning$ -- 5
+while$ -- 65
 width$ -- 0
-write$ -- 210
-(There were 4 warnings)
+write$ -- 222
+(There were 5 warnings)

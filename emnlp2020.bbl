@@ -1,4 +1,4 @@
-\begin{thebibliography}{17}
+\begin{thebibliography}{18}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{Bengio et~al.(2003)Bengio, Ducharme, Vincent, and
@@ -41,6 +41,14 @@ Yoon Kim, Chris Dyer, and Alexander~M. Rush. 2019.
 Viktoriya Krakovna and Finale Doshi-Velez. 2016.
 \newblock \href {http://arxiv.org/abs/1606.05320} {Increasing the
   interpretability of recurrent neural networks using hidden markov models}.
+
+\bibitem[{Kuhn et~al.(1994)Kuhn, Niemann, and
+  Schukat-Talamazzini}]{kuhn1994hmmlm}
+Thomas Kuhn, Heinrich Niemann, and Ernst~Günter Schukat-Talamazzini. 1994.
+\newblock \href
+  {http://dblp.uni-trier.de/db/conf/icassp/icassp1994.html#KuhnNS94} {Ergodic
+  hidden markov models and polygrams for language modeling.}
+\newblock pages 357--360.
 
 \bibitem[{Loshchilov and Hutter(2017)}]{adamw}
 Ilya Loshchilov and Frank Hutter. 2017.
