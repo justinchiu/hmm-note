@@ -74,21 +74,21 @@ and eventually recurrent neural networks \citep{mikolov2010rnn,zaremba2014lstm,m
 or transformers \citep{radford2019language}.
 % what do we gain by modeling dynamics
 
-We have learned three lessons from language modeling progress.
-The first lesson is that parameterization is important for learning.
+We can make three observations about language modeling progress.
+The first is that parameterization is important for learning.
 The feedforward neural network of \citet{bengio2003nlm}
 had the same independence assumptions as an n-gram model,
 yet achieved better performance due to its parameterization.
-The second lesson is that overparameterization is helpful as well.
+The second is that overparameterization is helpful as well.
 The work in \citet{zaremba2014lstm} demonstrated that increasing the size of
 a recurrent neural network led to marked improvements in performance.
-The third lesson is that regularization is necessary with small
+The third is that regularization is necessary with small
 datasets and overparameterization.
 Experiments by \citet{merity2017awdlstm} showed that the
 performance a recurrent neural network could vary
 greatly given various training tricks.
 
-In this work, we apply the lessons learned from improving fully observed
+In this work, we apply the observations taken from improving fully observed
 language models to HMMs.
 We scale HMM training to a large number of states by introducing the following
 contributions:
