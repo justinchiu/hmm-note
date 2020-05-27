@@ -191,7 +191,11 @@ and implicitly parameterizes the transition and emission distributions
 by modeling those matrices as a function of the embeddings.
 We use a residual network as in \citet{kim2019cpcfg} to parameterize conditional distributions.
 
+(Compare complexity of forward in LSTM / HMM, matmul for lstm vs matmul for HMM. cost of computing transition matrix is "amortized" over examples)
+
 \begin{figure}[t]
+% purpose: show that both models we consider are literally HMMs
+\label{fig:hmm}
 \centering
 \begin{subfigure}[t]{0.4\textwidth}
 \centering
@@ -342,8 +346,8 @@ each cluster is emit by a disjoint set of states.
 Above is the trellis after conditioning on the observation sequence $\bx$
 with hidden states $\bz$.
 The arrows indicate transitions with nonzero probabilities.
-Rather than considering transition matrices of size 4x4,
-the emission constraint allows us to use transition matrices of size 2x2
+Rather than considering the full transition matrices at every timestep,
+the emission constraint allows us to use much smaller matrices
 after conditioning on $\bx$.
 }
 \end{figure}
