@@ -15,43 +15,43 @@ Warning--empty journal in mikolov2010rnn
 Warning--empty journal in radford2019language
 You've used 17 entries,
             3571 wiz_defined-function locations,
-            801 strings with 8798 characters,
-and the built_in function-call counts, 12557 in all, are:
-= -- 999
-> -- 738
+            805 strings with 8707 characters,
+and the built_in function-call counts, 12185 in all, are:
+= -- 993
+> -- 666
 < -- 6
-+ -- 233
-- -- 213
-* -- 917
-:= -- 1943
++ -- 208
+- -- 189
+* -- 871
+:= -- 1877
 add.period$ -- 64
 call.type$ -- 17
-change.case$ -- 156
-chr.to.int$ -- 18
+change.case$ -- 148
+chr.to.int$ -- 17
 cite$ -- 21
-duplicate$ -- 812
-empty$ -- 846
-format.name$ -- 268
-if$ -- 2708
-int.to.chr$ -- 2
+duplicate$ -- 791
+empty$ -- 845
+format.name$ -- 248
+if$ -- 2641
+int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 170
+missing$ -- 163
 newline$ -- 85
 num.names$ -- 68
-pop$ -- 379
+pop$ -- 362
 preamble$ -- 1
-purify$ -- 139
+purify$ -- 131
 quote$ -- 0
-skip$ -- 581
+skip$ -- 583
 stack$ -- 0
-substring$ -- 340
-swap$ -- 404
+substring$ -- 365
+swap$ -- 394
 text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 153
 warning$ -- 4
-while$ -- 59
+while$ -- 60
 width$ -- 0
 write$ -- 210
 (There were 4 warnings)

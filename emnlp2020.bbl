@@ -7,14 +7,6 @@ Yoshua Bengio, R\'{e}jean Ducharme, Pascal Vincent, and Christian Janvin. 2003.
 \newblock A neural probabilistic language model.
 \newblock \emph{J. Mach. Learn. Res.}, 3(null):1137–1155.
 
-\bibitem[{Bowman et~al.(2015)Bowman, Vilnis, Vinyals, Dai, J{\'{o}}zefowicz,
-  and Bengio}]{bowman2015vae}
-Samuel~R. Bowman, Luke Vilnis, Oriol Vinyals, Andrew~M. Dai, Rafal
-  J{\'{o}}zefowicz, and Samy Bengio. 2015.
-\newblock \href {http://arxiv.org/abs/1511.06349} {Generating sentences from a
-  continuous space}.
-\newblock \emph{CoRR}, abs/1511.06349.
-
 \bibitem[{Brown et~al.(1992)Brown, deSouza, Mercer, Pietra, and
   Lai}]{brown1992}
 Peter~F. Brown, Peter~V. deSouza, Robert~L. Mercer, Vincent J.~Della Pietra,
@@ -33,19 +25,17 @@ Antoine Dedieu, Nishad Gothoskar, Scott Swingle, Wolfgang Lehrach, Miguel
 \newblock \href {http://arxiv.org/abs/1905.00507} {Learning higher-order
   sequential structure with cloned hmms}.
 
-\bibitem[{Kim et~al.(2019{\natexlab{a}})Kim, Dyer, and Rush}]{kim2019cpcfg}
-Yoon Kim, Chris Dyer, and Alexander~M. Rush. 2019{\natexlab{a}}.
+\bibitem[{Ghahramani and Jordan(1997)}]{zoubin1997fhmm}
+Zoubin Ghahramani and Michael~I. Jordan. 1997.
+\newblock \href {https://doi.org/10.1023/A:1007425814087} {Factorial hidden
+  markov models}.
+\newblock \emph{Mach. Learn.}, 29(2–3):245–273.
+
+\bibitem[{Kim et~al.(2019)Kim, Dyer, and Rush}]{kim2019cpcfg}
+Yoon Kim, Chris Dyer, and Alexander~M. Rush. 2019.
 \newblock \href {http://arxiv.org/abs/1906.10225} {Compound probabilistic
   context-free grammars for grammar induction}.
 \newblock \emph{CoRR}, abs/1906.10225.
-
-\bibitem[{Kim et~al.(2019{\natexlab{b}})Kim, Rush, Yu, Kuncoro, Dyer, and
-  Melis}]{kim2019urnng}
-Yoon Kim, Alexander~M. Rush, Lei Yu, Adhiguna Kuncoro, Chris Dyer, and
-  G{\'{a}}bor Melis. 2019{\natexlab{b}}.
-\newblock \href {http://arxiv.org/abs/1904.03746} {Unsupervised recurrent
-  neural network grammars}.
-\newblock \emph{CoRR}, abs/1904.03746.
 
 \bibitem[{Krakovna and Doshi-Velez(2016)}]{krakovna2016hmm}
 Viktoriya Krakovna and Finale Doshi-Velez. 2016.
@@ -94,6 +84,12 @@ Tomas Mikolov, Martin Karafiát, Lukás Burget, Jan Cernocký, and Sanjeev
   {http://dblp.uni-trier.de/db/conf/interspeech/interspeech2010.html#MikolovKBCK10}
   {Recurrent neural network based language model.}
 \newblock pages 1045--1048.
+
+\bibitem[{Nepal and Yates(2013)}]{nepal2013fhmm}
+Anjan Nepal and Alexander Yates. 2013.
+\newblock Factorial hidden markov models for learning representations of
+  natural language.
+\newblock \emph{CoRR}, abs/1312.6168.
 
 \bibitem[{Radford et~al.(2019)Radford, Wu, Child, Luan, Amodei, and
   Sutskever}]{radford2019language}

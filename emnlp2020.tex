@@ -59,71 +59,81 @@ todo
 
 \section{Introduction}
 
-todo
+
+% Hidden Markov models are classic models that have been abandoned.
+Hidden Markov models (HMMs) are fundamental to the field of machine learning,
+providing one of the simplest models of sequential data that posits
+a generative process involving latent variables. 
+HMMs have been applied to many time-series problems, such as those that
+can be found in bioinformatics, reinforcement learning, and natural language processing.
+For the task of language modeling,
+HMMs were not considered until recently \citep{krakovna2016hmm,dedieu2019learning}.
+Instead, language models modeled the observed words using n-gram models, 
+feedforward neural networks \citep{bengio2003nlm},
+and eventually recurrent neural networks \citep{mikolov2010rnn,zaremba2014lstm,merity2017awdlstm}
+or transformers \citep{radford2019language}.
+% what do we gain by modeling dynamics
+
+These developments in language modeling taught us three lessons.
+Parameterization is important, as the feedforward neural network 
+of \citet{bengio2003nlm} had the same independence assumptions as an n-gram model
+but achieved better performance.
+In addition to parameterization, a large amount of parameters
+or even overparameterization can lead to performance improvements \citep{zaremba2014lstm}
+(cite other overparam papers).
+Finally, our models need to be able to capture long term dependencies.
+
+In this work, we apply the first two of the lessons learned from improving fully observed
+language models to HMMs, while leaving the third to future work.
+We scale HMM training to a large number of states by introducing the following
+contributions:
+\begin{enumerate}
+\item Sparsity constraints that allow for efficient conditional
+    inference in HMMs.
+\item A dropout variant that improves both performance and computational overhead
+    during training
+\item A neural parameterization that allows us to compute
+    conditional distributions only as needed while avoiding gradient sparsity.
+\end{enumerate}
+
+On two small language modeling datasets and a supervised part of speech task,
+we found the HMM to outperform n-gram models and perform comparably to
+neural network counterparts (cite).
 
 \section{Related work}
-%\paragraph{Observed language models}
-Practitioners have used neural models
-to improve language modeling performance by utilizing
-architectures that capture long-range dependencies,
-moving from feedforward architectures \citep{bengio2003nlm}
-to recurrent neural networks \citep{mikolov2010rnn,zaremba2014lstm,merity2017awdlstm}
-as well as transformer-based architectures \citep{radford2019language}.
 
-%\paragraph{Latent lms}
-A recent line of work has investigated the inclusion of latent variables 
-in sequence models \citep{bowman2015vae,kim2019urnng},
-with the aim of learning interpretable latent spaces.
-However, the inclusion of latent variables often complicates training
-and the performance of latent variable models has not been able to match
-that of fully observed models.
+% Prior work has tried neural parameterizations, but with small state spaces.
+Prior work has demonstrated the benefits of neural parameterization of conditional distributions. 
+For HMMs, \citet{tran2016hmm} demonstrated improvements in POS induction with a
+neural parameterization of an HMM,
+while \citet{kim2019cpcfg} demonstrated improvements in grammar induction with
+a context free grammar.
+Both of these works used latent variables with relatively small cardinalities,
+as the goal of both was structure induction rather than language modeling itself.
+We extend the neural parameterization to much larger state space models.
 
-To make matters worse,
-exact inference itself is intractable in many latent variable sequence models,
-especially those with continuous state spaces. 
-We therefore limit our focus to models that permit exact inference,
-and in particular models with discrete latent variables.
-
-% Neural parameterizations of classical LVMs
-Recent work has demonstrated improvements in tractable discrete latent variable models,
-such as hidden Markov models (HMMs) and probabilistic context free grammars,
-through neural parameterizations of
-conditional distributions \citep{tran2016hmm,kim2019cpcfg}.
-In the case of context free grammars,
-\citet{kim2019cpcfg} found that incorporating 
-a compound mixture led to performance improvements,
-which allowed for potentially infinitely many states
-while sacrificing exact inference.
-
-%\paragraph{Scaling HMMs}
-An alternative method for increasing the size of the state space which
-also retains tractability of exact inference was presented in
-experiments by \citet{dedieu2019learning},
-which introduced a sparsity constraint in the emission distribution of an HMM.
-The constraint they applied allowed each state to emit only a single element,
-which allowed them to train a 30k state HMM on character-level language modeling.
+% Prior work has tried large state spaces with scalar parameterizations.
+We also draw inspiration from the experiments by \citet{dedieu2019learning},
+who proposed to introduce sparsity constraints in the 
+emission distribution of HMMs in order to make conditional inference
+tractable in extremely large state spaces.
+\citet{dedieu2019learning} trained a 30k state HMM on character-level language modeling
+by constraining every state to emit only a single character type.
 This particular constraint is problematic for language modeling at the word level,
-as the size of the vocabulary for a given corpus may be greater than 30k,
-leaving only a single state per word.
+where the vocabulary size is much larger.
+We build on their work by proposing a sparsity constraint based on
+Brown clustering \citep{brown1992} which allows us to extend their
+work to vocabularies that are larger than the state space.
 
-In this work, we build off of \citet{dedieu2019learning} 
-to examine whether HMMs with tens of thousands of states
-can serve as effective language models.
-We introduce a new sparsity constraint and a variant of dropout
-for HMMs that allows us to efficiently train with a large number of states.
-With these techniques, we demonstrate that the performance of HMMs scales with the
-size of the state space, but does not reach the performance of recurrent neural networks
-but exceeds that of n-gram models.
-{\color{red}TODO: LM PPL, POS induction}
-
-% Insert somewhere
+% Refer to model combination paper, such as kj
 Other investigations into improving the performance of HMMs
 involve relaxing independence or modeling assumptions \citep{buys2018hmm}
 to resemble a recurrent neural network, or through model combination
 with a recurrent neural network \citep{krakovna2016hmm}.
-
-%\paragraph{Models with Sparsity}
-%\paragraph{Interpretability}
+There are also extensions of HMMs, such as factorial HMMs \citet{zoubin1997fhmm,nepal2013fhmm}
+and context free grammars \citep{kim2019cpcfg}.
+We leave scaling more expressive models to large state spaces for future work,
+and focus on scaling the simplest incarnation of the HMM.
 
 \section{Background}
 We focus on language modeling,
