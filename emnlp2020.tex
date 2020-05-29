@@ -491,6 +491,8 @@ by splitting each cluster into $k$ states.
 Since the emission constraints using Brown clusters partitions the state space,
 we share state dropout masks for all word types within a Brown cluster.
 
+(Parameterization of embeddings, factoring cluster + word to reduce params)
+
 \subsection{Sequence Tagging}
 We extend the language modeling HMM to part of speech (POS) tagging,
 where the tokens $\bx$ are now the product of words $\bw$ as well as tags
@@ -510,7 +512,7 @@ We use the same emission constraints and dropout strategy as language modeling,
 but applied only to the word emission distribution $p(w_t \mid z_t)$.
 The tag emission distribution is unconstrained.
 
-Parameterization, CharCNN
+(Parameterization, CharCNN)
 
 \subsection{Datasets}
 \paragraph{Language modeling}
