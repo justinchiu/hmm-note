@@ -259,37 +259,25 @@ constructing log potentials via indexing,
 then logarithmic reduction DP. )
 
 \paragraph{Comparison to RNNs}
-% complexity of belief update
-Whereas RNNs encode the previous observations with a distributed representation,
+RNNs also model $p(x)$, but without introducing a latent variable for the state.
+Whereas RNNs encode the previous observations with a single distributed representation,
 HMMs encode the past as a distribution over a finite set of states.
-We refer to both of the latent representations in the RNN and HMM as belief states,
-which get updated after observing each token $x_t$.
-As noted by \citet{buys2018hmm}, the belief states of the RNN and HMM 
-are used in similar ways.
-The computational complexity of updating the belief state is 
-equivalent to the belief state update in an HMM if the dimension of the
-RNN is equal to the number of states in the HMM.
+Given a hidden size of $h$ for the RNN and a cost $v(h)$ for computing
+a matrix-vector product, the computational complexity of
+computing $p(x)$ for a single sequence is $O(Tv(h))$ due to the use
+of matrix-vector products at every timestep.
+For an HMM with a state space of size $|\mcZ| = h$ and matrix-vector product cost $v(h)$,
+the complexity of computing $p(\bx) = \sum_z p(\bx,\bz)$ on sequential
+hardware is also $O(Tv(h))$.
+However, on parallel device, we are able to compute $p(\bx)$
+for an HMM in time logarithmic in $T$ using the parallel prefix-sum trick. 
+Assuming a cost $m(h)$ for matrix multiplication, this gives cost
+$\log(T)m(h)$ for an HMM on a parallel device.
+Quasi-RNNs \citep{bradbury2016qrnn} also have a logarithmic dependency on $T$
+by applying the same prefix-sum trick, but the operation applied is 
+less expensive than a matrix multiplication.
 
-Both RNN and HMM belief updates involve a matrix-vector product,
-which is the dominating factor computationally.
-RNNs use a linear projection of previous hidden vectors,
-while HMMs consider transitions from every previous state to all current states.
-A key distinguishing characteristic of the RNN belief update 
-is that it contains nonlinearities, resulting in a non-associative operator.
-On the other hand, the HMMs belief update is associative,
-allowing us to take advantage of parallel hardware to perform marginal
-inference in time logarithmic in the length of a sequence.
-This is similar to Quasi-RNNs \citep{bradbury2016qrnn},
-which also have an associative belief update operator
-albeit without maintaining any notion of uncertainty over states.
-
-(Can expand on this if necessary, or put in appendix.
-this is hard to talk about without giving the forward algorithm
-for computing $p(x_t\mid \bx_{<t})$)
-
-(seems like this went off the rails, need to simplify / break up)
-
-\section{Methods}
+\section{Method}
 
 HMMs cleanly separate out latent memory from the generative process of language.
 This separation makes them an important model for isolating observed properties and performing inference.
