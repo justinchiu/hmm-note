@@ -1,4 +1,4 @@
-\begin{thebibliography}{20}
+\begin{thebibliography}{23}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{Bengio et~al.(2003)Bengio, Ducharme, Vincent, and
@@ -6,6 +6,13 @@
 Yoshua Bengio, R\'{e}jean Ducharme, Pascal Vincent, and Christian Janvin. 2003.
 \newblock A neural probabilistic language model.
 \newblock \emph{J. Mach. Learn. Res.}, 3(null):1137–1155.
+
+\bibitem[{Bradbury et~al.(2016)Bradbury, Merity, Xiong, and
+  Socher}]{bradbury2016qrnn}
+James Bradbury, Stephen Merity, Caiming Xiong, and Richard Socher. 2016.
+\newblock \href {http://arxiv.org/abs/1611.01576} {Quasi-recurrent neural
+  networks}.
+\newblock \emph{CoRR}, abs/1611.01576.
 
 \bibitem[{Brown et~al.(1992)Brown, deSouza, Mercer, Pietra, and
   Lai}]{brown1992}
@@ -56,11 +63,11 @@ Thomas Kuhn, Heinrich Niemann, and Ernst~Günter Schukat-Talamazzini. 1994.
   hidden markov models and polygrams for language modeling.}
 \newblock pages 357--360.
 
-\bibitem[{Loshchilov and Hutter(2017)}]{adamw}
-Ilya Loshchilov and Frank Hutter. 2017.
-\newblock \href {http://arxiv.org/abs/1711.05101} {Fixing weight decay
-  regularization in adam}.
-\newblock \emph{CoRR}, abs/1711.05101.
+\bibitem[{Ma and Hovy(2016)}]{ma2016crf}
+Xuezhe Ma and Eduard~H. Hovy. 2016.
+\newblock \href {http://arxiv.org/abs/1603.01354} {End-to-end sequence labeling
+  via bi-directional lstm-cnns-crf}.
+\newblock \emph{CoRR}, abs/1603.01354.
 
 \bibitem[{Marcus et~al.(1993)Marcus, Santorini, and Marcinkiewicz}]{ptb}
 Mitchell~P. Marcus, Beatrice Santorini, and Mary~Ann Marcinkiewicz. 1993.
@@ -112,6 +119,12 @@ Slav Petrov, Leon Barrett, Romain Thibaux, and Dan Klein. 2006.
   compact, and interpretable tree annotation}.
 \newblock page 433–440.
 
+\bibitem[{Rabiner(1990)}]{rabiner1990tut}
+Lawrence~R. Rabiner. 1990.
+\newblock \emph{A Tutorial on Hidden Markov Models and Selected Applications in
+  Speech Recognition}, page 267–296. Morgan Kaufmann Publishers Inc., San
+  Francisco, CA, USA.
+
 \bibitem[{Radford et~al.(2019)Radford, Wu, Child, Luan, Amodei, and
   Sutskever}]{radford2019language}
 Alec Radford, Jeff Wu, Rewon Child, David Luan, Dario Amodei, and Ilya
@@ -124,6 +137,14 @@ Ke~M. Tran, Yonatan Bisk, Ashish Vaswani, Daniel Marcu, and Kevin Knight. 2016.
 \newblock \href {http://arxiv.org/abs/1609.09007} {Unsupervised neural hidden
   markov models}.
 \newblock \emph{CoRR}, abs/1609.09007.
+
+\bibitem[{Vogel et~al.(1996)Vogel, Ney, and Tillmann}]{vogel1996hmm}
+Stephan Vogel, Hermann Ney, and Christoph Tillmann. 1996.
+\newblock \href {https://doi.org/10.3115/993268.993313} {Hmm-based word
+  alignment in statistical translation}.
+\newblock In \emph{Proceedings of the 16th Conference on Computational
+  Linguistics - Volume 2}, COLING ’96, page 836–841, USA. Association for
+  Computational Linguistics.
 
 \bibitem[{Zaremba et~al.(2014)Zaremba, Sutskever, and
   Vinyals}]{zaremba2014lstm}
