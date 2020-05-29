@@ -272,7 +272,7 @@ hardware is also $O(Tv(h))$.
 However, on parallel device, we are able to compute $p(\bx)$
 for an HMM in time logarithmic in $T$ using the parallel prefix-sum trick. 
 Assuming a cost $m(h)$ for matrix multiplication, this gives cost
-$\log(T)m(h)$ for an HMM on a parallel device.
+$O(\log(T)m(h))$ for an HMM on a parallel device.
 Quasi-RNNs \citep{bradbury2016qrnn} also have a logarithmic dependency on $T$
 by applying the same prefix-sum trick, but the operation applied is 
 less expensive than a matrix multiplication.
