@@ -26,6 +26,12 @@
 \usepackage{mystyle}
 \usepackage{subcaption}
 
+% trellis
+\usepackage{lmodern}%
+\usepackage{textcomp}%
+\usepackage{lastpage}%
+\usepackage{tikz}%
+
 %% ADD BACK!!!!!!!!!!!!!!!!!
 \aclfinalcopy % Uncomment this line for the final submission
 \def\aclpaperid{***} %  Enter the acl Paper ID here
@@ -289,6 +295,37 @@ capture the underlying properties of language.
 Our goal is to vastly expand the state space of an HMM model, while maintaining 
 a regularized neural parameterization and efficient exact inference. 
 
+\subsection{Static Parameterization}
+We parameterize the transition and emission distributions using a residual network
+with LayerNorm.
+Let $\ba,\bb\in\mathbb{R}^h$, where $h$ is the hidden dimension of our neural network
+and the size of our token and state embeddings.
+We use the following neural network for $i \in \set{\phi,\psi}$
+\begin{equation}
+\begin{aligned}
+f_i(A) &= g(\textrm{ReLU}(W_{i1}A))\\
+g_i(B) &= \textrm{LayerNorm}(\textrm{ReLU}(W_{i2}B) + B)
+\end{aligned}
+\end{equation}
+to define the distributional parameters,
+where $A,B\in\mathbb{R}^{h \times |\mcZ|}$ and $W_{i1},W_{i2} \in \mathbb{R}^{h \times h}$.
+Let $V_x \in \mathbb{R}^{h \times |\mcX|}$ be the token embeddings
+and $U_{\textrm{previous}},U_{\textrm{current}},U_\textrm{preterminal}
+\in \mathbb{R}^{h \times |\mcZ|}$ the state embeddings.
+The distributional parameters are given by
+\begin{equation}
+\begin{aligned}
+\phi &= V_x^\top f_\phi(U_\textrm{preterminal})\\
+\psi &= U_\textrm{current}^\top f_\psi(U_\textrm{previous})
+\end{aligned}
+\end{equation}
+where $\phi \in \mathbb{R}^{|X|\times|Z|}$ and $\psi \in \mathbb{R}^{|Z|\times|Z|}$.
+
+Compared to fully representing $\phi,\psi$ with a scalar parameterization
+which would require $O(|\mcZ|^2 + |\mcX||\mcZ|)$,
+this neural parameterization takes $O(h^2 + h|\mcZ| + h|\mcX|)$ parameters
+where $h$ is in the 100s and $|\mcZ|,|\mcX|$ are on the order of 10k.
+
 \subsection{Inducing Blocked Transition}
 Marginal inference for HMMs is quadratic in the  state space $|\mcZ|$.
 This limits the size of the state space to the order of 100s,
@@ -340,50 +377,9 @@ Please refer to Fig.~\ref{fig:trellis} for an illustration of this method.
 %The cloned HMM constrains states to emit only a single token,
 %which prevents its application to problems where the token space is larger than the state space.
 
-\tikzstyle{state}=[shape=circle,draw=blue!50,fill=blue!20]
-\tikzstyle{observation}=[shape=rectangle,draw=orange!50,fill=orange!20]
-\tikzstyle{lightedge}=[<-,dotted]
-\tikzstyle{mainstate}=[state,thick]
-\tikzstyle{mainedge}=[<-,thick]
-\tikzstyle{transedge}=[<-]
-
-
 \begin{figure}[t]
 \begin{center}
-\begin{tikzpicture}[]
-% 1st column
-\node[latent] (s1_1) at (0,4) {$z_{0,0}$};
-\node[latent] (s2_1) at (0,3) {$z_{0,1}$};
-\node[latent] (s3_1) at (0,2) {$z_{0,2}$};
-\node[latent] (s4_1) at (0,1) {$z_{0,3}$};
-\node[obs]    (x0) at (0,5) {$x_0$}
-    edge[transedge, bend left=40] (s1_1)
-    edge[transedge, bend left=40] (s2_1);
-% 2nd column
-\node[latent] (s1_2) at (2,4) {$z_{1,0}$};
-\node[latent] (s2_2) at (2,3) {$z_{1,1}$};
-\node[latent] (s3_2) at (2,2) {$z_{1,2}$}
-    edge[transedge] (s1_1)
-    edge[transedge] (s2_1);
-\node[latent] (s4_2) at (2,1) {$z_{1,3}$}
-    edge[transedge] (s1_1)
-    edge[transedge] (s2_1);
-\node[obs]    (x1)    at (2,5) {$x_1$}
-    edge[transedge, bend left=40] (s3_2)
-    edge[transedge, bend left=40] (s4_2);
-% 3rd column
-\node[latent] (s1_3) at (4,4) {$z_{2,0}$}
-    edge[transedge] (s3_2)
-    edge[transedge] (s4_2);
-\node[latent] (s2_3) at (4,3) {$z_{2,1}$}
-    edge[transedge] (s3_2)
-    edge[transedge] (s4_2);
-\node[latent] (s3_3) at (4,2) {$z_{2,2}$};
-\node[latent] (s4_3) at (4,1) {$z_{2,3}$};
-\node[obs]    (x2)    at (4,5) {$x_2$}
-    edge[transedge, bend left=40] (s1_3)
-    edge[transedge, bend left=40] (s2_3);
-\end{tikzpicture}
+\input{trellis.tex}
 \end{center}
 \caption{
 \label{fig:trellis}
@@ -424,36 +420,6 @@ p(x \mid z) \propto b_{xz}1(z \in \mcC_x)e^{\phi_{xz}}
 Performing marginal inference with state dropout requires $O(Tn^2)$ computation,
 where $n$ is the number of nonzero elements of $\mathbf{b}_\mcC, \forall \mcC$.
 
-\subsection{Static Parameterization}
-We parameterize the transition and emission distributions using a residual network
-with LayerNorm.
-Let $\ba,\bb\in\mathbb{R}^h$, where $h$ is the hidden dimension of our neural network
-and the size of our token and state embeddings.
-We use the following neural network for $i \in \set{\phi,\psi}$
-\begin{equation}
-\begin{aligned}
-f_i(A) &= g(\textrm{ReLU}(W_{i1}A))\\
-g_i(B) &= \textrm{LayerNorm}(\textrm{ReLU}(W_{i2}B) + B)
-\end{aligned}
-\end{equation}
-to define the distributional parameters,
-where $A,B\in\mathbb{R}^{h \times |\mcZ|}$ and $W_{i1},W_{i2} \in \mathbb{R}^{h \times h}$.
-Let $V_x \in \mathbb{R}^{h \times |\mcX|}$ be the token embeddings
-and $U_{\textrm{previous}},U_{\textrm{current}},U_\textrm{preterminal}
-\in \mathbb{R}^{h \times |\mcZ|}$ the state embeddings.
-The distributional parameters are given by
-\begin{equation}
-\begin{aligned}
-\phi &= V_x^\top f_\phi(U_\textrm{preterminal})\\
-\psi &= U_\textrm{current}^\top f_\psi(U_\textrm{previous})
-\end{aligned}
-\end{equation}
-where $\phi \in \mathbb{R}^{|X|\times|Z|}$ and $\psi \in \mathbb{R}^{|Z|\times|Z|}$.
-
-Compared to fully representing $\phi,\psi$ with a scalar parameterization
-which would require $O(|\mcZ|^2 + |\mcX||\mcZ|)$,
-this neural parameterization takes $O(h^2 + h|\mcZ| + h|\mcX|)$ parameters
-where $h$ is in the 100s and $|\mcZ|,|\mcX|$ are on the order of 10k.
 
 \section{Experiments}
 In this section we provide further details on the application
