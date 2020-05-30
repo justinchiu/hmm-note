@@ -32,6 +32,9 @@
 \usepackage{lastpage}%
 \usepackage{tikz}%
 
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
 %% ADD BACK!!!!!!!!!!!!!!!!!
 \aclfinalcopy % Uncomment this line for the final submission
 \def\aclpaperid{***} %  Enter the acl Paper ID here
@@ -111,7 +114,8 @@ e.g. experiments by \citet{merity2017awdlstm} outline a variety of training choi
 
 In this work, we revisit HMMs for NLP. We posit that for HMMs to be 
 effective they must scale to much large state-spaces, utilizing appropriate parameterization, and 
-employ the right regularization. Taking this into account, we develop a neural parameterization for HMMs that extends 
+employ the right regularization.
+Taking this into account, we develop a neural parameterization for HMMs that extends 
 them to comparable size and structure of deep learning models,
 while allowing us to lazily instantiate distributions.
 We then develop a sparsity constraint that allows us to utilize very large HMMs,
@@ -325,6 +329,25 @@ Compared to fully representing $\phi,\psi$ with a scalar parameterization
 which would require $O(|\mcZ|^2 + |\mcX||\mcZ|)$,
 this neural parameterization takes $O(h^2 + h|\mcZ| + h|\mcX|)$ parameters
 where $h$ is in the 100s and $|\mcZ|,|\mcX|$ are on the order of 10k.
+
+\begin{figure}[!tp]
+\centering
+\begin{algorithm}[H]
+\begin{algorithmic}
+\State{blah}
+\Function{Meh}{}
+    \For{meh}
+        \State{meh}
+    \EndFor
+    \State \Return meh \Comment{$O(1)$}
+\EndFunction
+\end{algorithmic}
+\caption{
+\label{fig:algo}
+Meh
+}
+\end{algorithm}
+\end{figure}
 
 \subsection{Inducing Blocked Transition}
 Marginal inference for HMMs is quadratic in the  state space $|\mcZ|$.

@@ -42,11 +42,12 @@
 \newlabel{param}{{2}{2}{Background: HMMs}{equation.3.2}{}}
 \citation{bradbury2016qrnn}
 \citation{dedieu2019learning}
-\citation{brown1992}
+\newlabel{fig:algo}{{1}{4}{Meh \relax }{figure.caption.3}{}}
 \newlabel{eqn:sparse_emission}{{5}{4}{Inducing Blocked Transition}{equation.4.5}{}}
 \newlabel{eqn:sparse_marginalization}{{6}{4}{Inducing Blocked Transition}{equation.4.6}{}}
-\newlabel{fig:trellis}{{2}{4}{{\color {red} WILL REPLACE WITH TRELLIS} A depiction of the emission sparsity constraints. \relax }{figure.caption.3}{}}
+\newlabel{fig:trellis}{{2}{4}{{\color {red} WILL REPLACE WITH TRELLIS} A depiction of the emission sparsity constraints. \relax }{figure.caption.4}{}}
 \newlabel{eqn:state_dropout}{{7}{4}{Dropout as State Reduction}{equation.4.7}{}}
+\citation{brown1992}
 \citation{ptb}
 \citation{wikitext}
 \citation{mikolov-2011}
@@ -62,11 +63,11 @@
 \citation{buys2018hmm}
 \bibstyle{acl_natbib}
 \bibdata{anthology,emnlp2020}
+\newlabel{tbl:ppl}{{1}{6}{Perplexities on the \texttt {Penn Treebank} dataset. The FF model is a 256-dim 2-layer feedforward neural network with a window of 4 previous tokens with 0.3 dropout. The LSTM is a 256-dim 2-layer recurrent neural network with 0.3 dropout. The HMM is a 64k-state HMM with 0.5 state dropout. \relax }{table.caption.7}{}}
+\newlabel{tbl:ppl}{{2}{6}{Perplexities on the \texttt {Wikitext-2} dataset. The FF model is a 256-dim 2-layer feedforward neural network with a window of 4 previous tokens with 0.3 dropout. The LSTM is a 256-dim 2-layer recurrent neural network with 0.3 dropout. The HMM is a 64k-state HMM with 0.5 state dropout. \relax }{table.caption.8}{}}
+\newlabel{tbl:states-ablation}{{3}{6}{Perplexities on the \texttt {Penn Treebank} dataset. Obviously better as a graph. Increase number of states while holding $\mcC _x=256$ and state dropout at 0.5. \relax }{table.caption.10}{}}
+\newlabel{tbl:constraint-ablation}{{4}{6}{Perplexities on the \texttt {Penn Treebank} dataset. Ablate number of brown clusters. Ablate Brown cluster constraints against uniform for 16k state model. Ablate Brown cluster emission constraints against small HMM. Let $m$ be the number of clusters. \relax }{table.caption.12}{}}
 \bibcite{bengio2003nlm}{{1}{2003}{{Bengio et~al.}}{{Bengio, Ducharme, Vincent, and Janvin}}}
-\newlabel{tbl:ppl}{{1}{6}{Perplexities on the \texttt {Penn Treebank} dataset. The FF model is a 256-dim 2-layer feedforward neural network with a window of 4 previous tokens with 0.3 dropout. The LSTM is a 256-dim 2-layer recurrent neural network with 0.3 dropout. The HMM is a 64k-state HMM with 0.5 state dropout. \relax }{table.caption.6}{}}
-\newlabel{tbl:ppl}{{2}{6}{Perplexities on the \texttt {Wikitext-2} dataset. The FF model is a 256-dim 2-layer feedforward neural network with a window of 4 previous tokens with 0.3 dropout. The LSTM is a 256-dim 2-layer recurrent neural network with 0.3 dropout. The HMM is a 64k-state HMM with 0.5 state dropout. \relax }{table.caption.7}{}}
-\newlabel{tbl:states-ablation}{{3}{6}{Perplexities on the \texttt {Penn Treebank} dataset. Obviously better as a graph. Increase number of states while holding $\mcC _x=256$ and state dropout at 0.5. \relax }{table.caption.9}{}}
-\newlabel{tbl:constraint-ablation}{{4}{6}{Perplexities on the \texttt {Penn Treebank} dataset. Ablate number of brown clusters. Ablate Brown cluster constraints against uniform for 16k state model. Ablate Brown cluster emission constraints against small HMM. Let $m$ be the number of clusters. \relax }{table.caption.11}{}}
 \bibcite{bradbury2016qrnn}{{2}{2016}{{Bradbury et~al.}}{{Bradbury, Merity, Xiong, and Socher}}}
 \bibcite{brown1992}{{3}{1992}{{Brown et~al.}}{{Brown, deSouza, Mercer, Pietra, and Lai}}}
 \bibcite{buys2018hmm}{{4}{2018}{{Buys et~al.}}{{Buys, Bisk, and Choi}}}
@@ -90,8 +91,8 @@
 \bibcite{tran2016hmm}{{22}{2016}{{Tran et~al.}}{{Tran, Bisk, Vaswani, Marcu, and Knight}}}
 \bibcite{vogel1996hmm}{{23}{1996}{{Vogel et~al.}}{{Vogel, Ney, and Tillmann}}}
 \bibcite{zaremba2014lstm}{{24}{2014}{{Zaremba et~al.}}{{Zaremba, Sutskever, and Vinyals}}}
-\newlabel{tbl:dropout-param-ablation}{{5}{7}{Perplexities on the \texttt {Penn Treebank} dataset. Dropout and parameterization ablation \relax }{table.caption.12}{}}
-\newlabel{sec:hyperparams}{{A}{7}{Hyperparameters}{appendix.A}{}}
+\newlabel{tbl:dropout-param-ablation}{{5}{7}{Perplexities on the \texttt {Penn Treebank} dataset. Dropout and parameterization ablation \relax }{table.caption.13}{}}
+\newlabel{sec:hyperparams}{{A}{8}{Hyperparameters}{appendix.A}{}}
 \newlabel{sec:supplemental}{{B}{8}{Supplemental Material}{appendix.B}{}}
 \newlabel{LastPage}{{}{8}{}{page.8}{}}
 \xdef\lastpage@lastpage{8}
