@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex emnlp2020"] 1590812894 "emnlp2020.aux" "emnlp2020.bbl" "emnlp2020" 1590813081
+["bibtex emnlp2020"] 1590867252 "emnlp2020.aux" "emnlp2020.bbl" "emnlp2020" 1590867253
   "./acl_natbib.bst" 1571355934 47585 c671f071a8f3957857acb307a7173505 ""
-  "anthology.bib" 1590743785 16700 55872e6e3c582786278ae70e53936bc0 ""
-  "emnlp2020.aux" 1590813081 4684 988901e241aa1098cc747fb286fb2683 ""
+  "anthology.bib" 1590860806 16978 dc7a9383bb3bff4a0b24e3615ef613d5 ""
+  "emnlp2020.aux" 1590867253 6044 7b918a7b32c9d56d2960fea4f63cbba3 ""
   "emnlp2020.bib" 1571355934 1974 4d7084b2f3a55753e2f48da8052bb437 ""
   (generated)
-  "emnlp2020.blg"
   "emnlp2020.bbl"
-["pdflatex"] 1590813080 "emnlp2020.tex" "emnlp2020.pdf" "emnlp2020" 1590813081
+  "emnlp2020.blg"
+["pdflatex"] 1590867252 "emnlp2020.tex" "emnlp2020.pdf" "emnlp2020" 1590867253
   "/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc" 1480098668 3486 c7eadf5dcc57b3b2d11736679f6636ba ""
   "/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1480098668 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
   "/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc" 1480098668 2840 216e6e45ad352e2456e1149f28885bee ""
@@ -67,6 +67,7 @@
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/lm/rm-lmbx12.tfm" 1480098712 11880 ea60d06924270684e6f852f3141c992b ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/lm/rm-lmbx5.tfm" 1480098712 11828 9b1880528bdbe7e6035fd1b46bff1bbb ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/lm/rm-lmbx6.tfm" 1480098712 11852 eda7061aa4cc8552ba736dae866e4460 ""
+  "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/lm/rm-lmbx7.tfm" 1480098712 11864 44cdb751af976143ebc0bed7eb1df9f4 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/lm/rm-lmbx8.tfm" 1480098712 11868 731e03b24d399279cf9609d002110394 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/lm/rm-lmbx9.tfm" 1480098712 11872 6fc83bd89656207db7e11b4f7ac7546e ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/lm/rm-lmr10.tfm" 1480098712 11868 4f81e9b6033c032bdaf9884f4d7ef412 ""
@@ -277,16 +278,16 @@
   "/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1526780433 2803735 8410db0ed74a2504fc3708922651cf03 ""
   "/usr/local/texlive/2018/texmf-var/web2c/pdftex/pdflatex.fmt" 1526780453 4219895 d646d013bf99294ff1d974bf7a525ca5 ""
   "/usr/local/texlive/2018/texmf.cnf" 1526780430 455 5b996dcaa0eb4ef14a83b026bc0a008c ""
-  "emnlp2020.aux" 1590813081 4684 988901e241aa1098cc747fb286fb2683 ""
-  "emnlp2020.bbl" 1590812894 6836 f57ba1b32ca543b4c7319182420df3f6 "bibtex emnlp2020"
-  "emnlp2020.out" 1590813081 0 d41d8cd98f00b204e9800998ecf8427e ""
+  "emnlp2020.aux" 1590867253 6044 7b918a7b32c9d56d2960fea4f63cbba3 ""
+  "emnlp2020.bbl" 1590867252 7088 c2ed63bb481e477b3fe53ff6dba41546 "bibtex emnlp2020"
+  "emnlp2020.out" 1590867253 0 d41d8cd98f00b204e9800998ecf8427e ""
   "emnlp2020.sty" 1577480256 22046 23868bb911b26009f0fd06fe069f4c26 ""
-  "emnlp2020.tex" 1590812894 36921 a39bc2712f2662cde1d547548647f966 ""
+  "emnlp2020.tex" 1590867253 39805 20946252196dd4f5200903665d34d4b7 ""
+  "img/trellis.tex" 1590813079 36386 41b777dcad798a57df999f34841ddf63 ""
   "mystyle.sty" 1590116431 2630 53d779d96a12d0870793f5635a268ca5 ""
-  "trellis.tex" 1590813079 36386 41b777dcad798a57df999f34841ddf63 ""
   (generated)
-  "emnlp2020.log"
-  "emnlp2020.out"
-  "emnlp2020.aux"
-  "trellis.aux"
   "emnlp2020.pdf"
+  "trellis.aux"
+  "emnlp2020.log"
+  "emnlp2020.aux"
+  "emnlp2020.out"

@@ -42,18 +42,31 @@
 \newlabel{param}{{2}{2}{Background: HMMs}{equation.3.2}{}}
 \citation{bradbury2016qrnn}
 \citation{dedieu2019learning}
-\newlabel{eqn:sparse_emission}{{3}{3}{Inducing Blocked Transition}{equation.4.3}{}}
-\newlabel{fig:trellis}{{2}{4}{{\color {red} WILL REPLACE WITH TRELLIS} A depiction of the emission sparsity constraints. \relax }{figure.caption.3}{}}
-\newlabel{eqn:sparse_marginalization}{{4}{4}{Inducing Blocked Transition}{equation.4.4}{}}
-\newlabel{eqn:state_dropout}{{5}{4}{Dropout as State Reduction}{equation.4.5}{}}
 \citation{brown1992}
+\newlabel{eqn:sparse_emission}{{5}{4}{Inducing Blocked Transition}{equation.4.5}{}}
+\newlabel{eqn:sparse_marginalization}{{6}{4}{Inducing Blocked Transition}{equation.4.6}{}}
+\newlabel{fig:trellis}{{2}{4}{{\color {red} WILL REPLACE WITH TRELLIS} A depiction of the emission sparsity constraints. \relax }{figure.caption.3}{}}
+\newlabel{eqn:state_dropout}{{7}{4}{Dropout as State Reduction}{equation.4.7}{}}
 \citation{ptb}
 \citation{wikitext}
 \citation{mikolov-2011}
 \citation{ma2016crf}
+\citation{mikolov2012rnn}
+\citation{mikolov2012rnn}
+\citation{mikolov2012rnn}
+\citation{zaremba2014lstm}
+\citation{zaremba2014lstm}
+\citation{merity2017awdlstm}
+\citation{merity2017awdlstm}
+\citation{buys2018hmm}
+\citation{buys2018hmm}
 \bibstyle{acl_natbib}
 \bibdata{anthology,emnlp2020}
 \bibcite{bengio2003nlm}{{1}{2003}{{Bengio et~al.}}{{Bengio, Ducharme, Vincent, and Janvin}}}
+\newlabel{tbl:ppl}{{1}{6}{Perplexities on the \texttt {Penn Treebank} dataset. The FF model is a 256-dim 2-layer feedforward neural network with a window of 4 previous tokens with 0.3 dropout. The LSTM is a 256-dim 2-layer recurrent neural network with 0.3 dropout. The HMM is a 64k-state HMM with 0.5 state dropout. \relax }{table.caption.6}{}}
+\newlabel{tbl:ppl}{{2}{6}{Perplexities on the \texttt {Wikitext-2} dataset. The FF model is a 256-dim 2-layer feedforward neural network with a window of 4 previous tokens with 0.3 dropout. The LSTM is a 256-dim 2-layer recurrent neural network with 0.3 dropout. The HMM is a 64k-state HMM with 0.5 state dropout. \relax }{table.caption.7}{}}
+\newlabel{tbl:states-ablation}{{3}{6}{Perplexities on the \texttt {Penn Treebank} dataset. Obviously better as a graph. Increase number of states while holding $\mcC _x=256$ and state dropout at 0.5. \relax }{table.caption.9}{}}
+\newlabel{tbl:constraint-ablation}{{4}{6}{Perplexities on the \texttt {Penn Treebank} dataset. Ablate number of brown clusters. Ablate Brown cluster constraints against uniform for 16k state model. Ablate Brown cluster emission constraints against small HMM. Let $m$ be the number of clusters. \relax }{table.caption.11}{}}
 \bibcite{bradbury2016qrnn}{{2}{2016}{{Bradbury et~al.}}{{Bradbury, Merity, Xiong, and Socher}}}
 \bibcite{brown1992}{{3}{1992}{{Brown et~al.}}{{Brown, deSouza, Mercer, Pietra, and Lai}}}
 \bibcite{buys2018hmm}{{4}{2018}{{Buys et~al.}}{{Buys, Bisk, and Choi}}}
@@ -67,18 +80,19 @@
 \bibcite{ptb}{{12}{1993}{{Marcus et~al.}}{{Marcus, Santorini, and Marcinkiewicz}}}
 \bibcite{merity2017awdlstm}{{13}{2017}{{Merity et~al.}}{{Merity, Keskar, and Socher}}}
 \bibcite{wikitext}{{14}{2016}{{Merity et~al.}}{{Merity, Xiong, Bradbury, and Socher}}}
-\bibcite{mikolov-2011}{{15}{2011}{{Mikolov et~al.}}{{Mikolov, Deoras, Kombrink, Burget, and Cernock\IeC {\'y}}}}
-\bibcite{mikolov2010rnn}{{16}{2010}{{Mikolov et~al.}}{{Mikolov, Karafi\IeC {\'a}t, Burget, Cernock\IeC {\'y}, and Khudanpur}}}
-\bibcite{nepal2013fhmm}{{17}{2013}{{Nepal and Yates}}{{}}}
-\bibcite{petrov2006splitmerge}{{18}{2006}{{Petrov et~al.}}{{Petrov, Barrett, Thibaux, and Klein}}}
-\bibcite{rabiner1990tut}{{19}{1990}{{Rabiner}}{{}}}
-\bibcite{radford2019language}{{20}{2019}{{Radford et~al.}}{{Radford, Wu, Child, Luan, Amodei, and Sutskever}}}
-\newlabel{tbl:ppl-ptb}{{1}{6}{Perplexities on the \texttt {Penn Treebank} dataset. The FF model is a 256-dim 2-layer feedforward neural network with a window of 4 previous tokens with 0.3 dropout. The LSTM is a 256-dim 2-layer recurrent neural network with 0.3 dropout. The HMM is a 64k-state HMM with 0.5 state dropout. \relax }{table.caption.6}{}}
-\bibcite{tran2016hmm}{{21}{2016}{{Tran et~al.}}{{Tran, Bisk, Vaswani, Marcu, and Knight}}}
-\bibcite{vogel1996hmm}{{22}{1996}{{Vogel et~al.}}{{Vogel, Ney, and Tillmann}}}
-\bibcite{zaremba2014lstm}{{23}{2014}{{Zaremba et~al.}}{{Zaremba, Sutskever, and Vinyals}}}
+\bibcite{mikolov2012rnn}{{15}{2012}{{{Mikolov} and {Zweig}}}{{}}}
+\bibcite{mikolov-2011}{{16}{2011}{{Mikolov et~al.}}{{Mikolov, Deoras, Kombrink, Burget, and Cernock\IeC {\'y}}}}
+\bibcite{mikolov2010rnn}{{17}{2010}{{Mikolov et~al.}}{{Mikolov, Karafi\IeC {\'a}t, Burget, Cernock\IeC {\'y}, and Khudanpur}}}
+\bibcite{nepal2013fhmm}{{18}{2013}{{Nepal and Yates}}{{}}}
+\bibcite{petrov2006splitmerge}{{19}{2006}{{Petrov et~al.}}{{Petrov, Barrett, Thibaux, and Klein}}}
+\bibcite{rabiner1990tut}{{20}{1990}{{Rabiner}}{{}}}
+\bibcite{radford2019language}{{21}{2019}{{Radford et~al.}}{{Radford, Wu, Child, Luan, Amodei, and Sutskever}}}
+\bibcite{tran2016hmm}{{22}{2016}{{Tran et~al.}}{{Tran, Bisk, Vaswani, Marcu, and Knight}}}
+\bibcite{vogel1996hmm}{{23}{1996}{{Vogel et~al.}}{{Vogel, Ney, and Tillmann}}}
+\bibcite{zaremba2014lstm}{{24}{2014}{{Zaremba et~al.}}{{Zaremba, Sutskever, and Vinyals}}}
+\newlabel{tbl:dropout-param-ablation}{{5}{7}{Perplexities on the \texttt {Penn Treebank} dataset. Dropout and parameterization ablation \relax }{table.caption.12}{}}
 \newlabel{sec:hyperparams}{{A}{7}{Hyperparameters}{appendix.A}{}}
-\newlabel{sec:supplemental}{{B}{7}{Supplemental Material}{appendix.B}{}}
-\newlabel{LastPage}{{}{7}{}{page.7}{}}
-\xdef\lastpage@lastpage{7}
-\xdef\lastpage@lastpageHy{7}
+\newlabel{sec:supplemental}{{B}{8}{Supplemental Material}{appendix.B}{}}
+\newlabel{LastPage}{{}{8}{}{page.8}{}}
+\xdef\lastpage@lastpage{8}
+\xdef\lastpage@lastpageHy{8}

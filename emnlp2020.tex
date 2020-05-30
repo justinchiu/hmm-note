@@ -379,7 +379,7 @@ Please refer to Fig.~\ref{fig:trellis} for an illustration of this method.
 
 \begin{figure}[t]
 \begin{center}
-\input{trellis.tex}
+\input{img/trellis.tex}
 \end{center}
 \caption{
 \label{fig:trellis}
@@ -448,7 +448,12 @@ by splitting each cluster into $k$ states.
 Since the emission constraints using Brown clusters partitions the state space,
 we share state dropout masks for all word types within a Brown cluster.
 
-(Parameterization of embeddings, factoring cluster + word to reduce params)
+(Parameterization of embeddings,
+weight tying,
+factoring cluster + word to reduce params.
+Comparison to uniform?
+Shows sensitivity to cluster assignments, hypothesize why Brown is more effective
+)
 
 \subsection{Sequence Tagging}
 We extend the language modeling HMM to part of speech (POS) tagging,
@@ -535,29 +540,136 @@ In the remainder of this section we ablate and analyze the HMMs on \texttt{Penn 
 
 \begin{table*}[!t]
 \centering
-\caption{\label{tbl:ppl-ptb}
+\caption{\label{tbl:ppl}
 Perplexities on the \texttt{Penn Treebank} dataset.
 The FF model is a 256-dim 2-layer feedforward neural network
 with a window of 4 previous tokens with 0.3 dropout.
 The LSTM is a 256-dim 2-layer recurrent neural network with 0.3 dropout.
 The HMM is a 64k-state HMM with 0.5 state dropout.
 }
-\begin{tabular}{lllll}
+\begin{tabular}{llll}
 \toprule
-Dataset & Model & Num Params & Valid PPL & Test PPL\\
+Model & Num Params & Valid PPL & Test PPL\\
 \midrule
-\texttt{Penn Treebank}
-& FF    & 2.8M       & 164         & -       \\
-& LSTM  & 3.6M       & 93.55       & 88.83   \\
-& HMM   & 7.7M       & 125.02      & 115.82  \\
+KN-5 \citep{mikolov2012rnn}  & 2M & - & 141.2\\
+KN-5 + cache \citep{mikolov2012rnn}  & 2M & - & 125.7\\
+RNN \citep{mikolov2012rnn}  & 2M & - & 124.7\\
+Medium LSTM \citep{zaremba2014lstm} & 20M & 86.2 & 82.7\\
+Large LSTM \citep{zaremba2014lstm} & 66M & 82.2 & 78.4\\
+AWD-LSTM \citep{merity2017awdlstm} & 24M & 60.0 & 57.3\\
+AWD-LSTM + cache \citep{merity2017awdlstm} & 24M & 53.9 & 52.8\\
+HMM \citep{buys2018hmm} & 10M & 284.59 & -\\
+HMM + sigmoid + RNN emit \citep{buys2018hmm} & 10M & 142.31 & -\\
 \midrule
-\texttt{Wikitext-2}
-& FF    &            & 209       & -       \\
-& LSTM  &            & 125       & -       \\
-& HMM   &            & 167       & -       \\
+256 dim FF 4-gram  & 2.8M     & 163.02      & 151.00  \\
+2 layer 256 dim LSTM  & 3.6M     & 93.55       & 88.83   \\
+32k state HMM   & 7.7M     & 125.02      & 115.82  \\
 \bottomrule
 \end{tabular}
 \end{table*}
+
+\begin{table*}[!t]
+\centering
+\caption{\label{tbl:ppl}
+Perplexities on the \texttt{Wikitext-2} dataset.
+The FF model is a 256-dim 2-layer feedforward neural network
+with a window of 4 previous tokens with 0.3 dropout.
+The LSTM is a 256-dim 2-layer recurrent neural network with 0.3 dropout.
+The HMM is a 64k-state HMM with 0.5 state dropout.
+}
+\begin{tabular}{llll}
+\toprule
+Model & Num Params & Valid PPL & Test PPL\\
+\midrule
+A     & b          & c         & d       \\
+\midrule
+This work
+FF    &            & 209       & -       \\
+LSTM  &            & 125       & -       \\
+HMM   &            & 167       & -       \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\paragraph{Number of states}
+
+\begin{table}[!t]
+\centering
+\caption{\label{tbl:states-ablation}
+Perplexities on the \texttt{Penn Treebank} dataset.
+Obviously better as a graph.
+Increase number of states while holding $\mcC_x=256$
+and state dropout at 0.5.
+}
+\begin{tabular}{ll}
+\toprule
+$m$ & Val PPL\\
+\midrule
+1024 & 213.25\\
+2048 & 199.98\\
+4096 & 169.18\\
+8192 & 150.22\\
+16384 & 135.79\\
+32768 & 125.02\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\paragraph{Ablation}
+
+\begin{itemize}
+\item Graph of state size vs ppl, holding $|\mcC_x| = 256$ (w/ 0.5 state dropout).
+\item Scalar param at 16k results in very bad performance. Is a table necessary?
+\end{itemize}
+
+\begin{table}[!t]
+\centering
+\caption{\label{tbl:constraint-ablation}
+Perplexities on the \texttt{Penn Treebank} dataset.
+Ablate number of brown clusters.
+Ablate Brown cluster constraints against uniform for 16k state model.
+Ablate Brown cluster emission constraints against small HMM.
+Let $m$ be the number of clusters.
+}
+\begin{tabular}{lllll}
+\toprule
+Constraint & $|\mcZ|$ & $|\mcC_x|$ & $m$ & Val PPL\\
+\midrule
+Brown & 16384 & 512 & 32  & -\\
+Brown & 16384 & 256 & 64  & -\\
+Brown & 16384 & 128 & 128 & -\\
+Brown & 16384 & 64  & 256 & -\\
+\midrule
+Uniform    & 8192    & 128    & -   & 150\\
+Brown      & 8192    & 128    & 64  & 142\\
+Uniform    & 16384   & 128    & -   & 146\\
+Brown      & 16384   & 128    & 128 & 136\\
+\midrule
+None  & 1024 & - & - & \\
+Brown & 1024 & 256 & 4 & \\
+Brown & 1024 & 128 & 8 & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[!t]
+\centering
+\caption{\label{tbl:dropout-param-ablation}
+Perplexities on the \texttt{Penn Treebank} dataset.
+Dropout and parameterization ablation
+}
+\begin{tabular}{ll}
+\toprule
+Model & Val PPL\\
+\midrule
+16384 state HMM & 135.79\\
+\quad - dropout & 145.48\\
+\quad - neural parameterization & 169.031\\
+\bottomrule
+\end{tabular}
+\end{table}
+
 
 
 \begin{comment}
@@ -634,10 +746,6 @@ at a rate of 0.5.
 \toprule
 Constraint & $|\mcZ|$ & $k$    & Valid PPL\\
 \midrule
-Uniform    & 1k       & 32     & -\\
-Brown      & 1k       & 32     & -\\
-None       & 1k       & 1k     & -\\
-\midrule 
 Uniform    & 8k       & 128    & 150*\\
 Brown      & 8k       & 128    & 142*\\
 Uniform    & 16k      & 128    & 146*\\
