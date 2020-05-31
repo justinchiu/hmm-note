@@ -547,7 +547,8 @@ independently and uniformly from all subsets.
 \paragraph{State dropout}
 We apply state dropout such that each partition $\mcC_x$ has exactly
 $n = |\mcC_x|p$ dropped states, where $p$ is the dropout rate.
-We accomplish this by sampling from the uniform distribution over subsets,
+We accomplish this by sampling from the uniform distribution over subsets
+of states in each partition,
 obtained by sampling iid Gumbel noise and selecting the top $n$ indices.
 
 \subsection{Sequence Tagging}
