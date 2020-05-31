@@ -1,4 +1,4 @@
-\begin{thebibliography}{26}
+\begin{thebibliography}{27}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{Bengio et~al.(2003)Bengio, Ducharme, Vincent, and
@@ -57,6 +57,12 @@ Yoon Kim, Chris Dyer, and Alexander~M. Rush. 2019.
 \newblock \href {http://arxiv.org/abs/1906.10225} {Compound probabilistic
   context-free grammars for grammar induction}.
 \newblock \emph{CoRR}, abs/1906.10225.
+
+\bibitem[{Kim et~al.(2015)Kim, Jernite, Sontag, and Rush}]{kim2015charcnn}
+Yoon Kim, Yacine Jernite, David~A. Sontag, and Alexander~M. Rush. 2015.
+\newblock \href {http://arxiv.org/abs/1508.06615} {Character-aware neural
+  language models}.
+\newblock \emph{CoRR}, abs/1508.06615.
 
 \bibitem[{Krakovna and Doshi-Velez(2016)}]{krakovna2016hmm}
 Viktoriya Krakovna and Finale Doshi-Velez. 2016.

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  30 MAY 2020 23:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  31 MAY 2020 04:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1107,11 +1107,7 @@ Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
 \ALG@tmplength=\skip70
 )
 Document Style - pseudocode environments for use with the `algorithmicx' style
-) (./emnlp2020.aux
-
-LaTeX Warning: Label `tbl:ppl' multiply defined.
-
-)
+) (./emnlp2020.aux)
 \openout1 = `emnlp2020.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 65.
@@ -1130,7 +1126,8 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 65.
 LaTeX Font Info:    ... okay on input line 65.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 65.
 LaTeX Font Info:    Try loading font information for TS1+cmr on input line 65.
- (/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1cmr.fd
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 65.
@@ -1308,9 +1305,6 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <9> not available
 (Font)              Font shape `U/lasy/m/n' tried instead on input line 275.
 
-Underfull \vbox (badness 1308) has occurred while \output is active []
-
- [3]
 Underfull \hbox (badness 1286) in paragraph at lines 330--339
 \U/msb/m/n/10.95 R[]$\OT1/lmr/m/n/10.95 (+20) . Ad-di-tion-ally, Lay-er-Norm ac
 ts on
@@ -1322,30 +1316,41 @@ Underfull \hbox (badness 1383) in paragraph at lines 330--339
 OT1/lmr/m/n/10.95 (+20) the
  []
 
-
+[3]
 Overfull \hbox (9.98088pt too wide) detected at line 395
 [][]
  []
 
-(./img/trellis.tex) [4]
-Underfull \hbox (badness 1735) in paragraph at lines 443--450
+(./img/trellis.tex) Excluding 'comment' comment. [4]
+Underfull \hbox (badness 1735) in paragraph at lines 491--498
 \OT1/lmr/m/n/10.95 (+20) Performing marginal in-fer-ence with state
  []
 
-[5] Excluding 'comment' comment.
 
-LaTeX Warning: Reference `tbl:ppl-ptb' on page 6 undefined on input line 572.
+Underfull \hbox (badness 2197) in paragraph at lines 499--502
+\OT1/lmr/m/n/10.95 (+20) from de-scrip-tion to un-der-stand-ing trel-lis.
+ []
 
 
-LaTeX Warning: Reference `tbl:ppl-wikitext2' on page 6 undefined on input line 
-573.
+Underfull \hbox (badness 2790) in paragraph at lines 516--528
+\OT1/lmr/m/n/10.95 (+20) for pa-ram-e-ter-iz-ing the state em-bed-dings
+ []
 
-LaTeX Font Info:    Try loading font information for TS1+lmr on input line 669.
 
-(/usr/local/texlive/2018/texmf-dist/tex/latex/lm/ts1lmr.fd
-File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-Excluding 'comment' comment. (./emnlp2020.bbl
+Underfull \hbox (badness 3428) in paragraph at lines 516--528
+\OML/lmm/m/it/10.95 E[] \OMS/lmsy/m/n/10.95 2 \U/msb/m/n/10.95 R[]$\OT1/lmr/m/n
+/10.95 (+20) , where $\OML/lmm/m/it/10.95 h$ \OT1/lmr/m/n/10.95 (+20) is the di
+-men-
+ []
+
+
+Underfull \hbox (badness 1158) in paragraph at lines 516--528
+\OT1/lmr/m/n/10.95 (+20) sion of the neu-ral com-po-nents and $\OML/lmm/m/it/10
+.95 j \OMS/lmsy/m/n/10.95 2
+ []
+
+[5] Excluding 'comment' comment. [6] [7] Excluding 'comment' comment.
+(./emnlp2020.bbl
 Underfull \hbox (badness 1629) in paragraph at lines 56--60
 \OT1/lmr/m/n/10 2019.  [][]Com-pound prob-a-bilis-tic context-free
  []
@@ -1356,90 +1361,80 @@ Underfull \hbox (badness 1910) in paragraph at lines 56--60
 OT1/lmr/m/n/10 ,
  []
 
-[6pdfTeX warning (ext4): destination with the same identifier (name{figure.capt
-ion.4}) has been already used, duplicate ignored
 
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.60 
-     ]
-Underfull \hbox (badness 10000) in paragraph at lines 68--73
+Underfull \hbox (badness 10000) in paragraph at lines 74--79
 []\OT1/lmr/m/n/10 Thomas Kuhn, Hein-rich Nie-mann, and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 68--73
+Underfull \hbox (badness 10000) in paragraph at lines 74--79
 \OT1/lmr/m/n/10 Ernst G^^?unter Schukat-Talamazzini. 1994.
  []
 
 
-LaTeX Warning: Text page 7 contains only floats.
-
-[7]
-Underfull \hbox (badness 3049) in paragraph at lines 81--85
+Underfull \hbox (badness 3049) in paragraph at lines 87--91
 []\OT1/lmr/m/n/10 Mitchell P. Mar-cus, Beat-rice San-torini, and
  []
 
 
-Underfull \hbox (badness 3679) in paragraph at lines 87--91
+Underfull \hbox (badness 3679) in paragraph at lines 93--97
 []\OT1/lmr/m/n/10 Stephen Mer-ity, Ni-tish Shirish Keskar, and
  []
 
 
-Underfull \hbox (badness 2799) in paragraph at lines 87--91
+Underfull \hbox (badness 2799) in paragraph at lines 93--97
 \OT1/lmr/m/n/10 ti-miz-ing LSTM lan-guage mod-els[][].  \OT1/lmr/m/it/10 CoRR\O
 T1/lmr/m/n/10 ,
  []
 
 
-Underfull \hbox (badness 1253) in paragraph at lines 99--103
+Underfull \hbox (badness 1253) in paragraph at lines 105--109
 \OT1/lmr/m/n/10 In \OT1/lmr/m/it/10 2012 IEEE Spo-ken Lan-guage Tech-nol-ogy
  []
 
-
-Underfull \hbox (badness 3460) in paragraph at lines 124--128
+[8]
+Underfull \hbox (badness 3460) in paragraph at lines 130--134
 \OT1/lmr/m/n/10 re-sen-ta-tions of nat-u-ral lan-guage.  \OT1/lmr/m/it/10 CoRR\
 OT1/lmr/m/n/10 ,
  []
 
 
-Underfull \hbox (badness 1596) in paragraph at lines 171--175
+Underfull \hbox (badness 1596) in paragraph at lines 177--181
 []\OT1/lmr/m/n/10 Wojciech Zaremba, Ilya Sutskever, and Oriol
  []
 
-) Excluding 'comment' comment. 
+)
+LaTeX Font Info:    Try loading font information for TS1+lmr on input line 1073
+.
+ (/usr/local/texlive/2018/texmf-dist/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+Excluding 'comment' comment. 
 AED: lastpage setting LastPage
-[8]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1045.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1045.
+[9]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1155.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1155.
  (./emnlp2020.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1045.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1045.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1155.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1155.
 
 Package rerunfilecheck Info: File `emnlp2020.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: There were multiply-defined labels.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1045.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1155.
  )
 (\end occurred when \iffalse on line 352 was incomplete) 
 Here is how much of TeX's memory you used:
- 25642 strings out of 492649
- 508780 string characters out of 6129607
- 760627 words of memory out of 5000000
- 28773 multiletter control sequences out of 15000+600000
- 91583 words of font info for 159 fonts, out of 8000000 for 9000
+ 25664 strings out of 492649
+ 509083 string characters out of 6129607
+ 763156 words of memory out of 5000000
+ 28784 multiletter control sequences out of 15000+600000
+ 97162 words of font info for 162 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,10n,84p,1012b,868s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/201
 8/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/local/texlive/2018/texmf-dist/
-fonts/enc/dvips/lm/lm-rmsc.enc}{/usr/local/texlive/2018/texmf-dist/fonts/enc/dv
-ips/lm/lm-rmtt.enc}{/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/lm/lm-rm
+fonts/enc/dvips/lm/lm-rmtt.enc}{/usr/local/texlive/2018/texmf-dist/fonts/enc/dv
+ips/lm/lm-rmsc.enc}{/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/lm/lm-rm
 .enc}{/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr
 /local/texlive/2018/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/tex
 live/2018/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}</usr/local/texlive/2018/
@@ -1466,10 +1461,10 @@ xmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2018/texmf-dist/fo
 nts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/
 public/lm/lmtt12.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/ams
 fonts/symbols/msbm10.pfb>
-Output written on emnlp2020.pdf (8 pages, 424966 bytes).
+Output written on emnlp2020.pdf (9 pages, 438335 bytes).
 PDF statistics:
- 412 PDF objects out of 1000 (max. 8388607)
- 356 compressed objects within 4 object streams
- 76 named destinations out of 1000 (max. 500000)
- 24685 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 448 PDF objects out of 1000 (max. 8388607)
+ 391 compressed objects within 4 object streams
+ 85 named destinations out of 1000 (max. 500000)
+ 25709 words of extra memory for PDF output out of 29859 (max. 10000000)
 

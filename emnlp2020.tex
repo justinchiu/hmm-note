@@ -308,9 +308,8 @@ a regularized neural parameterization and efficient exact inference.
 A neural parameterization allows us to precisely control the
 represention of distributional parameters,
 affording a degree of flexibility not present in a scalar parameterization.
-The scalar parameterization of a very large HMM would take millions to
-billions of parameters, due to the parameters of the transition matrix
-$\psi \in \mathbb{R}^{|\mcZ|\times|\mcZ|}$.
+The scalar parameterization of a very large HMM would take millions of parameters
+due to the transition matrix parameters $\psi \in \mathbb{R}^{|\mcZ|\times|\mcZ|}$.
 We use the intuition that introducing a parameter to model the attraction
 between each state is unnecessary,
 and instead use embeddings which allow the number of parameters to
@@ -323,6 +322,7 @@ where $v$ is the number of embeddings and
 $h$ is the hidden dimension of our neural network.
 We use the following neural network for $i \in \set{\phi,\psi}$
 \begin{equation}
+\label{eqn:res}
 \begin{aligned}
 f_i(E) &= g_i(\textrm{ReLU}(EW_{i1}))\\
 g_i(D) &= \textrm{LayerNorm}(\textrm{ReLU}(DW_{i2}) + D)
@@ -415,6 +415,54 @@ and is within the previous partition, i.e. $z_{t-1}\in\mcC_{x_{t-1}}$.
 }
 \end{figure}
 
+\begin{algorithm*}%[H]
+\begin{algorithmic}
+\State{Given: constraints $\mcC_x$ and model parameters}
+\Function{ComputeLikelihood}{}
+    \State{Compute parameters $\phi,\psi$ from model parameters}
+    \ForAll{examples $\bx$}
+        \State{Compute log potentials $\Phi = \Call{LogPotentials}{\phi,\psi,\bx,\mcC_x}$}
+        \State{Compute evidence $\log p(\bx) = \Call{Forward}{\Phi}$}
+    \EndFor
+\EndFunction
+\Function{ComputeLikelihoodDropout}{}
+    \ForAll{examples $\bx$}
+        \State{Sample dropout mask $\bb$}
+        \State{Let $\mcB_x$ be the remaining states after removing
+            all dropped states in $\bb$ from $\mcC_x, \forall x$}
+        \State{Compute parameters $\phi_\bb,\psi_\bb$ ignoring states where $b_z = 0$}
+        \State{Compute log potentials $\Phi = \Call{LogPotentials}{\phi,\psi,\bx,\mcB_x}$}
+        \State{Compute evidence $\log p(\bx) = \Call{Forward}{\Phi}$}
+    \EndFor
+\EndFunction
+\begin{comment}
+\Function{LogPotentials}{}
+    \State{Given sequence $\bx = \langle x_1,\ldots,x_T \rangle$,
+    constraints $\mcC_x$ with $|\mcC_x| = k$,
+    transition parameters $\psi$,
+    and emission parameters $\phi$}
+    \State{Initialize $\Phi \in \mathbb{R}^{T \times k \times k} = 0$}
+    \ForAll{$t\in \set{1,\ldots,T}$}
+        \State{Set $\Phi[t,:,:] += \psi[x]$}
+        \State{Set $\Phi[t,:,:] += \psi[x]$}
+    \EndFor
+    \State \Return meh \Comment{$O(1)$}
+\EndFunction
+\Function{Forward}{}
+    \For{meh}
+        \State{meh}
+    \EndFor
+    \State \Return meh \Comment{$O(1)$}
+\EndFunction
+\end{comment}
+\end{algorithmic}
+\caption{
+\label{fig:algo}
+Pseudocode for computing the likelihood of a corpus
+}
+\end{algorithm*}
+
+
 \subsection{Dropout as State Reduction}
 Although a neural parameterization has empirically been shown to find good optima,
 it requires that the distributional parameters be recomputed every time the
@@ -442,33 +490,18 @@ we have the following emission distribution:
 p(x \mid z) \propto b_{z}1(z \in \mcC_x)e^{\phi_{xz}}
 \end{equation}
 Performing marginal inference with state dropout requires $O(Tn^2)$ computation,
-where $n$ is the number of nonzero elements of $\mathbf{b}_\mcC, \forall \mcC$.
+where $n = \max_x \left|\set{z:b_z=1,z \in \mcC_x}\right|$.
 Additionally, we do not need to compute the parameters of the
 transition and emission distributions that have been dropped. 
 This reduces the cost of computing $\phi$ and $\psi$ from
 $O(|\mcZ|^2+|\mcZ||\mcX|)$ to $n^2 + n|\mcX|$.
 
-\begin{figure*}[!tp]
-\centering
-\begin{algorithm}[H]
-\begin{algorithmic}
-\State{blah}
-\Function{Meh}{}
-    \For{meh}
-        \State{meh}
-    \EndFor
-    \State \Return meh \Comment{$O(1)$}
-\EndFunction
-\end{algorithmic}
-\caption{
-\label{fig:algo}
-Meh
-}
-\end{algorithm}
-\end{figure*}
-
+(Unsatisfied,
+seems like there's a big jump from description to understanding trellis.
+Think this means section 3 is incomplete)
 
 \section{Experiments}
+\label{sec:experiments}
 In this section we provide further details on the application
 of the methods described in the previous section
 to language modeling and sequence tagging.
@@ -479,28 +512,41 @@ $\bw = \langle w_1,\ldots,w_T \rangle$ in a sentence.
 We thus learn a model over words and states
 $p(\bw,\bz) = \prod_t p(w_t\mid z_t)p(z_t \mid z_{t-1})$.
 
+\paragraph{Parameterization}
+We have two methods for parameterizing the state embeddings
+$E_j \in \mathbb{R}^{|\mcZ|\times h}$, where $h$ is the dimension of the neural components
+and $j \in \set{\textrm{previous},\textrm{current},\textrm{preterminal}}$.
+The first is by introducing one set of embeddings and sharing it for all $j$.
+The second is to introduce a set of embeddings $E_{\textrm{state}}\in\mathbb{R}^{|\mcZ|\times h/2}$,
+and another set of embeddings
+$E_{\textrm{cluster}}\in\mathbb{R}^{m \times h}$ for each Brown cluster,
+where $m$ is the number of Brown clusters.
+We then use a separate residual network $f_j$ (as defined in Eqn.~\ref{eqn:res})
+to obtain $E_j = f_j([E_\textrm{cluster}, E_\textrm{state}])$.
+We refer to this as a factored state embedding.
+This reduces the number of parameters, as there are many more states than Brown clusters.
+
+\paragraph{Emission constraints}
 We use Brown clusters \citep{brown1992} to create the emission constraints.
 Brown clusters are obtained by assigning every token type in $\mcX$ a state in a HMM,
 then continually merging states until a desired number of states is reached.
 The merge at each iteration attempts to merge the two states that results in best likelihood.
 
 To apply the Brown clusters as an emission constraint,
-each Brown cluster cluster is assigned a disjoint set of $k$ states
-such that the state space is partitioned.
-Each state corresponding to a Brown cluster is then allowed to emit only
-the words in that Brown cluster.
+every word $x$ in a Brown cluster is assigned the same constraint set $\mcC_x$.
+We choose the $\mcC_x$ such that they are all of size $k$.
 This constraint corresponds to learning a refinement of the Brown clusters
 by splitting each cluster into $k$ states.
 
-Since the emission constraints using Brown clusters partitions the state space,
-we share state dropout masks for all word types within a Brown cluster.
+We additionally compare the Brown cluster constraint with a uniform
+constraint that samples each $\mcC_x$ of size $n$
+independently and uniformly from all subsets.
 
-(Parameterization of embeddings,
-weight tying,
-factoring cluster + word to reduce params.
-Comparison to uniform?
-Shows sensitivity to cluster assignments, hypothesize why Brown is more effective
-)
+\paragraph{State dropout}
+We apply state dropout such that each partition $\mcC_x$ has exactly
+$n = |\mcC_x|p$ dropped states, where $p$ is the dropout rate.
+We accomplish this by sampling from the uniform distribution over subsets,
+obtained by sampling iid Gumbel noise and selecting the top $n$ indices.
 
 \subsection{Sequence Tagging}
 We extend the language modeling HMM to part of speech (POS) tagging,
@@ -521,7 +567,8 @@ We use the same emission constraints and dropout strategy as language modeling,
 but applied only to the word emission distribution $p(w_t \mid z_t)$.
 The tag emission distribution is unconstrained.
 
-(Parameterization, CharCNN)
+We additionally employ a CharCNN word emission parameterization \citep{kim2015charcnn},
+as used by \citet{ma2016crf}.
 
 \subsection{Datasets}
 \paragraph{Language modeling}
@@ -540,7 +587,7 @@ due to the use of documents consisting of more than a single sentence.
 
 \paragraph{Part of speech tagging}
 We use the Wall Street Journal portion of the \texttt{Penn Treebank}
-for evaluating POS tagging.
+for evaluating POS tagging (LDC99T42 treebank 3).
 We map all numbers to 0, and perform no further preprocessing.
 We train on sections 0-18, validate on sections 19-21, and test on 22-24
 following \citet{ma2016crf}.
@@ -567,12 +614,12 @@ See Appendix \ref{sec:hyperparams} for the hyperparameters for all models.
 \end{comment}
 
 \section{Results}
-% Only PTB results for now.
+\subsection{Language Modeling}
 We report perplexities 
-for \texttt{Penn Treebank} in Table \ref{tbl:ppl-ptb} and for 
-\texttt{wikitext2} in Table \ref{tbl:ppl-wikitext2}.
+for \texttt{Penn Treebank} in Table \ref{tbl:ptb-ppl} and for 
+\texttt{wikitext2} in Table \ref{tbl:wt2-ppl}.
 
-The HMMs in all cases outperform the feedforward models (FF),
+The HMMs in all cases outperform the n-gram and feedforward models (FF),
 but underperform the recurrent LSTMs.
 Since the HMMs require parameters linear in the number of hidden states,
 we find that the performance of the HMMs scales poorly compared to the other models
@@ -583,16 +630,20 @@ it proves to be a limiting factor in terms of performance.
 
 In the remainder of this section we ablate and analyze the HMMs on \texttt{Penn Treebank}.
 
-% transition?
 
 \begin{table*}[!t]
 \centering
-\caption{\label{tbl:ppl}
+\caption{\label{tbl:ptb-ppl}
 Perplexities on the \texttt{Penn Treebank} dataset.
-The FF model is a 256-dim 2-layer feedforward neural network
-with a window of 4 previous tokens with 0.3 dropout.
-The LSTM is a 256-dim 2-layer recurrent neural network with 0.3 dropout.
-The HMM is a 64k-state HMM with 0.5 state dropout.
+The top shows results from previous work,
+while the bottom shows our results for models 
+with comparable computational cost.
+In particular, we compare models that have the same 
+asymptotic inference cost: linear in
+the length of a sequence and quadratic in the hidden
+dimension.
+This is $h=256$ for the FF model and LSTM
+and $|\mcZ| = 256$ for the HMM.
 }
 \begin{tabular}{llll}
 \toprule
@@ -617,12 +668,11 @@ HMM + sigmoid + RNN emit \citep{buys2018hmm} & 10M & 142.31 & -\\
 
 \begin{table*}[!t]
 \centering
-\caption{\label{tbl:ppl}
+\caption{\label{tbl:wt2-ppl}
 Perplexities on the \texttt{Wikitext-2} dataset.
-The FF model is a 256-dim 2-layer feedforward neural network
-with a window of 4 previous tokens with 0.3 dropout.
-The LSTM is a 256-dim 2-layer recurrent neural network with 0.3 dropout.
-The HMM is a 64k-state HMM with 0.5 state dropout.
+We report results from previous work on top,
+while the bottom shows our results for the same
+models and hyperparameters applied to \texttt{Penn Treebank}.
 }
 \begin{tabular}{llll}
 \toprule
@@ -639,6 +689,21 @@ HMM   &            & 167       & -       \\
 \end{table*}
 
 \paragraph{Number of states}
+In Tbl.~\ref{tbl:states-ablation} we examine the effect of the 
+number of states on perplexity.
+We find that performance continuously improves as we increase
+the size of the state space, up until we reach 65k states.
+It is possible that at 65k states, we are bottlenecked by
+other aspects of the model, such as the expressive power
+or learnability of the neural parameterization. 
+Due to GPU memory constraints, we were unable to further
+explore larger parameterizations, both 
+in terms of the dimension of the neural components as well as 
+the size of the state space.
+However, we note that increasing the dimension of the neural component to
+512 dimensions with $|\mcZ| = 32,768$ did not improve performance.
+Another hypothesis is that the marginal gains in likelihood
+decreases as we continue to increase the size of the state space.
 
 \begin{table}[!t]
 \centering
@@ -658,17 +723,37 @@ $m$ & Val PPL\\
 8192 & 150.22\\
 16384 & 135.79\\
 32768 & 125.02\\
+65536 & 121.93\\
 \bottomrule
 \end{tabular}
 \end{table}
 
 
-\paragraph{Ablation}
+\paragraph{Emission constraint ablation}
+We next analyze the effect of the emission constraint and dropout on performance.
+We analyze first a 16k state HMM, keeping the total number of states fixed
+while varying the emission constraints and dropout.
+In the top section of Tbl.~\ref{tbl:constraint-ablation},
+we find that the performance is
+insensitive to the number of Brown clusters at 16k states.
+However, in the middle section,
+the model appears to be sensitive to the number of Brown clusters
+at 1k total states. 
+The 1k state HMM with 4 Brown clusters matches the unconstrained 1k state HMM,
+while the HMM with 8 Brown clusters underperforms.
+This implies that there may be a loss in performance due to the emission
+constraints, however it is difficult this insight
+to extrapolate to larger HMMs.
+This observation warrants further investigation in future work.
 
-\begin{itemize}
-\item Graph of state size vs ppl, holding $|\mcC_x| = 256$ (w/ 0.5 state dropout).
-\item Scalar param at 16k results in very bad performance. Is a table necessary?
-\end{itemize}
+We also experiment with a different style of constraint in the
+bottom section of Tbl.~\ref{tbl:constraint-ablation}.
+Models using the uniform constraints as described in Sec.~\ref{sec:experiments}
+are consistently outperformed by the Brown cluster constraints
+as measured by validation perplexity.
+The models with uniform constraints also reached better training perplexities,
+implying overfitting.
+(Need conclusion for this experiment)
 
 \begin{table}[!t]
 \centering
@@ -688,36 +773,61 @@ Brown & 16384 & 256 & 64  & -\\
 Brown & 16384 & 128 & 128 & -\\
 Brown & 16384 & 64  & 256 & -\\
 \midrule
+None  & 1024 & - & - & 180.34\\
+Brown & 1024 & 256 & 4 & 182.13\\
+Brown & 1024 & 128 & 8 & 194.16\\
+\midrule
 Uniform    & 8192    & 128    & -   & 150\\
 Brown      & 8192    & 128    & 64  & 142\\
 Uniform    & 16384   & 128    & -   & 146\\
 Brown      & 16384   & 128    & 128 & 136\\
-\midrule
-None  & 1024 & - & - & \\
-Brown & 1024 & 256 & 4 & \\
-Brown & 1024 & 128 & 8 & \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\begin{table}[!t]
+\paragraph{Dropout and parameterization ablation}
+We ablate dropout and model parameterization in Tbl.~\ref{tbl:dropout-param-ablation}.
+We find that 
+
+\begin{table*}[!t]
 \centering
 \caption{\label{tbl:dropout-param-ablation}
 Perplexities on the \texttt{Penn Treebank} dataset.
 Dropout and parameterization ablation
 }
-\begin{tabular}{ll}
+\begin{tabular}{llll}
 \toprule
-Model & Val PPL\\
+Model                           & Num params & Val PPL & Time per epoch (s)\\
 \midrule
-16384 state HMM & 135.79\\
-\quad - dropout & 145.48\\
-\quad - neural parameterization & 169.031\\
+16384 state HMM                 & 5.6M    & 135.79  & 159\\
+\quad - dropout                 & 5.6M    & 145.48  & 363\\
+\quad - neural parameterization & 423M    & 169.031 & \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
 
+\subsection{Part-of-Speech Tagging}
 
+\begin{table*}[!t]
+\centering
+\caption{\label{tbl:pos}
+Tagging accuracies on the Wall Street Journal (WSJ) portion of the
+\texttt{Penn Treebank}.
+}
+\begin{tabular}{llll}
+\toprule
+Model                               & Num params & Valid Acc & Test Acc\\
+\midrule
+BRNN \citep{ma2016crf}              & -          & 96.56     & 96.76    \\ 
+BLSTM \citep{ma2016crf}             & -          & 96.88     & 96.93    \\ 
+BLSTM + CNN \citep{ma2016crf}       & -          & 97.34     & 97.33    \\ 
+BLSTM + CNN + CRF \citep{ma2016crf} & -          & 97.46     & 97.55    \\ 
+\midrule
+HMM                                 & 19M        & 96.25     & 96.50       \\
+HMM + CNN Emit                      & 9M         & 96.73     & 96.95       \\
+\bottomrule
+\end{tabular}
+\end{table*}
 
 \begin{comment}
 

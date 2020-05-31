@@ -15,45 +15,45 @@ Warning--empty journal in mikolov-2011
 Warning--empty journal in mikolov2010rnn
 Warning--empty journal in petrov2006splitmerge
 Warning--empty journal in radford2019language
-You've used 26 entries,
+You've used 27 entries,
             3571 wiz_defined-function locations,
-            871 strings with 10865 characters,
-and the built_in function-call counts, 19030 in all, are:
-= -- 1632
-> -- 927
+            878 strings with 11045 characters,
+and the built_in function-call counts, 19730 in all, are:
+= -- 1688
+> -- 969
 < -- 15
-+ -- 291
-- -- 261
-* -- 1273
-:= -- 2841
-add.period$ -- 102
-call.type$ -- 26
-change.case$ -- 221
-chr.to.int$ -- 26
-cite$ -- 32
-duplicate$ -- 1277
-empty$ -- 1354
-format.name$ -- 345
-if$ -- 4232
++ -- 304
+- -- 273
+* -- 1324
+:= -- 2951
+add.period$ -- 106
+call.type$ -- 27
+change.case$ -- 230
+chr.to.int$ -- 27
+cite$ -- 33
+duplicate$ -- 1323
+empty$ -- 1401
+format.name$ -- 360
+if$ -- 4384
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 246
-newline$ -- 129
-num.names$ -- 104
-pop$ -- 557
+missing$ -- 256
+newline$ -- 134
+num.names$ -- 108
+pop$ -- 578
 preamble$ -- 1
-purify$ -- 191
+purify$ -- 199
 quote$ -- 0
-skip$ -- 995
+skip$ -- 1029
 stack$ -- 0
-substring$ -- 616
-swap$ -- 663
+substring$ -- 627
+swap$ -- 685
 text.length$ -- 8
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 231
+type$ -- 240
 warning$ -- 6
-while$ -- 97
+while$ -- 100
 width$ -- 0
-write$ -- 329
+write$ -- 342
 (There were 6 warnings)
