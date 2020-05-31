@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  31 MAY 2020 04:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  31 MAY 2020 04:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1321,7 +1321,10 @@ Overfull \hbox (9.98088pt too wide) detected at line 395
 [][]
  []
 
-(./img/trellis.tex) Excluding 'comment' comment. [4]
+(./img/trellis.tex
+Missing character: There is no k in font nullfont!
+Missing character: There is no k in font nullfont!
+) Excluding 'comment' comment. [4]
 Underfull \hbox (badness 1735) in paragraph at lines 491--498
 \OT1/lmr/m/n/10.95 (+20) Performing marginal in-fer-ence with state
  []
