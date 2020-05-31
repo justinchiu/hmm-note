@@ -629,18 +629,28 @@ See Appendix \ref{sec:hyperparams} for the hyperparameters for all models.
 
 \section{Results}
 \subsection{Language Modeling}
+% Tone: Made a lot of progress, and there is even more room for improvement.
+% Main avenue for improvement: emission constraints.
 We report perplexities 
 for \texttt{Penn Treebank} in Table \ref{tbl:ptb-ppl} and for 
 \texttt{wikitext2} in Table \ref{tbl:wt2-ppl}.
 
-The HMMs in all cases outperform the n-gram and feedforward models (FF),
-but underperform the recurrent LSTMs.
+On \texttt{Penn Treebank}, we see in Tbl.~\ref{tbl:ptb-ppl}
+that a 32k state HMM is able to outperform the n-gram models (with cache)
+as reported by \citet{mikolov2012rnn}, achieving a test perplexity of
+115.8 versus 125.7 respectively.
+However, we find that the HMM underperforms RNN-based models
+(need longer-term dependency experiment, measure trend as num states is increased).
+
+
+\begin{comment}
 Since the HMMs require parameters linear in the number of hidden states,
 we find that the performance of the HMMs scales poorly compared to the other models
 which only require parameters that scale linearly with the vocbaulary size.
 Although representing and summing over the hidden states
 allows us to explicitly capture uncertainty in the hidden state,
 it proves to be a limiting factor in terms of performance.
+\end{comment}
 
 In the remainder of this section we ablate and analyze the HMMs on \texttt{Penn Treebank}.
 
@@ -658,12 +668,12 @@ Medium LSTM \citep{zaremba2014lstm} & 20M & 86.2 & 82.7\\
 Large LSTM \citep{zaremba2014lstm} & 66M & 82.2 & 78.4\\
 AWD-LSTM \citep{merity2017awdlstm} & 24M & 60.0 & 57.3\\
 AWD-LSTM + cache \citep{merity2017awdlstm} & 24M & 53.9 & 52.8\\
-HMM \citep{buys2018hmm} & 10M & 284.59 & -\\
-HMM + sigmoid + RNN emit \citep{buys2018hmm} & 10M & 142.31 & -\\
+HMM \citep{buys2018hmm} & 10M & 284.6 & -\\
+HMM + sigmoid + RNN emit \citep{buys2018hmm} & 10M & 142.3 & -\\
 \midrule
-256 dim FF 4-gram  & 2.8M     & 163.02      & 151.00  \\
-2 layer 256 dim LSTM  & 3.6M     & 93.55       & 88.83   \\
-32k state HMM   & 7.7M     & 125.02      & 115.82  \\
+256 dim FF 4-gram  & 2.8M     & 163.0      & 151.0  \\
+2 layer 256 dim LSTM  & 3.6M     & 93.6       & 88.8   \\
+32k state HMM   & 7.7M     & 125.0      & 115.8  \\
 \bottomrule
 \end{tabular}
 \caption{\label{tbl:ptb-ppl}
@@ -719,31 +729,6 @@ However, we note that increasing the dimension of the neural component from 256 
 Another hypothesis is that the marginal gains in likelihood
 decreases as we continue to increase the size of the state space.
 
-\begin{comment}
-\begin{table}[!t]
-\centering
-\begin{tabular}{ll}
-\toprule
-$|\mcZ|$ & Val PPL\\
-\midrule
-1024 & 213.25\\
-2048 & 199.98\\
-4096 & 169.18\\
-8192 & 150.22\\
-16384 & 135.79\\
-32768 & 125.02\\
-65536 & 121.93\\
-\bottomrule
-\end{tabular}
-\caption{\label{tbl:states-ablation}
-Perplexities on the \texttt{Penn Treebank} dataset.
-Obviously better as a graph.
-Increase number of states while holding $\mcC_x=256$
-and state dropout at 0.5.
-}
-\end{table}
-\end{comment}
-
 \begin{figure}[!t]
 \centering
 \begin{tikzpicture}
@@ -753,6 +738,7 @@ and state dropout at 0.5.
     xmode=log,
     log basis x={2},
     xtick={},
+    width=7cm,
 ]
   \addplot plot coordinates {
     (1024,  213.25)
@@ -766,9 +752,9 @@ and state dropout at 0.5.
 \end{axis}
 \end{tikzpicture}
 \caption{\label{tbl:states-ablation}
-Perplexities on the \texttt{Penn Treebank} dataset.
-Obviously better as a graph.
-Increase number of states while holding $\mcC_x=256$
+Perplexities on the \texttt{Penn Treebank} dataset
+as a function of the state size $|\mcZ|$.
+We hold the emission constraints fixed using 128 Brown clusters,
 and state dropout at 0.5.
 }
 \end{figure}
@@ -787,18 +773,22 @@ at 1k total states.
 The 1k state HMM with 4 Brown clusters matches the unconstrained 1k state HMM,
 while the HMM with 8 Brown clusters underperforms.
 This implies that there may be a loss in performance due to the emission
-constraints, however it is difficult this insight
-to extrapolate to larger HMMs.
-This observation warrants further investigation in future work.
+constraints.
 
-We also experiment with a different style of constraint in the
-bottom section of Tbl.~\ref{tbl:constraint-ablation}.
-Models using the uniform constraints as described in Sec.~\ref{sec:experiments}
-are consistently outperformed by the Brown cluster constraints
+We also experiment with the uniform constraints as described in Sec.~\ref{sec:experiments}.
+In the bottom section of Tbl.~\ref{tbl:constraint-ablation},
+we find that models with uniform constraints
+are consistently outperformed by models with Brown cluster constraints
 as measured by validation perplexity.
-The models with uniform constraints also reached better training perplexities,
-implying overfitting.
-(Need conclusion for this experiment)
+The models with uniform constraints also had poor validation perplexities
+despite better training perplexities, a symptom of overfitting.
+
+In conclusion,
+we find the Brown cluster emission constraints to achieve reasonable performance
+in HMMs with large state spaces.
+We also observe that model performance is sensitive to the emission constraints,
+motivating future work towards exploring learning emission constraints
+while keeping inference tractable. 
 
 \begin{table}[!t]
 \centering
@@ -806,14 +796,14 @@ implying overfitting.
 \toprule
 Constraint & $|\mcZ|$ & $|\mcC_x|$ & $m$ & Val PPL\\
 \midrule
-Brown & 16384 & 512 & 32  & 136.58\\
-Brown & 16384 & 256 & 64  & 137.55\\
-Brown & 16384 & 128 & 128 & 134.06\\
-Brown & 16384 & 64  & 256 & 135.75\\
+Brown & 16384 & 512 & 32  & 137\\
+Brown & 16384 & 256 & 64  & 138\\
+Brown & 16384 & 128 & 128 & 134\\
+Brown & 16384 & 64  & 256 & 136\\
 \midrule
-None  & 1024 & - & - & 180.34\\
-Brown & 1024 & 256 & 4 & 182.13\\
-Brown & 1024 & 128 & 8 & 194.16\\
+None  & 1024 & - & - & 180\\
+Brown & 1024 & 256 & 4 & 182\\
+Brown & 1024 & 128 & 8 & 194\\
 \midrule
 Uniform    & 8192    & 128    & -   & 150\\
 Brown      & 8192    & 128    & 64  & 142\\
@@ -823,10 +813,12 @@ Brown      & 16384   & 128    & 128 & 136\\
 \end{tabular}
 \caption{\label{tbl:constraint-ablation}
 Perplexities on the \texttt{Penn Treebank} dataset.
-Ablate number of brown clusters.
-Ablate Brown cluster constraints against uniform for 16k state model.
-Ablate Brown cluster emission constraints against small HMM.
-Let $m$ be the number of clusters.
+We ablate the effect of the number of Brown clusters,
+examine whether there may be a drop in performance due to the emission sparsity constraint,
+and compare the Brown cluster constraint to a uniform baseline.
+All models have 0.5 state dropout, except for the 1k state HMMs,
+which have no dropout.
+We use $m$ to indicate the number of clusters.
 }
 \end{table}
 
@@ -836,11 +828,19 @@ We find that state dropout results in both an improvement in perplexity
 and a large improvement in time per epoch.
 The train-val gap for the model without state dropout was much larger than 
 the model with dropout, highlighting the effectiveness of state dropout as regularization.
+
 The scalar parameterization, which was run with 0.5 state dropout,
 has a massive number of model parameters at 423M, compared to the
 neural parameterization with 5.6M parameters.
 Although the neural and scalar parameterizations reach a similar training perplexity,
 the neural model generalizes better on validation.
+
+We additionally ablate the factored state embeddings (add to table),
+and find that the performance of the factored embeddings drops
+when the number of clusters is too small.
+(Makes sense that )
+(Indicates number of parameters not necessarily the best comparison)
+
 
 \begin{table*}[!t]
 \centering
@@ -848,9 +848,9 @@ the neural model generalizes better on validation.
 \toprule
 Model                           & Num params & Train PPL & Val PPL & Time per epoch (s)\\
 \midrule
-16384 state HMM                 & 5.6M       & 121.88    & 135.79  & 159\\
-\quad - dropout                 & 5.6M       & 89.18     & 145.48  & 363\\
-\quad - neural parameterization & 423M       & 119.01    & 169.031 & 520
+16384 state HMM                 & 5.6M       & 122    & 136  & 159\\
+\quad - dropout                 & 5.6M       & 89     & 145  & 363\\
+\quad - neural parameterization & 423M       & 119    & 169 & 520
 \footnote{The scalar parameterization should be faster per epoch than the
 neural parameterization. We attribute this slowdown
 to the speed of indexing in PyTorch.
@@ -889,8 +889,15 @@ HMM + CNN Emit                      & 9M         & 96.73     & 96.95    \\
 \caption{\label{tbl:pos}
 Tagging accuracies on the Wall Street Journal (WSJ) portion of the
 \texttt{Penn Treebank}.
+We use a HMM with 32k states and 0.5 state dropout.
 }
 \end{table*}
+
+We find in Tbl.~\ref{tbl:pos} that the HMM outperforms the BRNN and BLSTM baselines
+of \citep{ma2016crf}, but underperforms the BLSTM with CNN and CRF variants.
+Additionally,
+we found that incorporating pretrained embeddings in the HMMs did not improve performance.
+
 
 \begin{comment}
 

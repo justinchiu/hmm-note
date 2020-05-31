@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  31 MAY 2020 13:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  31 MAY 2020 15:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1454,13 +1454,8 @@ Underfull \hbox (badness 1158) in paragraph at lines 518--530
 .95 j \OMS/lmsy/m/n/10.95 2
  []
 
-[5] Excluding 'comment' comment. [6] Excluding 'comment' comment.
-Overfull \hbox (18.53506pt too wide) in paragraph at lines 767--773
- [][] 
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
+[5] Excluding 'comment' comment. Excluding 'comment' comment. [6]
+Underfull \vbox (badness 7291) has occurred while \output is active []
 
  [7]
 Excluding 'comment' comment. (./emnlp2020.bbl [8]
@@ -1517,7 +1512,7 @@ Underfull \hbox (badness 1596) in paragraph at lines 177--181
  []
 
 )
-LaTeX Font Info:    Try loading font information for TS1+lmr on input line 1136
+LaTeX Font Info:    Try loading font information for TS1+lmr on input line 1143
 .
  (/usr/local/texlive/2018/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
@@ -1527,25 +1522,25 @@ AED: lastpage setting LastPage
 [10
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1218.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1218.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1225.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1225.
  (./emnlp2020.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1218.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1218.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1225.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1225.
 
 Package rerunfilecheck Info: File `emnlp2020.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1218.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1225.
  )
 (\end occurred when \iffalse on line 352 was incomplete) 
 Here is how much of TeX's memory you used:
- 35342 strings out of 492649
- 835575 string characters out of 6129607
- 1174137 words of memory out of 5000000
- 38331 multiletter control sequences out of 15000+600000
+ 35344 strings out of 492649
+ 835627 string characters out of 6129607
+ 1174359 words of memory out of 5000000
+ 38333 multiletter control sequences out of 15000+600000
  97506 words of font info for 166 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,16n,103p,1012b,1958s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,16n,103p,1012b,1963s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): 
 name{Hfootnote.2} has been referenced but does not exist, replaced by a fixed o
 ne
@@ -1579,10 +1574,10 @@ r/local/texlive/2018/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/tex
 live/2018/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2018/
 texmf-dist/fonts/type1/public/lm/lmtt12.pfb></usr/local/texlive/2018/texmf-dist
 /fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on emnlp2020.pdf (10 pages, 442496 bytes).
+Output written on emnlp2020.pdf (10 pages, 443441 bytes).
 PDF statistics:
- 454 PDF objects out of 1000 (max. 8388607)
- 396 compressed objects within 4 object streams
+ 462 PDF objects out of 1000 (max. 8388607)
+ 403 compressed objects within 5 object streams
  87 named destinations out of 1000 (max. 500000)
  25709 words of extra memory for PDF output out of 29859 (max. 10000000)
 
