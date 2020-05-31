@@ -35,6 +35,8 @@
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
 
+\usepackage{pgfplots}
+
 %% ADD BACK!!!!!!!!!!!!!!!!!
 \aclfinalcopy % Uncomment this line for the final submission
 \def\aclpaperid{***} %  Enter the acl Paper ID here
@@ -645,18 +647,6 @@ In the remainder of this section we ablate and analyze the HMMs on \texttt{Penn 
 
 \begin{table*}[!t]
 \centering
-\caption{\label{tbl:ptb-ppl}
-Perplexities on the \texttt{Penn Treebank} dataset.
-The top shows results from previous work,
-while the bottom shows our results for models 
-with comparable computational cost.
-In particular, we compare models that have the same 
-asymptotic inference cost: linear in
-the length of a sequence and quadratic in the hidden
-dimension.
-This is $h=256$ for the FF model and LSTM
-and $|\mcZ| = 256$ for the HMM.
-}
 \begin{tabular}{llll}
 \toprule
 Model & Num Params & Valid PPL & Test PPL\\
@@ -676,16 +666,22 @@ HMM + sigmoid + RNN emit \citep{buys2018hmm} & 10M & 142.31 & -\\
 32k state HMM   & 7.7M     & 125.02      & 115.82  \\
 \bottomrule
 \end{tabular}
+\caption{\label{tbl:ptb-ppl}
+Perplexities on the \texttt{Penn Treebank} dataset.
+The top shows results from previous work,
+while the bottom shows our results for models 
+with comparable computational cost.
+In particular, we compare models that have the same 
+asymptotic inference cost: linear in
+the length of a sequence and quadratic in the hidden
+dimension.
+This is $h=256$ for the FF model and LSTM
+and $|\mcZ| = 256$ for the HMM.
+}
 \end{table*}
 
 \begin{table*}[!t]
 \centering
-\caption{\label{tbl:wt2-ppl}
-Perplexities on the \texttt{Wikitext-2} dataset.
-We report results from previous work on top,
-while the bottom shows our results for the same
-models and hyperparameters applied to \texttt{Penn Treebank}.
-}
 \begin{tabular}{llll}
 \toprule
 Model & Num Params & Valid PPL & Test PPL\\
@@ -698,6 +694,12 @@ LSTM  &            & 125       & -       \\
 HMM   &            & 167       & -       \\
 \bottomrule
 \end{tabular}
+\caption{\label{tbl:wt2-ppl}
+Perplexities on the \texttt{Wikitext-2} dataset.
+We report results from previous work on top,
+while the bottom shows our results for the same
+models and hyperparameters applied to \texttt{Penn Treebank}.
+}
 \end{table*}
 
 \paragraph{Number of states}
@@ -717,14 +719,9 @@ However, we note that increasing the dimension of the neural component from 256 
 Another hypothesis is that the marginal gains in likelihood
 decreases as we continue to increase the size of the state space.
 
+\begin{comment}
 \begin{table}[!t]
 \centering
-\caption{\label{tbl:states-ablation}
-Perplexities on the \texttt{Penn Treebank} dataset.
-Obviously better as a graph.
-Increase number of states while holding $\mcC_x=256$
-and state dropout at 0.5.
-}
 \begin{tabular}{ll}
 \toprule
 $|\mcZ|$ & Val PPL\\
@@ -738,7 +735,43 @@ $|\mcZ|$ & Val PPL\\
 65536 & 121.93\\
 \bottomrule
 \end{tabular}
+\caption{\label{tbl:states-ablation}
+Perplexities on the \texttt{Penn Treebank} dataset.
+Obviously better as a graph.
+Increase number of states while holding $\mcC_x=256$
+and state dropout at 0.5.
+}
 \end{table}
+\end{comment}
+
+\begin{figure}[!t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$|\mcZ|$,
+    ylabel=PPL,
+    xmode=log,
+    log basis x={2},
+    xtick={},
+]
+  \addplot plot coordinates {
+    (1024,  213.25)
+    (2048,  199.98)
+    (4096,  169.18)
+    (8192,  150.22)
+    (16384, 135.79)
+    (32768, 125.02)
+    (65536, 121.93)
+};
+\end{axis}
+\end{tikzpicture}
+\caption{\label{tbl:states-ablation}
+Perplexities on the \texttt{Penn Treebank} dataset.
+Obviously better as a graph.
+Increase number of states while holding $\mcC_x=256$
+and state dropout at 0.5.
+}
+\end{figure}
 
 
 \paragraph{Emission constraint ablation}
@@ -769,13 +802,6 @@ implying overfitting.
 
 \begin{table}[!t]
 \centering
-\caption{\label{tbl:constraint-ablation}
-Perplexities on the \texttt{Penn Treebank} dataset.
-Ablate number of brown clusters.
-Ablate Brown cluster constraints against uniform for 16k state model.
-Ablate Brown cluster emission constraints against small HMM.
-Let $m$ be the number of clusters.
-}
 \begin{tabular}{lllll}
 \toprule
 Constraint & $|\mcZ|$ & $|\mcC_x|$ & $m$ & Val PPL\\
@@ -795,6 +821,13 @@ Uniform    & 16384   & 128    & -   & 146\\
 Brown      & 16384   & 128    & 128 & 136\\
 \bottomrule
 \end{tabular}
+\caption{\label{tbl:constraint-ablation}
+Perplexities on the \texttt{Penn Treebank} dataset.
+Ablate number of brown clusters.
+Ablate Brown cluster constraints against uniform for 16k state model.
+Ablate Brown cluster emission constraints against small HMM.
+Let $m$ be the number of clusters.
+}
 \end{table}
 
 \paragraph{Dropout and parameterization ablation}
@@ -803,10 +836,6 @@ We find that
 
 \begin{table*}[!t]
 \centering
-\caption{\label{tbl:dropout-param-ablation}
-Perplexities on the \texttt{Penn Treebank} dataset.
-Dropout and parameterization ablation
-}
 \begin{tabular}{llll}
 \toprule
 Model                           & Num params & Val PPL & Time per epoch (s)\\
@@ -825,16 +854,16 @@ available but must index into them to obtain the
 un-dropped values.}\\
 \bottomrule
 \end{tabular}
+\caption{\label{tbl:dropout-param-ablation}
+Perplexities on the \texttt{Penn Treebank} dataset.
+Dropout and parameterization ablation
+}
 \end{table*}
 
 \subsection{Part-of-Speech Tagging}
 
 \begin{table*}[!t]
 \centering
-\caption{\label{tbl:pos}
-Tagging accuracies on the Wall Street Journal (WSJ) portion of the
-\texttt{Penn Treebank}.
-}
 \begin{tabular}{llll}
 \toprule
 Model                               & Num params & Valid Acc & Test Acc\\
@@ -848,6 +877,10 @@ HMM                                 & 19M        & 96.25     & 96.50    \\
 HMM + CNN Emit                      & 9M         & 96.73     & 96.95    \\
 \bottomrule
 \end{tabular}
+\caption{\label{tbl:pos}
+Tagging accuracies on the Wall Street Journal (WSJ) portion of the
+\texttt{Penn Treebank}.
+}
 \end{table*}
 
 \begin{comment}
