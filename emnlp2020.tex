@@ -831,18 +831,26 @@ Let $m$ be the number of clusters.
 \end{table}
 
 \paragraph{Dropout and parameterization ablation}
-We ablate dropout and model parameterization in Tbl.~\ref{tbl:dropout-param-ablation}.
-We find that 
+We ablate state dropout and model parameterization in Tbl.~\ref{tbl:dropout-param-ablation}.
+We find that state dropout results in both an improvement in perplexity
+and a large improvement in time per epoch.
+The train-val gap for the model without state dropout was much larger than 
+the model with dropout, highlighting the effectiveness of state dropout as regularization.
+The scalar parameterization, which was run with 0.5 state dropout,
+has a massive number of model parameters at 423M, compared to the
+neural parameterization with 5.6M parameters.
+Although the neural and scalar parameterizations reach a similar training perplexity,
+the neural model generalizes better on validation.
 
 \begin{table*}[!t]
 \centering
-\begin{tabular}{llll}
+\begin{tabular}{lllll}
 \toprule
-Model                           & Num params & Val PPL & Time per epoch (s)\\
+Model                           & Num params & Train PPL & Val PPL & Time per epoch (s)\\
 \midrule
-16384 state HMM                 & 5.6M    & 135.79  & 159\\
-\quad - dropout                 & 5.6M    & 145.48  & 363\\
-\quad - neural parameterization & 423M    & 169.031 & 520
+16384 state HMM                 & 5.6M       & 121.88    & 135.79  & 159\\
+\quad - dropout                 & 5.6M       & 89.18     & 145.48  & 363\\
+\quad - neural parameterization & 423M       & 119.01    & 169.031 & 520
 \footnote{The scalar parameterization should be faster per epoch than the
 neural parameterization. We attribute this slowdown
 to the speed of indexing in PyTorch.
@@ -855,8 +863,9 @@ un-dropped values.}\\
 \bottomrule
 \end{tabular}
 \caption{\label{tbl:dropout-param-ablation}
-Perplexities on the \texttt{Penn Treebank} dataset.
-Dropout and parameterization ablation
+We report perplexities on the \texttt{Penn Treebank} dataset
+for a 16k state HMM with 0.5 state dropout, and ablate
+dropout and the neural parameterization one at a time.
 }
 \end{table*}
 
