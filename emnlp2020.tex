@@ -768,10 +768,10 @@ Let $m$ be the number of clusters.
 \toprule
 Constraint & $|\mcZ|$ & $|\mcC_x|$ & $m$ & Val PPL\\
 \midrule
-Brown & 16384 & 512 & 32  & -\\
-Brown & 16384 & 256 & 64  & -\\
-Brown & 16384 & 128 & 128 & -\\
-Brown & 16384 & 64  & 256 & -\\
+Brown & 16384 & 512 & 32  & 136.58\\
+Brown & 16384 & 256 & 64  & 137.55\\
+Brown & 16384 & 128 & 128 & 134.06\\
+Brown & 16384 & 64  & 256 & 135.75\\
 \midrule
 None  & 1024 & - & - & 180.34\\
 Brown & 1024 & 256 & 4 & 182.13\\
@@ -801,7 +801,16 @@ Model                           & Num params & Val PPL & Time per epoch (s)\\
 \midrule
 16384 state HMM                 & 5.6M    & 135.79  & 159\\
 \quad - dropout                 & 5.6M    & 145.48  & 363\\
-\quad - neural parameterization & 423M    & 169.031 & \\
+\quad - neural parameterization & 423M    & 169.031 & 520
+\footnote{The scalar parameterization should be faster per epoch than the
+neural parameterization. We attribute this slowdown
+to the speed of indexing in PyTorch.
+When working with dropout
+the neural parameterization computes subsets
+of $\phi$ and $\psi$ lazily via a matmul,
+whereas the scalar parameterization already has $\phi$ and $\psi$
+available but must index into them to obtain the
+un-dropped values.}\\
 \bottomrule
 \end{tabular}
 \end{table*}
