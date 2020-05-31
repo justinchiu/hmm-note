@@ -570,6 +570,18 @@ The tag emission distribution is unconstrained.
 We additionally employ a CharCNN word emission parameterization \citep{kim2015charcnn},
 as used by \citet{ma2016crf}.
 
+Note that at test time, the computing the condition distribution $p(\by \mid \bx)$
+is intractable, as marginalizing over $\bz$ in $\sum_\bz p(\by, \bz \mid \bx)$
+without clamping a $\by$ is exponential in $T$.
+At training time, we are able to condition on the gold $\by$ and inference is tractable.
+We therefore perform approximate inference at test time through the following two-step
+procedure: 1) ignore the tag emission distributions and obtain the distributions
+$\hat{p}(z_t \mid \bx)$ for each position $t$, then 2) predict the tag using 
+$\sum_{z_t} p(y_t \mid z_t)\hat{p}(z_t \mid \bx)$.
+This method precludes interaction between tags, resulting in some loss
+in performance. Future work may consider using Gibbs sampling to perform
+marginal inference.
+
 \subsection{Datasets}
 \paragraph{Language modeling}
 We evaluate on the \texttt{Penn Treebank} \citep{ptb}
@@ -585,7 +597,7 @@ Casing is preserved, and all words outside the vocab are unked.
 Both datasets contain inter-sentence dependencies,
 due to the use of documents consisting of more than a single sentence.
 
-\paragraph{Part of speech tagging}
+\paragraph{Part-of-speech tagging}
 We use the Wall Street Journal portion of the \texttt{Penn Treebank}
 for evaluating POS tagging (LDC99T42 treebank 3).
 We map all numbers to 0, and perform no further preprocessing.
@@ -832,8 +844,8 @@ BLSTM \citep{ma2016crf}             & -          & 96.88     & 96.93    \\
 BLSTM + CNN \citep{ma2016crf}       & -          & 97.34     & 97.33    \\ 
 BLSTM + CNN + CRF \citep{ma2016crf} & -          & 97.46     & 97.55    \\ 
 \midrule
-HMM                                 & 19M        & 96.25     & 96.50       \\
-HMM + CNN Emit                      & 9M         & 96.73     & 96.95       \\
+HMM                                 & 19M        & 96.25     & 96.50    \\
+HMM + CNN Emit                      & 9M         & 96.73     & 96.95    \\
 \bottomrule
 \end{tabular}
 \end{table*}
