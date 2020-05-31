@@ -1,5 +1,5 @@
 # Fdb version 3
-["bibtex emnlp2020"] 1590951755 "emnlp2020.aux" "emnlp2020.bbl" "emnlp2020" 1590953396
+["bibtex emnlp2020"] 1590951755 "emnlp2020.aux" "emnlp2020.bbl" "emnlp2020" 1590962288
   "./acl_natbib.bst" 1571355934 47585 c671f071a8f3957857acb307a7173505 ""
   "anthology.bib" 1590898211 19405 7964fe8bd7e4f5030de8377e29f0e81f ""
   "emnlp2020.aux" 1590953396 7684 ebb57e5f0c6d11096328dd958ef779c3 ""
@@ -7,7 +7,7 @@
   (generated)
   "emnlp2020.bbl"
   "emnlp2020.blg"
-["pdflatex"] 1590953395 "emnlp2020.tex" "emnlp2020.pdf" "emnlp2020" 1590953396
+["pdflatex"] 1590953395 "emnlp2020.tex" "emnlp2020.pdf" "emnlp2020" 1590962288
   "/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc" 1480098668 3486 c7eadf5dcc57b3b2d11736679f6636ba ""
   "/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1480098668 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
   "/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc" 1480098668 2840 216e6e45ad352e2456e1149f28885bee ""
@@ -331,15 +331,15 @@
   "emnlp2020.bbl" 1590951755 8091 f37b0d43c468d37e5b3e2055f29c292b "bibtex emnlp2020"
   "emnlp2020.out" 1590953395 0 d41d8cd98f00b204e9800998ecf8427e ""
   "emnlp2020.sty" 1577480256 22046 23868bb911b26009f0fd06fe069f4c26 ""
-  "emnlp2020.tex" 1590953392 50497 092bd8da6f38236c77bc40eeb87c397b ""
+  "emnlp2020.tex" 1590962286 50497 092bd8da6f38236c77bc40eeb87c397b ""
   "img/trellis.tex" 1590915002 35287 3901ed877a9a0357acd34c2c297e1fcc ""
   "mystyle.sty" 1590908742 2661 21f6bc81fda55e7d97bece70f7a902f0 ""
   (generated)
   "emnlp2020.out"
-  "emnlp2020.pdf"
   "emnlp2020.x.gnuplot"
-  "emnlp2020.sin.gnuplot"
-  "emnlp2020.aux"
-  "emnlp2020.log"
+  "emnlp2020.pdf"
   "trellis.aux"
+  "emnlp2020.log"
+  "emnlp2020.aux"
   "emnlp2020.exp.gnuplot"
+  "emnlp2020.sin.gnuplot"
