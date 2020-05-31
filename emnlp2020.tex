@@ -128,15 +128,27 @@ We find that our HMM extension significantly outperforms past HMMs as well as n-
 It also performs comparably to neural counterparts with a similar number of parameters
 while maintaining uncertainty over the state dynamics.
 
-\section{Related work}
+\section{Related Work}
+Investigations into improving the performance of HMMs
+involved relaxing independence or modeling assumptions \citep{buys2018hmm}
+to resemble a recurrent neural network, or through model combination
+with a recurrent neural network \citep{krakovna2016hmm}.
+However, \citet{buys2018hmm} reported HMM performance much worse than
+an n-gram model for language modeling, and \citep{krakovna2016hmm}
+experimented with 20 hidden states.
+We demonstrate that HMMs, once given enough states,
+outperform n-gram models and are comparable to
+recurrent neural networks in performance.
 
 % Prior work has tried neural parameterizations, but with small state spaces.
 Prior work has demonstrated the benefits of neural parameterization of structured generative models. 
 For HMMs, \citet{tran2016hmm} demonstrated improvements in POS induction with a
-neural parameterization of an HMM,
-while \citet{kim2019cpcfg} demonstrated improvements in grammar induction with
-a probabilistic context free grammar.
-Both of these works used latent variables with relatively small state spaces,
+neural parameterization of an HMM.
+Other work has neuralized classic models, such as 
+dependency models with valence \citep{han2017dependency},
+hidden semi-Markov models \citep{wiseman2018hsmm},
+and context free grammars \citep{kim2019cpcfg}.
+All of these works used latent variables with relatively small state spaces,
 as the goal of both was structure induction rather than language modeling itself.
 We extend the neural parameterization to much larger state space models.
 
@@ -164,13 +176,10 @@ Additionally, the cloned HMM \citep{dedieu2019learning} can be seen
 as an HMM that starts with a single state per word,
 then splits every state into $k$ states at the start
 with no subsequent splits or merges.
-The application of split-merge is an avenue for future work,
+The application of more complicated split-merge
+procedures is an avenue for future work,
 as we focus on fixed-size state spaces for simplicity.
 
-Other investigations into improving the performance of HMMs
-involved relaxing independence or modeling assumptions \citep{buys2018hmm}
-to resemble a recurrent neural network, or through model combination
-with a recurrent neural network \citep{krakovna2016hmm}.
 There are also extensions of HMMs, such as factorial HMMs \cite{zoubin1997fhmm,nepal2013fhmm}
 and context free grammars \citep{kim2019cpcfg}.
 We leave scaling more expressive models to large state spaces for future work,
@@ -265,34 +274,30 @@ with gradient ascent.
 however there is no closed form solution for the M-step with a neural parameterization.
 Gradient ascent is applicable to both the scalar and neural parameterizations.}
 
-(Talk about constructing matrices once per batch,
-decoupling cost of softmax over vocab and batch size,
-constructing log potentials via indexing,
-then logarithmic reduction DP. )
+\paragraph{HMMs and RNNs}
+% Motivate HMMs over RNNs.
+% Simplicity.
+% Faithful to generative process.
+% Computational reasons.
+Recurrent neural networks (RNNs) are one of the main alternatives to HMMs,
+as they also model data with sequential structure and achieve strong 
+performance doing so.
+However, HMMs do maintain advantages over RNNs in certain cases.
+As a fully observed model, an RNN does not decouple the latent dynamics from the observed.
+This rarely matches the true generative process of the data we wish to model.
+For example, HMMs are widely used in the case of known unknowns,
+such as acoustic modeling in speech recognition.
 
-\paragraph{ HMM / RNNs}
-RNNs also model $p(\bx)$, but without introducing a latent variable for the state.
-Whereas RNNs encode the previous observations with a single distributed representation,
-HMMs encode the past as a distribution over a finite set of states.
-Given a hidden size of $h$ for the RNN and a cost $v(h)$ for computing
-a matrix-vector product, the computational complexity of
-computing $p(x)$ for a single sequence is $O(Tv(h))$ due to the use
-of matrix-vector products at every timestep.
-For an HMM with a state space of size $|\mcZ| = h$ and matrix-vector product cost $v(h)$,
-the complexity of computing $p(\bx) = \sum_z p(\bx,\bz)$ on sequential
-hardware is also $O(Tv(h))$.
-However, on parallel device, we are able to compute $p(\bx)$
-for an HMM in time logarithmic in $T$ using the parallel prefix-sum trick. 
-Assuming a cost $m(h)$ for matrix multiplication, this gives cost
-$O(\log(T)m(h))$ for an HMM on a parallel device.
+Additionally, there are computational benefits to HMMs that are not available in RNNs.
+Computing the likelihood of a sequence in an RNN is linear in the length of a sequence
+and quadratic in the size of the hidden state.
+For an HMM, the same is true with a naive approach: the cost is linear sequence length
+but quadratic in the size of the state space.
+However, inference in the HMM can be sped up to be logarithmic in sequence length
+on a parallel machine via the prefix-sum trick.
 Quasi-RNNs \citep{bradbury2016qrnn} also have a logarithmic dependency on $T$
-by applying the same prefix-sum trick, but the operation applied is 
-less expensive than a matrix multiplication.
-
-HMMs cleanly separate out latent memory from the generative process of language.
-This separation makes them an important model for isolating observed properties and performing inference.
-However, this separation also means they require a large hidden state space to
-capture the underlying properties of language. 
+by applying the same prefix-sum trick, but do not model uncertainty over
+latent dynamics.
 
 \section{Method}
 
@@ -300,57 +305,63 @@ Our goal is to vastly expand the state space of an HMM model, while maintaining
 a regularized neural parameterization and efficient exact inference. 
 
 \subsection{Static Parameterization}
+A neural parameterization allows us to precisely control the
+represention of distributional parameters,
+affording a degree of flexibility not present in a scalar parameterization.
+The scalar parameterization of a very large HMM would take millions to
+billions of parameters, due to the parameters of the transition matrix
+$\psi \in \mathbb{R}^{|\mcZ|\times|\mcZ|}$.
+We use the intuition that introducing a parameter to model the attraction
+between each state is unnecessary,
+and instead use embeddings which allow the number of parameters to
+scale linearly with the size of the state space.
+
 We parameterize the transition and emission distributions using a residual network
 with LayerNorm.
-Let $\ba,\bb\in\mathbb{R}^h$, where $h$ is the hidden dimension of our neural network
-and the size of our token and state embeddings.
+Let $E\in\mathbb{R}^{v \times h}$ be an embedding matrix,
+where $v$ is the number of embeddings and
+$h$ is the hidden dimension of our neural network.
 We use the following neural network for $i \in \set{\phi,\psi}$
 \begin{equation}
 \begin{aligned}
-f_i(A) &= g(\textrm{ReLU}(W_{i1}A))\\
-g_i(B) &= \textrm{LayerNorm}(\textrm{ReLU}(W_{i2}B) + B)
+f_i(E) &= g_i(\textrm{ReLU}(EW_{i1}))\\
+g_i(D) &= \textrm{LayerNorm}(\textrm{ReLU}(DW_{i2}) + D)
 \end{aligned}
 \end{equation}
 to define the distributional parameters,
-where $A,B\in\mathbb{R}^{h \times |\mcZ|}$ and $W_{i1},W_{i2} \in \mathbb{R}^{h \times h}$.
-Let $V_x \in \mathbb{R}^{h \times |\mcX|}$ be the token embeddings
-and $U_{\textrm{previous}},U_{\textrm{current}},U_\textrm{preterminal}
-\in \mathbb{R}^{h \times |\mcZ|}$ the state embeddings.
+where $D$ has the same dimension as $E$
+and $W_{i1},W_{i2} \in \mathbb{R}^{h \times h}$.
+Additionally, LayerNorm acts on the last dimension of its argument.
+Let $E_x \in \mathbb{R}^{|\mcX|\times h}$ be the token embeddings
+and $E_{\textrm{previous}},E_{\textrm{current}},E_\textrm{preterminal}
+\in \mathbb{R}^{|\mcZ|\times h}$ the state embeddings.
 The distributional parameters are given by
 \begin{equation}
 \begin{aligned}
-\phi &= V_x^\top f_\phi(U_\textrm{preterminal})\\
-\psi &= U_\textrm{current}^\top f_\psi(U_\textrm{previous})
+\phi &= E_x f_\phi(E_\textrm{preterminal})^\top\\
+\psi &= E_\textrm{current} f_\psi(E_\textrm{previous})^\top
 \end{aligned}
 \end{equation}
 where $\phi \in \mathbb{R}^{|X|\times|Z|}$ and $\psi \in \mathbb{R}^{|Z|\times|Z|}$.
 
 Compared to fully representing $\phi,\psi$ with a scalar parameterization
-which would require $O(|\mcZ|^2 + |\mcX||\mcZ|)$,
+which would require $O(|\mcZ|^2 + |\mcX||\mcZ|)$ parameters,
 this neural parameterization takes $O(h^2 + h|\mcZ| + h|\mcX|)$ parameters
 where $h$ is in the 100s and $|\mcZ|,|\mcX|$ are on the order of 10k.
 
-\begin{figure}[!tp]
-\centering
-\begin{algorithm}[H]
-\begin{algorithmic}
-\State{blah}
-\Function{Meh}{}
-    \For{meh}
-        \State{meh}
-    \EndFor
-    \State \Return meh \Comment{$O(1)$}
-\EndFunction
-\end{algorithmic}
-\caption{
-\label{fig:algo}
-Meh
-}
-\end{algorithm}
-\end{figure}
+Given the parameters, we can then perform marginal inference
+by first constructing a trellis
+via indexing into $\phi$ and $\psi$ (illustrated in Fig.~\ref{fig:trellis}),
+then computing marginals with dynamic programming.
+The clean separation between the computation of the distributional parameters and marginal inference
+allows the distributional parameters to be computed and then cached for use in inference.
+In practice,  we compute the emission and transition distributions once per batch.
+This contrasts with recurrent neural networks and transformers,
+which must compute emission probabilities for every observation
+due to a theoretically infinite number of hidden states.
 
-\subsection{Inducing Blocked Transition}
-Marginal inference for HMMs is quadratic in the  state space $|\mcZ|$.
+\subsection{Inducing Blocked Transitions}
+Marginal inference for HMMs is quadratic in the size of the state space $|\mcZ|$.
 This limits the size of the state space to the order of 100s,
 which prevents models from having enough states to capture the full history.
 However, we can improve the complexity in special cases.
@@ -382,66 +393,79 @@ Exact marginal inference can be performed as
     \sum_{z_T \in \mcC_{x_T}} p(z_T \mid z_{T-1})p(x_T \mid z_T)
 \end{aligned}
 \end{equation}
-%The key step in the second equality was only summing
-%over the respective $z_t$ with nonzero $p(x_t \mid z_t)$ for each $x_t$.
 This allows us to compute $p(\bx)$ with $T$ matrix-vector products,
 each matrix of dimension $|\mcC_{x_t-1}| \times |\mcC_{x_{t}}|$.
 We choose sets $\mcC_x$ such that $\forall x, |\mcC_x| = k$
 yielding a computation complexity of $O(Tk^2)$ rather than $O(T|\mcZ|^2)$.
 Please refer to Fig.~\ref{fig:trellis} for an illustration of this method.
-(Describe here)
 
-%This gives a massive speedup in practice, for example if $|\mcZ|$ is on the order of
-%10k and $k$ in the 100s.
-
-%This method is a generalization of the one introduced in the cloned HMM \citep{dedieu2019learning},
-%as we constrain the emission distribution such that every token is emit by $k$
-%states, but a given state may emit more than one token.
-%The cloned HMM constrains states to emit only a single token,
-%which prevents its application to problems where the token space is larger than the state space.
-
-\begin{figure}[t]
+\begin{figure}[!t]
 \begin{center}
 \input{img/trellis.tex}
 \end{center}
 \caption{
 \label{fig:trellis}
-{\color{red} WILL REPLACE WITH TRELLIS}
-A depiction of the emission sparsity constraints.
-%The partitions the states such that.
-%Above is the trellis after conditioning on the observation sequence $\bx$
-%with hidden states $\bz$.
-%The arrows indicate transitions with nonzero probabilities.
-%Rather than considering the full transition matrices at every timestep,
-%the emission constraint allows us to use much smaller matrices
-%after conditioning on $\bx$.
+A depiction of the trellis for marginal inference
+after applying emission sparsity constraints and the state dropout method.
+The leftmost column depicts the state dropout mask $\mathbf{b}$,
+which is used to prevent states from being considered during inference.
+For every token $x_t$, the only incoming edges with nonzero mass are those
+whose source was not dropped out, i.e. $b_{z_t} = 1$,
+and is within the previous partition, i.e. $z_{t-1}\in\mcC_{x_{t-1}}$.
 }
 \end{figure}
 
 \subsection{Dropout as State Reduction}
-We introduce a variant of dropout called state dropout that operates on the
-emission distribution.
-The goal of state dropout is to encourage usage of the full state space in HMMs
-as well as to reduce the complexity of marginalization in a manner
-that compounds with the sparse emission constraints discussed above.
+Although a neural parameterization has empirically been shown to find good optima,
+it requires that the distributional parameters be recomputed every time the
+model parameters are updated.
+This entails running a neural network $O(|\mcZ| + |\mcX|)$ times 
+at every iteration of gradient descent.
 
-State dropout prevents a token $x$ from always being emit by a specific state $z$
-by zeroing out emission probabilities during training.
-Recall that the HMM has distributional parameters
-$\phi \in \mathbb{R}^{|\mcX|\times|\mcZ|}$ for the emission matrix,
-and the emission sparsity constraints associate each token $x$
-with a set of states $\mcC_x$ that are the only states which 
-emit $x$ with nonzero probability.
-State dropout samples a mask over states $\mathbf{b}_x \in \set{0,1}^{|\mcC_x|}$
-such that $|\mathbf{b}_x| = n$ for each $x$.
-Given the mask, we then computes the following emission distribution:
+We introduce a variant of dropout called state dropout that lessens
+the computational burden of the neural parameterization at training time
+while also encouraging full use of the state space and 
+reducing the complexity of marginalization.
+
+State dropout prevents a state $z$ from being considered during training.
+This can be implemented by adding another constraint to the emission matrix.
+Recall distributional parameters of the emission matrix
+$\phi \in \mathbb{R}^{|\mcX|\times|\mcZ|}$
+and the emission sparsity constraints which associate each token $x$
+with a set of states $\mcC_x$.
+State dropout samples a mask over states $\mathbf{b} \in \set{0,1}^{|\mcZ|}$.
+Given the mask and the emission constraints
+defined in the previous section,
+we have the following emission distribution:
 \begin{equation}
 \label{eqn:state_dropout}
-p(x \mid z) \propto b_{xz}1(z \in \mcC_x)e^{\phi_{xz}}
+p(x \mid z) \propto b_{z}1(z \in \mcC_x)e^{\phi_{xz}}
 \end{equation}
-
 Performing marginal inference with state dropout requires $O(Tn^2)$ computation,
 where $n$ is the number of nonzero elements of $\mathbf{b}_\mcC, \forall \mcC$.
+Additionally, we do not need to compute the parameters of the
+transition and emission distributions that have been dropped. 
+This reduces the cost of computing $\phi$ and $\psi$ from
+$O(|\mcZ|^2+|\mcZ||\mcX|)$ to $n^2 + n|\mcX|$.
+
+\begin{figure*}[!tp]
+\centering
+\begin{algorithm}[H]
+\begin{algorithmic}
+\State{blah}
+\Function{Meh}{}
+    \For{meh}
+        \State{meh}
+    \EndFor
+    \State \Return meh \Comment{$O(1)$}
+\EndFunction
+\end{algorithmic}
+\caption{
+\label{fig:algo}
+Meh
+}
+\end{algorithm}
+\end{figure*}
 
 
 \section{Experiments}
