@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  31 MAY 2020 05:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  31 MAY 2020 05:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1357,7 +1357,7 @@ Underfull \vbox (badness 4254) has occurred while \output is active []
 
  [7]
 Excluding 'comment' comment. (./emnlp2020.bbl
-Underfull \vbox (badness 3271) has occurred while \output is active []
+Underfull \vbox (badness 1478) has occurred while \output is active []
 
 
 Underfull \hbox (badness 1629) in paragraph at lines 56--60
@@ -1473,7 +1473,7 @@ r/local/texlive/2018/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/tex
 live/2018/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2018/
 texmf-dist/fonts/type1/public/lm/lmtt12.pfb></usr/local/texlive/2018/texmf-dist
 /fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on emnlp2020.pdf (9 pages, 439717 bytes).
+Output written on emnlp2020.pdf (9 pages, 439757 bytes).
 PDF statistics:
  450 PDF objects out of 1000 (max. 8388607)
  393 compressed objects within 4 object streams

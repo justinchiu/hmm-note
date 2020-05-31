@@ -712,8 +712,8 @@ Due to GPU memory constraints, we were unable to further
 explore larger parameterizations, both 
 in terms of the dimension of the neural components as well as 
 the size of the state space.
-However, we note that increasing the dimension of the neural component to
-512 dimensions with $|\mcZ| = 32,768$ did not improve performance.
+However, we note that increasing the dimension of the neural component from 256 to
+512 dimensions with $|\mcZ| = 32,768$ total states did not improve performance.
 Another hypothesis is that the marginal gains in likelihood
 decreases as we continue to increase the size of the state space.
 
@@ -727,7 +727,7 @@ and state dropout at 0.5.
 }
 \begin{tabular}{ll}
 \toprule
-$m$ & Val PPL\\
+$|\mcZ|$ & Val PPL\\
 \midrule
 1024 & 213.25\\
 2048 & 199.98\\
