@@ -324,7 +324,7 @@ However, we can improve the complexity in special cases.
 For instance, inspired by cloned HMMs \citep{dedieu2019learning} if we know that the probability of emitting a word $x_t$ from a state $z_t$ is 0,
 i.e. $p(x_t \mid z_t) = 0$  then we can ignore transitions into and from that state during inference. 
 
-We enforce a stronger constraint that the HMM have  rectangular fixed-width blocked emissions,
+We enforce a stronger constraint that the HMM have rectangular fixed-width blocked emissions,
 \[\mathbf{O} = \begin{bmatrix} \mathbf{O}^1 & 0 & 0 \\ 0 & $\dots$ & 0 \\ 0 & 0 & \mathbf{O}^M \\
 \end{bmatrix}\]
 where each $\mathbf{O}_m \in \mathbb{R}^{ {\cal X}_m \times |{\cal Z}|/M}$ is a partition indicating which tokens ${\cal X}_m$ can be emitted by states $m|{\cal Z}|$ through $(m+1)|{\cal Z}|$. Conversely let $\mcZ_x \subset {\cal Z}$ be the states with non-zero probability of emitting $x$.
@@ -343,7 +343,7 @@ p(x \mid z) \propto \mathbf{1}(z \in \mcC_x)e^{\phi_{xz}}
 \end{equation}
 \end{comment}
 
-Exact marginalization can be computed as,  
+Exact marginalization can be computed as 
 \begin{equation}
 \label{eqn:sparse_marginalization}
 \begin{aligned}
@@ -391,7 +391,9 @@ The HMM distributional parameters are given by,
 \end{aligned}
 \end{equation}
 where $\phi \in \mathbb{R}^{|X|\times|Z|}$ and
-$\psi \in \mathbb{R}^{|Z|\times|Z|}$. MLP architecture follows \cite{kim2019cpcfg}. details are in supplementary materials. 
+$\psi \in \mathbb{R}^{|Z|\times|Z|}$.
+The MLP architecture follows \cite{kim2019cpcfg}.
+Please refer to the supplementary material for details. 
 This neural parameterization takes $O(h^2 + h|\mcZ| + h|\mcX|)$ parameters.
 
 

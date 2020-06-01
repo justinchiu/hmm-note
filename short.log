@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  1 JUN 2020 19:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  1 JUN 2020 19:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1174,19 +1174,15 @@ er-ence for
  []
 
 [2] Excluding 'comment' comment. Excluding 'comment' comment.
-Underfull \hbox (badness 1019) in paragraph at lines 469--474
+Underfull \hbox (badness 1019) in paragraph at lines 471--476
 []\OT1/ptm/m/n/10.95 (+20) State dropout acts on each emis-sion block
  []
 
 [3] Excluding 'comment' comment. Excluding 'comment' comment.
-Overfull \hbox (16.9325pt too wide) in paragraph at lines 614--644
- [][] 
- []
-
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <7> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 644.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 646.
 
-Underfull \hbox (badness 1708) in paragraph at lines 748--748
+Underfull \hbox (badness 1708) in paragraph at lines 750--750
 []\OT1/ptm/m/n/10 Table 3: |[] Per-plex-i-ties on the \OT1/pcr/m/n/10 Penn Tree
 bank
  []
@@ -1221,26 +1217,26 @@ Underfull \hbox (badness 1199) in paragraph at lines 169--173
  []
 
 )
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 879.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 881.
 
  (/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 879.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 881.
 
 Excluding 'comment' comment.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 961.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 963.
  [7
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 961.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 963.
  (./short.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 961.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 961.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 963.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 963.
 Package rerunfilecheck Info: File `short.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 961.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 963.
  )
 (\end occurred when \iffalse on line 352 was incomplete) 
 Here is how much of TeX's memory you used:
@@ -1274,10 +1270,10 @@ ts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2018/texmf-dist
 ype1/urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/t
 imes/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmri
 8a.pfb>
-Output written on short.pdf (7 pages, 237382 bytes).
+Output written on short.pdf (7 pages, 236962 bytes).
 PDF statistics:
- 349 PDF objects out of 1000 (max. 8388607)
- 302 compressed objects within 4 object streams
+ 346 PDF objects out of 1000 (max. 8388607)
+ 300 compressed objects within 3 object streams
  68 named destinations out of 1000 (max. 500000)
  35437 words of extra memory for PDF output out of 35830 (max. 10000000)
 
