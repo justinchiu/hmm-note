@@ -595,7 +595,8 @@ AWD-LSTM + cache \citep{merity2017awdlstm} & 24M & 53.9 & 52.8\\
 HMM \citep{buys2018hmm} & 10M & 284.6 & -\\
 HMM + sigmoid + RNN emit \citep{buys2018hmm} & 10M & 142.3 & -\\
 \midrule
-256 dim FF 4-gram  & 2.8M     & 163.0      & 151.0  \\
+KN-5 & 2.2M & 161.3 & 157.2\\
+256 dim FF 5-gram  & 2.9M     & 159.9      & 152.0  \\
 2 layer 256 dim LSTM  & 3.6M     & 93.6       & 88.8   \\
 32k state HMM   & 7.7M     & 125.0      & 115.8  \\
 \bottomrule
@@ -623,10 +624,10 @@ Model & Num Params & Valid PPL & Test PPL\\
 \midrule
 A     & b          & c         & d       \\
 \midrule
-This work
-FF    &            & 209       & -       \\
-LSTM  &            & 125       & -       \\
-HMM   &            & 167       & -       \\
+KN-5 & 2.2M       & 248.7 & 234.3\\
+256 dim FF 5-gram &            & 210.9       & 195.0       \\
+LSTM              &            & 125       & -       \\
+HMM               &            & 167       & -       \\
 \bottomrule
 \end{tabular}
 \caption{\label{tbl:wt2-ppl}
@@ -764,12 +765,14 @@ neural parameterization with 5.6M parameters.
 Although the neural and scalar parameterizations reach a similar training perplexity,
 the neural model generalizes better on validation.
 
-We additionally ablate the factored state embeddings (add to table),
-and find that the performance of the factored embeddings drops
-when the number of clusters is too small.
-(Makes sense that )
-(Indicates number of parameters not necessarily the best comparison)
-
+We additionally ablate the factored state embeddings,
+and find that performance of independent state embeddings is similar
+to a model with factored embeddings
+but with fewer parameters.
+We additionally found that if the number of clusters is too small
+(i.e. 64 or 32)
+while keeping the total number of hidden states fixed to 16384,
+performance on validation drops to 143.
 
 \begin{table*}[!t]
 \centering
@@ -779,6 +782,7 @@ Model                           & Num params & Train PPL & Val PPL & Time per ep
 \midrule
 16384 state HMM                 & 5.6M       & 122    & 136  & 159\\
 \quad - dropout                 & 5.6M       & 89     & 145  & 363\\
+\quad - state emb factorization & 7.2M       & 115    & 134  & 142\\
 \quad - neural parameterization & 423M       & 119    & 169 & 520
 \footnote{The scalar parameterization should be faster per epoch than the
 neural parameterization. We attribute this slowdown
@@ -793,7 +797,7 @@ un-dropped values.}\\
 \end{tabular}
 \caption{\label{tbl:dropout-param-ablation}
 We report perplexities on the \texttt{Penn Treebank} dataset
-for a 16k state HMM with 0.5 state dropout, and ablate
+for a 16k state HMM with 0.5 state dropout and 128 Brown clusters, and ablate
 dropout and the neural parameterization one at a time.
 }
 \end{table*}
