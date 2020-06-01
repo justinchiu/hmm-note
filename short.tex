@@ -499,20 +499,12 @@ $p(\bw,\bz) = \prod_t p(w_t\mid z_t)p(z_t \mid z_{t-1})$.
 \paragraph{State and word partitions}
 We use Brown clusters \citep{brown1992,liang2005brown} to construct the state and word partitions.
 Brown clusters are obtained by assigning every token type in $\mcX$ a state in a HMM,
-then continually merging states until a desired number of states is reached.
-The merge at each iteration attempts to merge the two states that results in the best likelihood.
-
+then states are merged until a desired number of states is reached.
 Importantly, every word is emit by only a single state, yielding the word partition $\rho$
-where the number of partitions $m$ equal to the number of Brown clusters.
+with the number of partitions $m$ equal to the number of Brown clusters.
 We then create the state partition $\pi$ by assigning each of the states in the
 Brown model $k$ states in the resulting HMM.
 
-We additionally compare the partition induced by Brown clustering with a uniform
-constraint that samples each $\mcC_x$ of size $n$
-independently and uniformly from all subsets of $\mcC$.
-This foregoes a partitioning, which makes it difficult to apply state dropout.
-We therefore apply a version of dropout that does not have block structure
-and zeroes out elements of the transition matrix randomly.
 
 \subsection{Datasets}
 We evaluate on the \texttt{Penn Treebank} \citep{ptb}
@@ -702,7 +694,12 @@ while the HMM with 8 Brown clusters underperforms.
 This implies that there may be a loss in performance due to the emission
 constraints.
 
-We also experiment with the uniform constraints as described in Sec.~\ref{sec:experiments}.
+We additionally compare the partition induced by Brown clustering with a uniform
+constraint that samples each $\mcC_x$ of size $n$
+independently and uniformly from all subsets of $\mcC$.
+This foregoes a partitioning, which makes it difficult to apply state dropout.
+We therefore apply a version of dropout that does not have block structure
+and zeroes out elements of the transition matrix randomly.
 In the bottom section of Tbl.~\ref{tbl:constraint-ablation},
 we find that models with uniform constraints
 are consistently outperformed by models with Brown cluster constraints
@@ -769,7 +766,7 @@ but with fewer parameters.
 We additionally found that if the number of clusters is too small
 (i.e. 64 or 32)
 while keeping the total number of hidden states fixed to 16384,
-performance on validation drops to 143.
+performance on validation drops to 143 perplexity.
 
 \begin{table*}[!t]
 \centering
@@ -799,6 +796,8 @@ dropout and the neural parameterization one at a time.
 }
 \end{table*}
 
+
+\begin{comment}
 \subsection{Part-of-Speech Tagging}
 
 \begin{table*}[!t]
@@ -828,6 +827,7 @@ of \citep{ma2016crf}, but underperforms the BLSTM with CNN and CRF variants.
 Additionally,
 we found that incorporating pretrained embeddings in the HMMs did not improve performance.
 {\color{red} NEED ERROR ANALYSIS}
+\end{comment}
 
 \begin{comment}
 
