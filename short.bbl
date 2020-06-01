@@ -1,0 +1,155 @@
+\begin{thebibliography}{23}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{Bengio et~al.(2003)Bengio, Ducharme, Vincent, and
+  Janvin}]{bengio2003nlm}
+Yoshua Bengio, R\'{e}jean Ducharme, Pascal Vincent, and Christian Janvin. 2003.
+\newblock A neural probabilistic language model.
+\newblock \emph{J. Mach. Learn. Res.}, 3(null):1137–1155.
+
+\bibitem[{Bradbury et~al.(2016)Bradbury, Merity, Xiong, and
+  Socher}]{bradbury2016qrnn}
+James Bradbury, Stephen Merity, Caiming Xiong, and Richard Socher. 2016.
+\newblock \href {http://arxiv.org/abs/1611.01576} {Quasi-recurrent neural
+  networks}.
+\newblock \emph{CoRR}, abs/1611.01576.
+
+\bibitem[{Brown et~al.(1992)Brown, deSouza, Mercer, Pietra, and
+  Lai}]{brown1992}
+Peter~F. Brown, Peter~V. deSouza, Robert~L. Mercer, Vincent J.~Della Pietra,
+  and Jenifer~C. Lai. 1992.
+\newblock Class-based n-gram models of natural language.
+\newblock \emph{Comput. Linguist.}, 18(4):467–479.
+
+\bibitem[{Buys et~al.(2018)Buys, Bisk, and Choi}]{buys2018hmm}
+Jan Buys, Yonatan Bisk, and Yejin Choi. 2018.
+\newblock Bridging hmms and rnns through architectural transformations.
+
+\bibitem[{Dedieu et~al.(2019)Dedieu, Gothoskar, Swingle, Lehrach,
+  Lázaro-Gredilla, and George}]{dedieu2019learning}
+Antoine Dedieu, Nishad Gothoskar, Scott Swingle, Wolfgang Lehrach, Miguel
+  Lázaro-Gredilla, and Dileep George. 2019.
+\newblock \href {http://arxiv.org/abs/1905.00507} {Learning higher-order
+  sequential structure with cloned hmms}.
+
+\bibitem[{Han et~al.(2017)Han, Jiang, and Tu}]{han2017dependency}
+Wenjuan Han, Yong Jiang, and Kewei Tu. 2017.
+\newblock \href {https://doi.org/10.18653/v1/D17-1176} {Dependency grammar
+  induction with neural lexicalization and big training data}.
+\newblock In \emph{Proceedings of the 2017 Conference on Empirical Methods in
+  Natural Language Processing}, pages 1683--1688, Copenhagen, Denmark.
+  Association for Computational Linguistics.
+
+\bibitem[{Huang(2011)}]{huang2011thesis}
+Zhongqiang Huang. 2011.
+\newblock \href {https://drum.lib.umd.edu/handle/1903/12295} {\emph{Modeling
+  Dependencies in Natural Languages with Latent Variables}}.
+\newblock Ph.D. thesis, University of Maryland.
+
+\bibitem[{Kim et~al.(2019)Kim, Dyer, and Rush}]{kim2019cpcfg}
+Yoon Kim, Chris Dyer, and Alexander~M. Rush. 2019.
+\newblock \href {http://arxiv.org/abs/1906.10225} {Compound probabilistic
+  context-free grammars for grammar induction}.
+\newblock \emph{CoRR}, abs/1906.10225.
+
+\bibitem[{Krakovna and Doshi-Velez(2016)}]{krakovna2016hmm}
+Viktoriya Krakovna and Finale Doshi-Velez. 2016.
+\newblock \href {http://arxiv.org/abs/1606.05320} {Increasing the
+  interpretability of recurrent neural networks using hidden markov models}.
+
+\bibitem[{Kuhn et~al.(1994)Kuhn, Niemann, and
+  Schukat-Talamazzini}]{kuhn1994hmmlm}
+Thomas Kuhn, Heinrich Niemann, and Ernst~Günter Schukat-Talamazzini. 1994.
+\newblock \href
+  {http://dblp.uni-trier.de/db/conf/icassp/icassp1994.html#KuhnNS94} {Ergodic
+  hidden markov models and polygrams for language modeling.}
+\newblock pages 357--360.
+
+\bibitem[{Ladner and Fischer(1980)}]{ladner1980prefix}
+Richard~E. Ladner and Michael~J. Fischer. 1980.
+\newblock \href {https://doi.org/10.1145/322217.322232} {Parallel prefix
+  computation}.
+\newblock \emph{J. ACM}, 27(4):831–838.
+
+\bibitem[{Ma and Hovy(2016)}]{ma2016crf}
+Xuezhe Ma and Eduard~H. Hovy. 2016.
+\newblock \href {http://arxiv.org/abs/1603.01354} {End-to-end sequence labeling
+  via bi-directional lstm-cnns-crf}.
+\newblock \emph{CoRR}, abs/1603.01354.
+
+\bibitem[{Marcus et~al.(1993)Marcus, Santorini, and Marcinkiewicz}]{ptb}
+Mitchell~P. Marcus, Beatrice Santorini, and Mary~Ann Marcinkiewicz. 1993.
+\newblock \href {https://www.aclweb.org/anthology/J93-2004} {Building a large
+  annotated corpus of {E}nglish: The {P}enn {T}reebank}.
+\newblock \emph{Computational Linguistics}, 19(2):313--330.
+
+\bibitem[{Merity et~al.(2017)Merity, Keskar, and Socher}]{merity2017awdlstm}
+Stephen Merity, Nitish~Shirish Keskar, and Richard Socher. 2017.
+\newblock \href {http://arxiv.org/abs/1708.02182} {Regularizing and optimizing
+  {LSTM} language models}.
+\newblock \emph{CoRR}, abs/1708.02182.
+
+\bibitem[{Merity et~al.(2016)Merity, Xiong, Bradbury, and Socher}]{wikitext}
+Stephen Merity, Caiming Xiong, James Bradbury, and Richard Socher. 2016.
+\newblock \href {http://arxiv.org/abs/1609.07843} {Pointer sentinel mixture
+  models}.
+\newblock \emph{CoRR}, abs/1609.07843.
+
+\bibitem[{{Mikolov} and {Zweig}(2012)}]{mikolov2012rnn}
+T.~{Mikolov} and G.~{Zweig}. 2012.
+\newblock Context dependent recurrent neural network language model.
+\newblock In \emph{2012 IEEE Spoken Language Technology Workshop (SLT)}, pages
+  234--239.
+
+\bibitem[{Mikolov et~al.(2011)Mikolov, Deoras, Kombrink, Burget, and
+  Cernocký}]{mikolov-2011}
+Tomas Mikolov, Anoop Deoras, Stefan Kombrink, Lukás Burget, and Jan Cernocký.
+  2011.
+\newblock \href
+  {http://dblp.uni-trier.de/db/conf/interspeech/interspeech2011.html#MikolovDKBC11}
+  {Empirical evaluation and combination of advanced language modeling
+  techniques.}
+\newblock pages 605--608.
+
+\bibitem[{Petrov et~al.(2006)Petrov, Barrett, Thibaux, and
+  Klein}]{petrov2006splitmerge}
+Slav Petrov, Leon Barrett, Romain Thibaux, and Dan Klein. 2006.
+\newblock \href {https://doi.org/10.3115/1220175.1220230} {Learning accurate,
+  compact, and interpretable tree annotation}.
+\newblock page 433–440.
+
+\bibitem[{Rabiner(1990)}]{rabiner1990tut}
+Lawrence~R. Rabiner. 1990.
+\newblock \emph{A Tutorial on Hidden Markov Models and Selected Applications in
+  Speech Recognition}, page 267–296. Morgan Kaufmann Publishers Inc., San
+  Francisco, CA, USA.
+
+\bibitem[{Tran et~al.(2016)Tran, Bisk, Vaswani, Marcu, and
+  Knight}]{tran2016hmm}
+Ke~M. Tran, Yonatan Bisk, Ashish Vaswani, Daniel Marcu, and Kevin Knight. 2016.
+\newblock \href {http://arxiv.org/abs/1609.09007} {Unsupervised neural hidden
+  markov models}.
+\newblock \emph{CoRR}, abs/1609.09007.
+
+\bibitem[{Vogel et~al.(1996)Vogel, Ney, and Tillmann}]{vogel1996hmm}
+Stephan Vogel, Hermann Ney, and Christoph Tillmann. 1996.
+\newblock \href {https://doi.org/10.3115/993268.993313} {Hmm-based word
+  alignment in statistical translation}.
+\newblock In \emph{Proceedings of the 16th Conference on Computational
+  Linguistics - Volume 2}, COLING ’96, page 836–841, USA. Association for
+  Computational Linguistics.
+
+\bibitem[{Wiseman et~al.(2018)Wiseman, Shieber, and Rush}]{wiseman2018hsmm}
+Sam Wiseman, Stuart~M. Shieber, and Alexander~M. Rush. 2018.
+\newblock \href {http://arxiv.org/abs/1808.10122} {Learning neural templates
+  for text generation}.
+\newblock \emph{CoRR}, abs/1808.10122.
+
+\bibitem[{Zaremba et~al.(2014)Zaremba, Sutskever, and
+  Vinyals}]{zaremba2014lstm}
+Wojciech Zaremba, Ilya Sutskever, and Oriol Vinyals. 2014.
+\newblock \href {http://arxiv.org/abs/1409.2329} {Recurrent neural network
+  regularization}.
+\newblock \emph{CoRR}, abs/1409.2329.
+
+\end{thebibliography}

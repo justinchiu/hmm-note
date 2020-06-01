@@ -1,0 +1,94 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{rabiner1990tut}
+\citation{vogel1996hmm}
+\citation{kuhn1994hmmlm,huang2011thesis}
+\citation{bengio2003nlm}
+\citation{zaremba2014lstm}
+\citation{merity2017awdlstm}
+\citation{buys2018hmm}
+\citation{krakovna2016hmm}
+\citation{tran2016hmm}
+\citation{han2017dependency}
+\citation{wiseman2018hsmm}
+\citation{kim2019cpcfg}
+\citation{petrov2006splitmerge,huang2011thesis}
+\citation{huang2011thesis}
+\citation{ladner1980prefix}
+\citation{bradbury2016qrnn}
+\citation{dedieu2019learning}
+\newlabel{param}{{2}{2}{Background: HMMs}{equation.3.2}{}}
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:trellis}{{1}{2}{HMM search space after applying emission sparsity constraints and the state dropout method. \relax }{figure.caption.1}{}}
+\citation{kim2019cpcfg}
+\citation{brown1992}
+\newlabel{eqn:sparse_marginalization}{{3}{3}{Blocked Emissions}{equation.4.3}{}}
+\newlabel{fig:algo}{{1}{3}{VL-HMM Training \relax }{algorithm.1}{}}
+\newlabel{eqn:state_dropout}{{5}{3}{Dropout as State Reduction}{equation.4.5}{}}
+\newlabel{sec:experiments}{{5}{3}{Experiments: Language modeling}{section.5}{}}
+\citation{ptb}
+\citation{wikitext}
+\citation{mikolov-2011}
+\citation{mikolov2012rnn}
+\citation{mikolov2012rnn}
+\citation{mikolov2012rnn}
+\citation{mikolov2012rnn}
+\citation{zaremba2014lstm}
+\citation{zaremba2014lstm}
+\citation{merity2017awdlstm}
+\citation{merity2017awdlstm}
+\citation{buys2018hmm}
+\citation{buys2018hmm}
+\newlabel{tbl:states-ablation}{{2}{4}{Perplexities on the \texttt {Penn Treebank} dataset as a function of the state size $|\mcZ |$. We hold the emission constraints fixed using 128 Brown clusters, and state dropout at 0.5. \relax }{figure.caption.8}{}}
+\citation{ma2016crf}
+\citation{ma2016crf}
+\citation{ma2016crf}
+\citation{ma2016crf}
+\citation{ma2016crf}
+\newlabel{tbl:ptb-ppl}{{1}{5}{Perplexities on the \texttt {Penn Treebank} dataset. The top shows results from previous work, while the bottom shows our results for models with comparable computational cost. In particular, we compare models that have the same asymptotic inference cost: linear in the length of a sequence and quadratic in the hidden dimension. This is $h=256$ for the FF model and LSTM and $|\mcZ | = 256$ for the HMM. \relax }{table.caption.6}{}}
+\newlabel{tbl:constraint-ablation}{{2}{5}{Perplexities on the \texttt {Penn Treebank} dataset. We ablate the effect of the number of Brown clusters, examine whether there may be a drop in performance due to the emission sparsity constraint, and compare the Brown cluster constraint to a uniform baseline. All models have 0.5 state dropout, except for the 1k state HMMs, which have no dropout. We use $m$ to indicate the number of clusters. \relax }{table.caption.10}{}}
+\bibstyle{acl_natbib}
+\bibdata{anthology,emnlp2020}
+\bibcite{bengio2003nlm}{{1}{2003}{{Bengio et~al.}}{{Bengio, Ducharme, Vincent, and Janvin}}}
+\bibcite{bradbury2016qrnn}{{2}{2016}{{Bradbury et~al.}}{{Bradbury, Merity, Xiong, and Socher}}}
+\bibcite{brown1992}{{3}{1992}{{Brown et~al.}}{{Brown, deSouza, Mercer, Pietra, and Lai}}}
+\bibcite{buys2018hmm}{{4}{2018}{{Buys et~al.}}{{Buys, Bisk, and Choi}}}
+\bibcite{dedieu2019learning}{{5}{2019}{{Dedieu et~al.}}{{Dedieu, Gothoskar, Swingle, Lehrach, L\IeC {\'a}zaro-Gredilla, and George}}}
+\bibcite{han2017dependency}{{6}{2017}{{Han et~al.}}{{Han, Jiang, and Tu}}}
+\bibcite{huang2011thesis}{{7}{2011}{{Huang}}{{}}}
+\bibcite{kim2019cpcfg}{{8}{2019}{{Kim et~al.}}{{Kim, Dyer, and Rush}}}
+\bibcite{krakovna2016hmm}{{9}{2016}{{Krakovna and Doshi-Velez}}{{}}}
+\bibcite{kuhn1994hmmlm}{{10}{1994}{{Kuhn et~al.}}{{Kuhn, Niemann, and Schukat-Talamazzini}}}
+\bibcite{ladner1980prefix}{{11}{1980}{{Ladner and Fischer}}{{}}}
+\bibcite{ma2016crf}{{12}{2016}{{Ma and Hovy}}{{}}}
+\bibcite{ptb}{{13}{1993}{{Marcus et~al.}}{{Marcus, Santorini, and Marcinkiewicz}}}
+\newlabel{tbl:dropout-param-ablation}{{3}{6}{We report perplexities on the \texttt {Penn Treebank} dataset for a 16k state HMM with 0.5 state dropout and 128 Brown clusters, and ablate dropout and the neural parameterization one at a time. \relax }{table.caption.12}{}}
+\newlabel{tbl:pos}{{4}{6}{Tagging accuracies on the Wall Street Journal (WSJ) portion of the \texttt {Penn Treebank}. We use a HMM with 32k states and 0.5 state dropout. \relax }{table.caption.13}{}}
+\bibcite{merity2017awdlstm}{{14}{2017}{{Merity et~al.}}{{Merity, Keskar, and Socher}}}
+\bibcite{wikitext}{{15}{2016}{{Merity et~al.}}{{Merity, Xiong, Bradbury, and Socher}}}
+\bibcite{mikolov2012rnn}{{16}{2012}{{{Mikolov} and {Zweig}}}{{}}}
+\bibcite{mikolov-2011}{{17}{2011}{{Mikolov et~al.}}{{Mikolov, Deoras, Kombrink, Burget, and Cernock\IeC {\'y}}}}
+\bibcite{petrov2006splitmerge}{{18}{2006}{{Petrov et~al.}}{{Petrov, Barrett, Thibaux, and Klein}}}
+\bibcite{rabiner1990tut}{{19}{1990}{{Rabiner}}{{}}}
+\bibcite{tran2016hmm}{{20}{2016}{{Tran et~al.}}{{Tran, Bisk, Vaswani, Marcu, and Knight}}}
+\bibcite{vogel1996hmm}{{21}{1996}{{Vogel et~al.}}{{Vogel, Ney, and Tillmann}}}
+\bibcite{wiseman2018hsmm}{{22}{2018}{{Wiseman et~al.}}{{Wiseman, Shieber, and Rush}}}
+\bibcite{zaremba2014lstm}{{23}{2014}{{Zaremba et~al.}}{{Zaremba, Sutskever, and Vinyals}}}
+\newlabel{sec:hyperparams}{{A}{7}{Hyperparameters}{appendix.A}{}}
+\newlabel{sec:supplemental}{{B}{7}{Supplemental Material}{appendix.B}{}}
