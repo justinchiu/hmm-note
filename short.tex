@@ -497,7 +497,7 @@ We thus learn a model over words and states
 $p(\bw,\bz) = \prod_t p(w_t\mid z_t)p(z_t \mid z_{t-1})$.
 
 \paragraph{State and word partitions}
-We use Brown clusters \citep{brown1992} to construct the state and word partitions.
+We use Brown clusters \citep{brown1992,liang2005brown} to construct the state and word partitions.
 Brown clusters are obtained by assigning every token type in $\mcX$ a state in a HMM,
 then continually merging states until a desired number of states is reached.
 The merge at each iteration attempts to merge the two states that results in the best likelihood.
