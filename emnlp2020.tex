@@ -110,16 +110,16 @@ e.g. overly large LSTMs \cite{zaremba2014lstm} show marked improvements in perfo
 (c) regularization choices are necessary to find good solutions for different model parameterizations,
 e.g. experiments by \citet{merity2017awdlstm} outline a variety of training choices.
 
-In this work, we revisit HMMs for NLP, positing that competitive performance requires very large HMM (VL-HMMs). To scale to large state-spaces, we need  appropriate parameterizations, efficient inference, and 
+In this work, we revisit HMMs for NLP, positing that competitive performance requires very large HMM (VL-HMMs). To scale to large state-spaces, we need  shared parameterizations, efficient inference, and 
 effective regularization.
-Taking this into account, we develop a neural parameterization for HMMs that extends 
+We develop a neural parameterization for HMMs that extends 
 them to comparable size and structure of deep models.
 We combine this parameterization with a modeling constraint that allows us to utilize HMMs with very large state spaces,
 while maintaining efficient exact inference.
 Finally we incorporate a variant of dropout that both improves accuracy
 and reduces the computational overhead by an order of magnitude during training. 
 
-Experiments employ HMMs on two language modeling datasets and a supervised sequence tagging task.
+Experiments employ VL-HMMs on two language modeling datasets and a supervised sequence tagging task.
 We find that our HMM extension significantly outperforms past HMMs as well as n-gram models. 
 It also performs comparably to neural counterparts with a similar number of parameters
 while maintaining uncertainty over the state dynamics.
@@ -303,12 +303,14 @@ latent dynamics.
 The hypothesis of this work is that by expanding the state space of HMMs while while maintaining 
 a regularized neural parameterization and efficient exact inference, we can build models that are competitive with RNNs. We propose three techniques for scaling these models: factored neural parameterization, induced block transitions, and state dropout.
 
+Our approach assumes 
+
 \subsection{Factored Neural Parameterization}
 A neural parameterization allows us to precisely control the
 represention of distributional parameters,
 affording a degree of flexibility not present in a scalar parameterization.
 The scalar parameterization of a very large HMM grows quadratically due to the transition matrix parameters $\psi \in \mathbb{R}^{|\mcZ|\times|\mcZ|}$.
-We use the intuition that introducing a parameter to model between each state pair is unnecessary,
+We use the intuition that introducing a parameter for each state pair is unnecessary,
 and instead employ state embeddings which allow the number of parameters to scale linearly with the size of the state space.
 
 %We parameterize the transition and emission distributions using a residual network
@@ -340,12 +342,9 @@ g_i(D) &= \textrm{LayerNorm}(\textrm{ReLU}(DW_{i2}) + D)
 \end{equation}
 where $D$ has the dimensions of $E$
 and $W_{i1},W_{i2} \in \mathbb{R}^{h \times h}$.
-}
-
-Compared to fully representing $\phi,\psi$ with a scalar parameterization
-which would require $O(|\mcZ|^2 + |\mcX||\mcZ|)$ parameters,
-this neural parameterization takes $O(h^2 + h|\mcZ| + h|\mcX|)$ parameters
-where $h$ is in the 100s and $|\mcZ|,|\mcX|$ are on the order of 10k.
+}. Compared to fully representing $\phi,\psi$ with a scalar parameterization
+(which would require $O(|\mcZ|^2 + |\mcX||\mcZ|)$ parameters)
+this neural parameterization takes $O(h^2 + h|\mcZ| + h|\mcX|)$ parameters.
 
 Given the distributional parameters, we can then perform marginal inference separately. 
 %by first constructing a trellis
@@ -403,7 +402,7 @@ yielding a computation complexity of $O(Tk^2)$ rather than $O(T|\mcZ|^2)$.
 \end{center}
 \caption{
 \label{fig:trellis}
-State space of 
+HMM search space
 after applying emission sparsity constraints and the state dropout method.
 The leftmost column depicts the state dropout mask $\mathbf{b}$,
 which is used to prevent states from being considered during inference.
@@ -463,19 +462,14 @@ Pseudocode for computing the likelihood of a corpus
 
 \subsection{Dropout as State Reduction}
 
-To encourage redundancy and distribute state usage, we introduce dropout to the model. While we could use dropout on the parameterization alone, 
+Even with a factored parameterization, the very large state space of the model makes it possible for the model to use states to memorize training patterns. To encourage generalization through distributed state usage, we introduce dropout to the model. 
 
-variant of dropout called state dropout that lessens
-the computational burden of the neural parameterization at training time
-while also encouraging full use of the state space and 
-reducing the complexity of marginalization.
+We propose a form of HMM state dropout that removes states from use entirely for a batch. This forces the model to use different states while also leading to efficiency improvements for computing parameterization and inference. 
 
+%State dropout prevents a state $z$ from being considered during training.
 
+%State dropout is  implemented by adding another constraint to the emission matrix.
 
-
-
-State dropout prevents a state $z$ from being considered during training.
-This can be implemented by adding another constraint to the emission matrix.
 Recall distributional parameters of the emission matrix
 $\phi \in \mathbb{R}^{|\mcX|\times|\mcZ|}$
 and the emission sparsity constraints which associate each token $x$
@@ -488,8 +482,13 @@ we have the following emission distribution:
 \label{eqn:state_dropout}
 p(x \mid z) \propto b_{z}1(z \in \mcC_x)e^{\phi_{xz}}
 \end{equation}
-Performing marginal inference with state dropout requires $O(Tn^2)$ computation,
-where $n = \max_x \left|\set{z:b_z=1,z \in \mcC_x}\right|$.
+
+
+Performing marginal inference with state dropout allows us to skip states that are removed. To ensure the block structure of the previous section
+
+
+%requires $O(Tn^2)$ computation,
+%where $n = \max_x \left|\set{z:b_z=1,z \in \mcC_x}\right|$.
 Additionally, we do not need to compute the parameters of the
 transition and emission distributions that have been dropped. 
 This reduces the cost of computing $\phi$ and $\psi$ from
