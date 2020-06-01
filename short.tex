@@ -400,7 +400,7 @@ anchor=center,inner sep=0pt,outer sep=0pt,scale=\myscale,transform shape}}}
     %\node[rectangle,draw] (Epi) at ($(m-3-2.south) + (0, -2)$) {$E_\pi$};
     %\node[rectangle,draw] (Ez) at ($(m-3-6.south) + (0, -2)$) {$E_z$};
     \node[rectangle,draw] (p1) at ($(m-3-5.south) + (0, 1)$) {MLP$(\mathbf{E}_\pi,\mathbf{E}_z)$};
-    \node[rectangle,draw] (Ex) at ($(m-3-9.south) + (0,1)$) {$E_x$};
+    \node[rectangle,draw] (Ex) at ($(m-3-9.south) + (0,1)$) {$\mathbb{E}_x$};
     \coordinate[] (p2) at ($(m-3-7.south) + (0, 0.2)$);
 
     %\draw[-, thick] (Epi) to (p1);
@@ -619,8 +619,7 @@ and \texttt{wikitext2} \citep{wikitext} datasets.
 \texttt{Penn Treebank} contains 929k tokens in the training corpus,
 with a vocabulary size of 10k.
 We use the preprocessing from \citet{mikolov-2011},
-which lowercases all words and substitutes words outside of the vocabulary
-with unks. 
+which lowercases all words and substitutes words outside of the vocabulary with unks. 
 \texttt{Wikitext2} contains 2M tokens in the training corpus,
 with a vocabulary size of 33k.
 Casing is preserved, and all words outside the vocab are replaced with the unk token.
