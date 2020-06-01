@@ -293,7 +293,7 @@ and quadratic in the size of the hidden state.
 %For an HMM, the same is true with a naive approach: the cost is linear sequence length
 %but quadratic in the size of the state space.
 Inference in an HMM can be sped up to be logarithmic in sequence length
-on a parallel machine via the prefix-sum trick~ \cite{sarkka}.
+on a parallel machine via the prefix-sum algorithm \cite{ladner1980prefix}.
 Quasi-RNNs \citep{bradbury2016qrnn} also have a logarithmic dependency on $T$
 by applying the same prefix-sum trick, but do not model uncertainty over
 latent dynamics.

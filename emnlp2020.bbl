@@ -1,4 +1,4 @@
-\begin{thebibliography}{27}
+\begin{thebibliography}{26}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{Bengio et~al.(2003)Bengio, Ducharme, Vincent, and
@@ -31,12 +31,6 @@ Antoine Dedieu, Nishad Gothoskar, Scott Swingle, Wolfgang Lehrach, Miguel
   Lázaro-Gredilla, and Dileep George. 2019.
 \newblock \href {http://arxiv.org/abs/1905.00507} {Learning higher-order
   sequential structure with cloned hmms}.
-
-\bibitem[{Ghahramani and Jordan(1997)}]{zoubin1997fhmm}
-Zoubin Ghahramani and Michael~I. Jordan. 1997.
-\newblock \href {https://doi.org/10.1023/A:1007425814087} {Factorial hidden
-  markov models}.
-\newblock \emph{Mach. Learn.}, 29(2–3):245–273.
 
 \bibitem[{Han et~al.(2017)Han, Jiang, and Tu}]{han2017dependency}
 Wenjuan Han, Yong Jiang, and Kewei Tu. 2017.
@@ -76,6 +70,12 @@ Thomas Kuhn, Heinrich Niemann, and Ernst~Günter Schukat-Talamazzini. 1994.
   {http://dblp.uni-trier.de/db/conf/icassp/icassp1994.html#KuhnNS94} {Ergodic
   hidden markov models and polygrams for language modeling.}
 \newblock pages 357--360.
+
+\bibitem[{Ladner and Fischer(1980)}]{ladner1980prefix}
+Richard~E. Ladner and Michael~J. Fischer. 1980.
+\newblock \href {https://doi.org/10.1145/322217.322232} {Parallel prefix
+  computation}.
+\newblock \emph{J. ACM}, 27(4):831–838.
 
 \bibitem[{Ma and Hovy(2016)}]{ma2016crf}
 Xuezhe Ma and Eduard~H. Hovy. 2016.
@@ -125,12 +125,6 @@ Tomas Mikolov, Martin Karafiát, Lukás Burget, Jan Cernocký, and Sanjeev
   {http://dblp.uni-trier.de/db/conf/interspeech/interspeech2010.html#MikolovKBCK10}
   {Recurrent neural network based language model.}
 \newblock pages 1045--1048.
-
-\bibitem[{Nepal and Yates(2013)}]{nepal2013fhmm}
-Anjan Nepal and Alexander Yates. 2013.
-\newblock Factorial hidden markov models for learning representations of
-  natural language.
-\newblock \emph{CoRR}, abs/1312.6168.
 
 \bibitem[{Petrov et~al.(2006)Petrov, Barrett, Thibaux, and
   Klein}]{petrov2006splitmerge}
