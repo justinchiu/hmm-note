@@ -1,4 +1,4 @@
-\begin{thebibliography}{23}
+\begin{thebibliography}{26}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{Bengio et~al.(2003)Bengio, Ducharme, Vincent, and
@@ -40,6 +40,14 @@ Wenjuan Han, Yong Jiang, and Kewei Tu. 2017.
   Natural Language Processing}, pages 1683--1688, Copenhagen, Denmark.
   Association for Computational Linguistics.
 
+\bibitem[{Heafield et~al.(2013)Heafield, Pouzyrevsky, Clark, and Koehn}]{kenlm}
+Kenneth Heafield, Ivan Pouzyrevsky, Jonathan~H. Clark, and Philipp Koehn. 2013.
+\newblock \href {https://www.aclweb.org/anthology/P13-2121} {Scalable modified
+  {K}neser-{N}ey language model estimation}.
+\newblock In \emph{Proceedings of the 51st Annual Meeting of the Association
+  for Computational Linguistics (Volume 2: Short Papers)}, pages 690--696,
+  Sofia, Bulgaria. Association for Computational Linguistics.
+
 \bibitem[{Huang(2011)}]{huang2011thesis}
 Zhongqiang Huang. 2011.
 \newblock \href {https://drum.lib.umd.edu/handle/1903/12295} {\emph{Modeling
@@ -71,11 +79,10 @@ Richard~E. Ladner and Michael~J. Fischer. 1980.
   computation}.
 \newblock \emph{J. ACM}, 27(4):831–838.
 
-\bibitem[{Ma and Hovy(2016)}]{ma2016crf}
-Xuezhe Ma and Eduard~H. Hovy. 2016.
-\newblock \href {http://arxiv.org/abs/1603.01354} {End-to-end sequence labeling
-  via bi-directional lstm-cnns-crf}.
-\newblock \emph{CoRR}, abs/1603.01354.
+\bibitem[{Liang(2005)}]{liang2005brown}
+Percy Liang. 2005.
+\newblock Semi-supervised learning for natural language.
+\newblock In \emph{MASTER’S THESIS, MIT}.
 
 \bibitem[{Marcus et~al.(1993)Marcus, Santorini, and Marcinkiewicz}]{ptb}
 Mitchell~P. Marcus, Beatrice Santorini, and Mary~Ann Marcinkiewicz. 1993.
@@ -124,6 +131,12 @@ Lawrence~R. Rabiner. 1990.
   Speech Recognition}, page 267–296. Morgan Kaufmann Publishers Inc., San
   Francisco, CA, USA.
 
+\bibitem[{Takase et~al.(2018)Takase, Suzuki, and Nagata}]{awddoc}
+Sho Takase, Jun Suzuki, and Masaaki Nagata. 2018.
+\newblock \href {http://arxiv.org/abs/1808.10143} {Direct output connection for
+  a high-rank language model}.
+\newblock \emph{CoRR}, abs/1808.10143.
+
 \bibitem[{Tran et~al.(2016)Tran, Bisk, Vaswani, Marcu, and
   Knight}]{tran2016hmm}
 Ke~M. Tran, Yonatan Bisk, Ashish Vaswani, Daniel Marcu, and Kevin Knight. 2016.
@@ -144,6 +157,12 @@ Sam Wiseman, Stuart~M. Shieber, and Alexander~M. Rush. 2018.
 \newblock \href {http://arxiv.org/abs/1808.10122} {Learning neural templates
   for text generation}.
 \newblock \emph{CoRR}, abs/1808.10122.
+
+\bibitem[{Yang et~al.(2017)Yang, Dai, Salakhutdinov, and Cohen}]{mos}
+Zhilin Yang, Zihang Dai, Ruslan Salakhutdinov, and William~W. Cohen. 2017.
+\newblock \href {http://arxiv.org/abs/1711.03953} {Breaking the softmax
+  bottleneck: {A} high-rank {RNN} language model}.
+\newblock \emph{CoRR}, abs/1711.03953.
 
 \bibitem[{Zaremba et~al.(2014)Zaremba, Sutskever, and
   Vinyals}]{zaremba2014lstm}

@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex short"] 1591041495 "short.aux" "short.bbl" "short" 1591042113
+["bibtex short"] 1591050410 "short.aux" "short.bbl" "short" 1591050436
   "./acl_natbib.bst" 1571355934 47585 c671f071a8f3957857acb307a7173505 ""
-  "anthology.bib" 1590976119 19852 8f06f68ef81cece183610402cbaa5c94 ""
+  "anthology.bib" 1591049507 21756 34099d8b2e36ae9b4649684bced2ec41 ""
   "emnlp2020.bib" 1571355934 1974 4d7084b2f3a55753e2f48da8052bb437 ""
-  "short.aux" 1591042113 5946 b7c8350c2ef474c3c4dc32fcda3be176 ""
+  "short.aux" 1591050411 6204 630bdce773d7d491372dc83c18bb88aa ""
   (generated)
   "short.blg"
   "short.bbl"
-["pdflatex"] 1591042112 "short.tex" "short.pdf" "short" 1591042113
+["pdflatex"] 1591050410 "short.tex" "short.pdf" "short" 1591050436
   "/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1480098688 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -306,12 +306,12 @@
   "emnlp2020.sty" 1577480256 22046 23868bb911b26009f0fd06fe069f4c26 ""
   "img/trellis.tex" 1590915002 35287 3901ed877a9a0357acd34c2c297e1fcc ""
   "mystyle.sty" 1590908742 2661 21f6bc81fda55e7d97bece70f7a902f0 ""
-  "short.aux" 1591042113 5946 b7c8350c2ef474c3c4dc32fcda3be176 ""
-  "short.bbl" 1591041496 6941 e67da8cb470032f08d4a9d8e2eb87511 "bibtex short"
-  "short.out" 1591042113 0 d41d8cd98f00b204e9800998ecf8427e ""
-  "short.tex" 1591042113 48689 aa3d9eac355127551e2c25644d8a9925 ""
+  "short.aux" 1591050411 6204 630bdce773d7d491372dc83c18bb88aa ""
+  "short.bbl" 1591050410 7942 31f5a300defa85ff6ef24b44ae03c546 "bibtex short"
+  "short.out" 1591050410 0 d41d8cd98f00b204e9800998ecf8427e ""
+  "short.tex" 1591050435 49423 104e403210923ff62ec464d24a88847f ""
   (generated)
-  "short.out"
-  "short.pdf"
   "short.aux"
+  "short.out"
   "short.log"
+  "short.pdf"

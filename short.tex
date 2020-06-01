@@ -244,8 +244,9 @@ p(\bx, \bz; \theta)
  p(z_t \mid z_{t-1}) \propto e^{\psi_{z_tz_{t-1}}} \; \ p(x_t \mid z_t) \propto e^{\phi_{x_tz_t}}
 \end{equation}
 with  transitions $\psi \in \mathbb{R}^{|\mcZ|\times|\mcZ|}$
-and  emissions $\phi \in \mathbb{R}^{|\mcX| \times |\mcZ|}$. We refer to $p(z_t \mid x_t)$ as $\mathbf{O}$ and
-$p(x_t \mid x_{t-1})$ as $\mathbf{T}$.
+and  emissions $\phi \in \mathbb{R}^{|\mcX| \times |\mcZ|}$.
+We refer to 
+$p(z_t \mid z_{t-1})$ as $\mathbf{T}$ and $p(x_t \mid z_t)$ as $\mathbf{O}$.
 
 We distinguish two types of parameterizations: \textit{scalar} and \textit{neural}.
 A scalar parameterization simply uses $\theta = \set{\phi,\psi}$ to fit one model parameter for
@@ -272,7 +273,13 @@ with gradient ascent (or alternative variants of expectation maximization).
 %Recurrent neural networks (RNNs) %are one of the main alternatives to HMMs,
 %also model data with sequential structure and often achieve stronger performance. 
 %HMMs though are a useful alternative approach. 
-Recurrent neural networks (RNNs) do not attempt to decouple the latent dynamics from the observed. This often leads to improved accuracy, but does not allow for posterior inference or for directly incorporating additional state information. A further benefits of HMMs is that, unlike RNNs, their commutative structure  allow for parallel inference via the prefix-sum algorithm \cite{ladner1980prefix}.\footnote{Quasi-RNNs \citep{bradbury2016qrnn} also have a logarithmic dependency on $T$
+Recurrent neural networks (RNNs) do not attempt to decouple the latent dynamics from the observed.
+This often leads to improved accuracy,
+but does not allow for posterior inference or for directly incorporating additional
+state information.
+A further benefits of HMMs is that, unlike RNNs,
+their associative structure allows for parallel inference
+via the prefix-sum algorithm \cite{ladner1980prefix}.\footnote{Quasi-RNNs \citep{bradbury2016qrnn} also have a logarithmic dependency on $T$
 by applying the same prefix-sum trick, but do not model uncertainty over
 latent dynamics.}
 
@@ -357,10 +364,16 @@ This gives a serial complexity of $O(T(|Z|/M)^2)$
 
 \paragraph{Factored Neural Parameterization}
 
-
-
-Even with blocked emissions, the scalar parameterization of an HMM grows quadratically with states due to the transition matrix. We instead employ a neural parameterization. The approach is to embed each state in $\cal Z$ ($\mathbf{E}_z \in \mathbb{R}^{|\mcZ| \times h}$), each token in $\cal X$ ($\mathbf{E}_x \in \mathbb{R}^{|\mcX| \times h}$), and each partition ($\mathbf{E}_\pi \in \mathbb{R}^{M \times h}$). From these we can create representations for leaving a state, entering a state, and emitting a word: 
-\[ \mathbf{H}_{\textrm{out}},\mathbf{H}_{\textrm{in}},\mathbf{H}_\textrm{emit}  = \text{MLP}(\mathbf{E}_\phi, \mathbf{E}_z ) \] 
+Even with blocked emissions, the scalar parameterization of an HMM grows quadratically
+with states due to the transition matrix.
+We instead employ a neural parameterization.
+The approach is to embed each state in $\cal Z$ ($\mathbf{E}_z \in \mathbb{R}^{|\mcZ| \times h}$),
+each token in $\cal X$ ($\mathbf{E}_x \in \mathbb{R}^{|\mcX| \times h}$),
+and each partition ($\mathbf{E}_\pi \in \mathbb{R}^{M \times h}$).
+From these we can create representations for leaving a state, entering a state,
+and emitting a word: 
+\[ \mathbf{H}_{\textrm{out}},\mathbf{H}_{\textrm{in}},\mathbf{H}_\textrm{emit}
+ = \text{MLP}(\mathbf{E}_\phi, \mathbf{E}_z ) \] 
 %which allows the number of parameters to scale linearly with the size of the state space.
 %We parameterize the transition and emission distributions using a residual network
 %with LayerNorm.
@@ -382,10 +395,10 @@ $\psi \in \mathbb{R}^{|Z|\times|Z|}$. MLP architecture follows \cite{kim2019cpcf
 This neural parameterization takes $O(h^2 + h|\mcZ| + h|\mcX|)$ parameters.
 
 
-Note that parameter computation is independent of inference and can be cache at test-time.
+Note that parameter computation is independent of inference and can be cached at test-time.
 %The clean separation between the computation of the distributional parameters and marginal inference
 %allows the distributional parameters to be computed and then cached for use in inference.
-For training we compute them once per batch. 
+For training, we compute them once per batch. 
 For RNNs and similar models, %transition activations 
 emission probabilities must be recomputed for each token. 
 
@@ -442,7 +455,8 @@ VL-HMM Training
 %memorize training patterns.
 
 To encourage generalization through distributed state usage, we introduce dropout to the model. 
-We propose a form of HMM state dropout that removes states from use entirely, which has the added benefit of speeding up inference.
+We propose a form of HMM state dropout that removes states from use entirely,
+which has the added benefit of speeding up inference.
 
 %This forces the model to use different states while also leading to efficiency improvements
 %for computing parameterization and inference. 
@@ -452,13 +466,21 @@ We propose a form of HMM state dropout that removes states from use entirely, wh
 %and the emission sparsity constraints which associate each token $x$
 %with a set of states $\mcC_x$.
 
-State dropout acts on each emission block $\mathbf{O}_1 \ldots \mathbf{O}_M$ independently. Recall each block has $|{\cal Z}| / M$ columns. For each, we sample a binary dropout mask by sampling $ \lambda_{\text{drop}} \times(|{\cal Z}| / M)$ dropped row indices uniformly without replacement. We concatenate these to a global vector $\mathbf{b}$, which, along with the previous constraints,  ensures,
+State dropout acts on each emission block $\mathbf{O}_1 \ldots \mathbf{O}_M$ independently.
+Recall each block has $|{\cal Z}| / M$ columns.
+For each, we sample a binary dropout mask by sampling
+$ \lambda_{\text{drop}} \times(|{\cal Z}| / M)$ dropped row indices uniformly without replacement.
+We concatenate these to a global vector $\mathbf{b}$, which, along with the previous constraints,  ensures,
 \begin{equation}
 \label{eqn:state_dropout}
 p(x \mid z) \propto b_{z}1(z \in \mcZ_x)e^{\phi_{xz}}
 \end{equation}
 
-State dropout gives a larger practical speed up for both parameter computation and inference. For a dropout factor of $0.5$ we get a $4\times$ speed improvement for both, due to reduction of possible transitions. This structured dropout is also easier to exploit on GPU, since it maintains block structure with fixed-height.
+State dropout gives a larger practical speed up for both parameter computation and inference.
+For a dropout factor of $0.5$ we get a $4\times$ speed improvement for both,
+due to reduction of possible transitions.
+This structured dropout is also easier to exploit on GPU,
+since it maintains block structure with fixed-height.
 
 
 %Performing marginal inference with state dropout allows us to skip states that are removed 
@@ -516,12 +538,16 @@ which lowercases all words and substitutes words outside of the vocabulary
 with unks. 
 \texttt{Wikitext2} contains 2M tokens in the training corpus,
 with a vocabulary size of 33k.
-Casing is preserved, and all words outside the vocab are unked.
+Casing is preserved, and all words outside the vocab are replaced with the unk token.
 Both datasets contain inter-sentence dependencies,
 due to the use of documents consisting of more than a single sentence.
 
 We construct the Brown clusters on the training portions of both datasets.
-
+As baselines, we train a 5-gram model \citep{kenlm},
+a feedforward model with 256 hidden dimensions,
+and a 2-layer LSTM with 256 hidden dimension.
+We compare these models with an HMM that considers 256 latent states
+at every timestep at test time.
 
 \begin{comment}
 \paragraph{Implementation}
@@ -555,14 +581,21 @@ On \texttt{Penn Treebank}, we see in Tbl.~\ref{tbl:ptb-ppl}
 that a 32k state HMM is able to outperform the n-gram models
 as reported by \citet{mikolov2012rnn}, achieving a test perplexity of
 115.8 versus 141.2 respectively.
-We also find that the HMM 32k states vastly outperforms the vanilla HMM results from \citet{buys2018hmm},
-in addition to the 
+
+We also find that the 32k state HMM vastly outperforms the vanilla HMM results from \citet{buys2018hmm},
+which achieved a validation perplexity of 284.6
+\footnote{\citet{buys2018hmm} did not report test perplexity in their experiments.}
+versus the 32k state HMM at 125.0.
+The 32k state HMM outperforms their HMM extension, which achieves a
+validation perplexity of 142.3 by relaxing various HMM assumptions
+to more closely resemble an RNN.
 
 However, we find that the HMM underperforms RNN-based models.
+The baseline 2-layer 256 dim LSTM achieves 88.8 test perplexity,
+beating the HMM by 27 ppl.
 This trend persists in \texttt{Wikitext-2},
-with the HMM outperforming the 5-gram model at {\color{red}FILL IN} and 210.9 perplexity respectively.
-
-
+with the HMM outperforming the 5-gram model at {\color{red}FILL IN}
+and 210.9 perplexity respectively.
 
 \begin{comment}
 Since the HMMs require parameters linear in the number of hidden states,
@@ -622,10 +655,10 @@ AWD-LSTM-MoS \citep{mos} & 35M & 63.9 & 61.5\\
 AWD-LSTM-DOC \citep{awddoc} & 37M & 60.3 & 58.0\\
 KN-5              & 5.7M       & 248.7 & 234.3\\
 \midrule
-256 dim FF 5-gram & 8.8M    & 210.9     & 195.0\\
-LSTM              & 9.6M    & 124.5     & 117.5\\
-HMM               & 17.3M   & 167       & -\\
-HMM               & 13.7M   & -       & -\\
+256 dim FF 5-gram & 8.8M & 210.9     & 195.0\\
+2 layer 256 dim LSTM     & 9.6M    & 124.5     & 117.5\\
+32k state HMM (no fac)   & 17.3M   & 167       & -\\
+32k state HMM            & 13.7M   & -       & -\\
 \bottomrule
 \end{tabular}
 \caption{\label{tbl:wt2-ppl}
@@ -768,7 +801,7 @@ and find that performance of independent state embeddings is similar
 to a model with factored embeddings
 but with fewer parameters.
 We additionally found that if the number of clusters is too small
-(i.e. 64 or 32)
+(i.e. 64 or 32 as opposed to 128)
 while keeping the total number of hidden states fixed to 16384,
 performance on validation drops to 143 perplexity.
 
