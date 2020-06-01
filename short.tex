@@ -586,8 +586,8 @@ AWD-LSTM \citep{merity2017awdlstm} & 24M & 60.0 & 57.3\\
 AWD-LSTM + cache \citep{merity2017awdlstm} & 24M & 53.9 & 52.8\\
 HMM \citep{buys2018hmm} & 10M & 284.6 & -\\
 HMM + sigmoid + RNN emit \citep{buys2018hmm} & 10M & 142.3 & -\\
-\midrule
 KN-5 & 2.2M & 161.3 & 157.2\\
+\midrule
 256 dim FF 5-gram  & 2.9M     & 159.9      & 152.0  \\
 2 layer 256 dim LSTM  & 3.6M     & 93.6       & 88.8   \\
 32k state HMM   & 7.7M     & 125.0      & 115.8  \\
@@ -595,8 +595,7 @@ KN-5 & 2.2M & 161.3 & 157.2\\
 \end{tabular}
 \caption{\label{tbl:ptb-ppl}
 Perplexities on the \texttt{Penn Treebank} dataset.
-The top shows results from previous work,
-while the bottom shows our results for models 
+The bottom section shows results for models 
 with comparable computational cost.
 In particular, we compare models that have the same 
 asymptotic inference cost: linear in
@@ -614,8 +613,8 @@ and $|\mcZ| = 256$ for the HMM.
 Model & Num Params & Valid PPL & Test PPL\\
 \midrule
 A     & b          & c         & d       \\
-\midrule
 KN-5              & 5.7M       & 248.7 & 234.3\\
+\midrule
 256 dim FF 5-gram & 8.8M    & 210.9     & 195.0\\
 LSTM              & 9.6M    & 124.5     & 117.5\\
 HMM               & 17.3M   & 167       & -\\
@@ -624,9 +623,9 @@ HMM               & 13.7M   & -       & -\\
 \end{tabular}
 \caption{\label{tbl:wt2-ppl}
 Perplexities on the \texttt{Wikitext-2} dataset.
-We report results from previous work on top,
-while the bottom shows our results for the same
-models and hyperparameters applied to \texttt{Penn Treebank}.
+The bottom shows results for the models with 
+similar computation cost, using the same
+hyperparameters applied to \texttt{Penn Treebank}.
 }
 \end{table*}
 
