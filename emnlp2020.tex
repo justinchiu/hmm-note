@@ -301,9 +301,8 @@ latent dynamics.
 \section{Scaling HMMs}
 
 The hypothesis of this work is that by expanding the state space of HMMs while while maintaining 
-a regularized neural parameterization and efficient exact inference, we can build models that are competitive with RNNs. We propose three techniques for scaling these models: factored neural parameterization, induced block transitions, and state dropout.
+a regularized neural parameterization and efficient exact inference, we can build models that are competitive with RNNs. We propose three techniques for scaling these models: a factored neural parameterization, induced block transitions, and state dropout.
 
-Our approach assumes 
 
 \subsection{Factored Neural Parameterization}
 A neural parameterization allows us to precisely control the
@@ -636,8 +635,8 @@ We report perplexities
 for \texttt{Penn Treebank} in Table \ref{tbl:ptb-ppl} and for 
 \texttt{wikitext2} in Table \ref{tbl:wt2-ppl}.
 
-On \texttt{Penn Treebank}, we see in Tbl.~\ref{tbl:ptb-ppl}
-that a 32k state HMM is able to outperform the n-gram models (with cache)
+On \texttt{Penn Treebank}
+the 32k state HMM is able to outperform the n-gram models (with cache)
 as reported by \citet{mikolov2012rnn}, achieving a test perplexity of
 115.8 versus 125.7 respectively.
 However, we find that the HMM underperforms RNN-based models
@@ -721,10 +720,10 @@ the size of the state space, up until we reach 65k states.
 It is possible that at 65k states, we are bottlenecked by
 other aspects of the model, such as the expressive power
 or learnability of the neural parameterization. 
-Due to GPU memory constraints, we were unable to further
-explore larger parameterizations, both 
-in terms of the dimension of the neural components as well as 
-the size of the state space.
+%Due to GPU memory constraints, we were unable to further
+%explore larger parameterizations, both 
+%in terms of the dimension of the neural components as well as 
+%the size of the state space.
 However, we note that increasing the dimension of the neural component from 256 to
 512 dimensions with $|\mcZ| = 32,768$ total states did not improve performance.
 Another hypothesis is that the marginal gains in likelihood
