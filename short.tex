@@ -586,7 +586,7 @@ AWD-LSTM \citep{merity2017awdlstm} & 24M & 60.0 & 57.3\\
 AWD-LSTM + cache \citep{merity2017awdlstm} & 24M & 53.9 & 52.8\\
 HMM \citep{buys2018hmm} & 10M & 284.6 & -\\
 HMM + sigmoid + RNN emit \citep{buys2018hmm} & 10M & 142.3 & -\\
-KN-5 & 2.2M & 161.3 & 157.2\\
+KN-5 (do we cite KenLM here? software \citep{kenlm}) & 2.2M & 161.3 & 157.2\\
 \midrule
 256 dim FF 5-gram  & 2.9M     & 159.9      & 152.0  \\
 2 layer 256 dim LSTM  & 3.6M     & 93.6       & 88.8   \\
@@ -612,7 +612,9 @@ and $|\mcZ| = 256$ for the HMM.
 \toprule
 Model & Num Params & Valid PPL & Test PPL\\
 \midrule
-A     & b          & c         & d       \\
+AWD-LSTM \citep{merity2017awdlstm} & 33M & 68.6 & 65.8\\
+AWD-LSTM-MoS \citep{mos} & 35M & 63.9 & 61.5\\
+AWD-LSTM-DOC \citep{awddoc} & 37M & 60.3 & 58.0\\
 KN-5              & 5.7M       & 248.7 & 234.3\\
 \midrule
 256 dim FF 5-gram & 8.8M    & 210.9     & 195.0\\
@@ -622,7 +624,7 @@ HMM               & 13.7M   & -       & -\\
 \bottomrule
 \end{tabular}
 \caption{\label{tbl:wt2-ppl}
-Perplexities on the \texttt{Wikitext-2} dataset.
+Single model perplexities on the \texttt{Wikitext-2} dataset.
 The bottom shows results for the models with 
 similar computation cost, using the same
 hyperparameters applied to \texttt{Penn Treebank}.
