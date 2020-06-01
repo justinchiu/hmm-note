@@ -27,9 +27,6 @@
 \usepackage{subcaption}
 
 % trellis
-\usepackage{lmodern}%
-\usepackage{textcomp}%
-\usepackage{lastpage}%
 \usepackage{tikz}%
 
 \usepackage{algorithm}
@@ -67,14 +64,13 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-Hidden Markov models (HMMs) are a classic approach in NLP that 
-explicitly separate the hidden state and generative structure.
-Unfortunately, this clean separation makes them difficult to fit to large datasets in modern NLP, 
+The Hidden Markov model (HMM) is a fundamental tool for sequence modeling that 
+cleanly separates the hidden state from the emission structure.
+Unfortunately, this clean separation makes HMMs difficult to fit to large datasets in modern NLP, 
 and they have fallen out of use due to very poor performance 
 compared to fully observed models. This work revisits the challenge of 
-fitting HMMs to large datasets, taking ideas from recent approaches to neural modeling.
-We propose methods for scaling HMMs to massive state spaces, while maintaining compact parameterization, effective regularization, and efficient exact inference. Experiments show that this approach leads to models that are vastly better than previous HMM and ngram-based methods while nearing the performance of 
-simple NN models. 
+scaling HMMs to supervised datasets, taking ideas from recent approaches to neural modeling.
+We propose methods for scaling HMMs to massive state spaces, while maintaining compact parameterization, effective regularization, and efficient exact inference. Experiments show that this approach leads to models that are much more accurate than previous HMMs and ngram-based methods while nearing the performance of  NN models. 
 \end{abstract}
 
 \section{Introduction}
@@ -86,7 +82,7 @@ They are core to time-series problems in bioinformatics, reinforcement learning,
 of course, natural language processing.
 Historically they have been used extensively in NLP for tasks such as
 sequence modeling \citep{rabiner1990tut}, alignment \citep{vogel1996hmm},
-and less extensively language modeling \citep{kuhn1994hmmlm,huang2011thesis}. 
+and even, in a few cases, to language modeling \citep{kuhn1994hmmlm,huang2011thesis}. 
 Compared to other approaches for sequence models, HMMs are naturally appealing since they 
 fully separate out the process of sequential memory from the process of generation, while allowing for 
 exact posterior inference. 
@@ -99,28 +95,26 @@ exact posterior inference.
 %HMMs were explored in work by \citet{kuhn1994hmmlm,huang2011thesis}
 %but were not revisited until recently \citep{krakovna2016hmm,dedieu2019learning}.
 
-In recent years, most state-of-the-art systems in NLP have moved away utilizing explicit hidden states,
-particularly for structured models. For instance in the area of language models, systems have moved to model observed words using n-gram models, feedforward neural networks \citep{bengio2003nlm}, recurrent neural networks \citep{mikolov2010rnn,zaremba2014lstm,merity2017awdlstm}
+In recent years, most state-of-the-art systems in NLP have moved away from utilizing explicit hidden states,
+particularly for structured models. For instance in the area of language modeling, systems primarily model observed words using n-gram models, feedforward neural networks \citep{bengio2003nlm}, recurrent neural networks \citep{mikolov2010rnn,zaremba2014lstm,merity2017awdlstm}
 or transformers \citep{radford2019language}.
 This progress has led to the common wisdom that latent-variable models like HMMs are not
 competitive with fully observed models.
 
 
 We take several lessons from the success of deep neural models for NLP tasks:
-(a) the right factorization is critically important for representation learning, e.g. a feedforward model \citet{bengio2003nlm}
+(a) the right factorization is critically important for representation learning, e.g. a feedforward model \cite{bengio2003nlm}
 can have the same probabilistic structure as an n-gram model while performing significantly better;
 (b) overparameterization is critical for finding better local optima,
-e.g. overly large LSTMs \citet{zaremba2014lstm} show marked improvements in performance;
+e.g. overly large LSTMs \cite{zaremba2014lstm} show marked improvements in performance;
 (c) regularization choices are necessary to find good solutions for different model parameterizations,
 e.g. experiments by \citet{merity2017awdlstm} outline a variety of training choices.
 
-In this work, we revisit HMMs for NLP. We posit that for HMMs to be 
-effective they must scale to much large state-spaces, utilizing appropriate parameterization, and 
-employ the right regularization.
+In this work, we revisit HMMs for NLP, positing that competitive performance requires very large HMM (VL-HMMs). To scale to large state-spaces, we need  appropriate parameterizations, efficient inference, and 
+effective regularization.
 Taking this into account, we develop a neural parameterization for HMMs that extends 
-them to comparable size and structure of deep learning models,
-while allowing us to lazily instantiate distributions.
-We then develop a sparsity constraint that allows us to utilize very large HMMs,
+them to comparable size and structure of deep models.
+We combine this parameterization with a modeling constraint that allows us to utilize HMMs with very large state spaces,
 while maintaining efficient exact inference.
 Finally we incorporate a variant of dropout that both improves accuracy
 and reduces the computational overhead by an order of magnitude during training. 
@@ -131,36 +125,32 @@ It also performs comparably to neural counterparts with a similar number of para
 while maintaining uncertainty over the state dynamics.
 
 \section{Related Work}
-Investigations into improving the performance of HMMs
-involved relaxing independence or modeling assumptions \citep{buys2018hmm}
-to resemble a recurrent neural network, or through model combination
-with a recurrent neural network \citep{krakovna2016hmm}.
-However, \citet{buys2018hmm} reported HMM performance much worse than
-an n-gram model for language modeling, and \citep{krakovna2016hmm}
-experimented with 20 hidden states.
-We demonstrate that HMMs, once given enough states,
-outperform n-gram models and are comparable to
-recurrent neural networks in performance.
+
+Several recent papers have combined HMMs with 
+neural networks with moderate success. \citet{buys2018hmm}
+develop an approach to relax the independence and modeling assumptions to resemble a recurrent neural network. However, their results either report HMM performance much worse than
+an n-gram model for language modeling or require altering the fundametal probabilistic structure of the model. 
+\citet{krakovna2016hmm} utilize model combination with a recurrent neural network to connect both approaches in a 20 state model. We demonstrate how to scale to orders of magnitude more states and show performance surpassing n-gram models.
 
 % Prior work has tried neural parameterizations, but with small state spaces.
 Prior work has demonstrated the benefits of neural parameterization of structured generative models. 
-For HMMs, \citet{tran2016hmm} demonstrated improvements in POS induction with a
+For HMMs, \citet{tran2016hmm} demonstrate improvements in POS induction with a
 neural parameterization of an HMM.
-Other work has neuralized classic models, such as 
+Other work has used neural parameterization for classic models, such as 
 dependency models with valence \citep{han2017dependency},
 hidden semi-Markov models \citep{wiseman2018hsmm},
 and context free grammars \citep{kim2019cpcfg}.
-All of these works used latent variables with relatively small state spaces,
+All of these works use latent variables with relatively small state spaces,
 as the goal of both was structure induction rather than language modeling itself.
-We extend the neural parameterization to much larger state space models.
+We extend the neural parameterization with the aim of supervised modeling.
 
 % Prior work has tried large state spaces with scalar parameterizations.
 We also draw inspiration from the experiments with
 cloned HMMs by \citet{dedieu2019learning},
-who proposed to introduce sparsity constraints in scalar
+who propose to introduce sparsity constraints in scalar
 emission distribution of HMMs in order to make conditional inference
 tractable in large state spaces.
-\citet{dedieu2019learning} trained a 30k state HMM on character-level language modeling
+They train a 30k state HMM on character-level language modeling
 by constraining every state to emit only a single character type.
 This particular constraint is problematic for language modeling at the word level,
 where the vocabulary size is much larger.
@@ -169,23 +159,23 @@ Brown clustering \citep{brown1992} which allows us to extend their
 work to vocabularies that are larger than the state space.
 
 % State splitting / refinement
-Another approach to scaling to larger state spaces is to initialize
+Finally, another approach to scaling to larger state spaces is to initialize
 with a small state space then grow the state space via a split-merge process
 \citep{petrov2006splitmerge,huang2011thesis}.
 In particular, \citet{huang2011thesis} learn an HMM for language modeling
 via this process.
-Additionally, the cloned HMM \citep{dedieu2019learning} can be seen
-as an HMM that starts with a single state per word,
-then splits every state into $k$ states at the start
-with no subsequent splits or merges.
+%Additionally, the cloned HMM \citep{dedieu2019learning} can be seen
+%as an HMM that starts with a single state per word,
+%then splits every state into $k$ states at the start
+%with no subsequent splits or merges.
 The application of more complicated split-merge
 procedures is an avenue for future work,
-as we focus on fixed-size state spaces for simplicity.
+as we focus on fixed-size state spaces.
 
-There are also extensions of HMMs, such as factorial HMMs \cite{zoubin1997fhmm,nepal2013fhmm}
-and context free grammars \citep{kim2019cpcfg}.
-We leave scaling more expressive models to large state spaces for future work,
-and focus on scaling the basic HMM.
+%There are also extensions of HMMs, such as factorial HMMs \cite{zoubin1997fhmm,nepal2013fhmm}
+%and context free grammars \citep{kim2019cpcfg}.
+%We leave scaling more expressive models to large state spaces for future work,
+%and focus on scaling the basic HMM.
 
 \begin{figure}[t]
 \centering
@@ -193,15 +183,23 @@ and focus on scaling the basic HMM.
 \node[latent] (z0) {$z_0$} ;
 \node[latent] (z1) [right=1.25cm of z0] {$z_1$} ;
 \node[latent] (z2) [right=1.25cm of z1] {$z_2$} ;
+%\node (dots) [right=1.25cm of z2] {$\cdots$} ;
+%\node[latent] (zt) [right=1.25cm of dots] {$z_T$} ;
+
 \node[obs]    (x0) [below = 0.75cm of z0] {$x_0$};
 \node[obs]    (x1) [below = 0.75cm of z1] {$x_1$};
 \node[obs]    (x2) [below = 0.75cm of z2] {$x_2$};
+%\node (adots) [right=1.25cm of x2] {$$} ;
+%\node[latent] (xt) [right=1.25cm of adots] {$x_T$} ;
 
 \edge {z0} {x0};
 \edge {z1} {x1};
 \edge {z2} {x2};
 \edge {z0} {z1};
 \edge {z1} {z2};
+%\edge {z2} {zt};
+%\edge {dots} {zt};
+
 \end{tikzpicture}
 
 \caption{
@@ -270,7 +268,7 @@ we must marginalize over the latent states to obtain the likelihood
 $p(\bx) = \sum_{\bz}p(\bx,\bz)$.
 This sum can be computed in time $O(T|\mcZ|^2)$ via dynamic programming,
 which becomes prohibitive if the number of latent states $|\mcZ|$ is large.
-As the dynamic program is differentiable, we can optimize the likelihood 
+We can optimize the likelihood 
 with gradient ascent.
 \footnote{An alternative method would be to employ expectation maximization,
 however there is no closed form solution for the M-step with a neural parameterization.
@@ -281,10 +279,9 @@ Gradient ascent is applicable to both the scalar and neural parameterizations.}
 % Simplicity.
 % Faithful to generative process.
 % Computational reasons.
-Recurrent neural networks (RNNs) are one of the main alternatives to HMMs,
-as they also model data with sequential structure and achieve strong 
-performance doing so.
-However, HMMs do maintain advantages over RNNs in certain cases.
+Recurrent neural networks (RNNs) %are one of the main alternatives to HMMs,
+also model data with sequential structure and often achieve stronger performance. 
+HMMs though are a useful alternative approach. 
 As a fully observed model, an RNN does not decouple the latent dynamics from the observed.
 This rarely matches the true generative process of the data we wish to model.
 For example, HMMs are widely used in the case of known unknowns,
@@ -293,36 +290,47 @@ such as acoustic modeling in speech recognition.
 Additionally, there are computational benefits to HMMs that are not available in RNNs.
 Computing the likelihood of a sequence in an RNN is linear in the length of a sequence
 and quadratic in the size of the hidden state.
-For an HMM, the same is true with a naive approach: the cost is linear sequence length
-but quadratic in the size of the state space.
-However, inference in the HMM can be sped up to be logarithmic in sequence length
-on a parallel machine via the prefix-sum trick.
+%For an HMM, the same is true with a naive approach: the cost is linear sequence length
+%but quadratic in the size of the state space.
+Inference in an HMM can be sped up to be logarithmic in sequence length
+on a parallel machine via the prefix-sum trick~ \cite{sarkka}.
 Quasi-RNNs \citep{bradbury2016qrnn} also have a logarithmic dependency on $T$
 by applying the same prefix-sum trick, but do not model uncertainty over
 latent dynamics.
 
-\section{Method}
+\section{Scaling HMMs}
 
-Our goal is to vastly expand the state space of an HMM model, while maintaining 
-a regularized neural parameterization and efficient exact inference. 
+The hypothesis of this work is that by expanding the state space of HMMs while while maintaining 
+a regularized neural parameterization and efficient exact inference, we can build models that are competitive with RNNs. We propose three techniques for scaling these models: factored neural parameterization, induced block transitions, and state dropout.
 
-\subsection{Static Parameterization}
+\subsection{Factored Neural Parameterization}
 A neural parameterization allows us to precisely control the
 represention of distributional parameters,
 affording a degree of flexibility not present in a scalar parameterization.
-The scalar parameterization of a very large HMM would take millions of parameters
-due to the transition matrix parameters $\psi \in \mathbb{R}^{|\mcZ|\times|\mcZ|}$.
-We use the intuition that introducing a parameter to model the attraction
-between each state is unnecessary,
-and instead use embeddings which allow the number of parameters to
-scale linearly with the size of the state space.
+The scalar parameterization of a very large HMM grows quadratically due to the transition matrix parameters $\psi \in \mathbb{R}^{|\mcZ|\times|\mcZ|}$.
+We use the intuition that introducing a parameter to model between each state pair is unnecessary,
+and instead employ state embeddings which allow the number of parameters to scale linearly with the size of the state space.
 
-We parameterize the transition and emission distributions using a residual network
-with LayerNorm.
-Let $E\in\mathbb{R}^{v \times h}$ be an embedding matrix,
-where $v$ is the number of embeddings and
-$h$ is the hidden dimension of our neural network.
-We use the following neural network for $i \in \set{\phi,\psi}$
+%We parameterize the transition and emission distributions using a residual network
+%with LayerNorm.
+%Let $E\in\mathbb{R}^{v \times h}$ be an embedding matrix,
+%where $v$ is the number of embeddings and
+%$h$ is the hidden dimension of our neural network.
+
+
+
+
+Let $E_x \in \mathbb{R}^{|\mcX|\times h}$ be the token embeddings
+and $E_{\textrm{out}},E_{\textrm{in}},E_\textrm{emit}
+\in \mathbb{R}^{|\mcZ|\times h}$ be embeddings for leaving, entering, and emitting from a state respectively. 
+The distributional parameters are given by,
+\begin{equation}
+\begin{aligned}
+\phi = E_x f_\phi(E_\textrm{emit})^\top \;\; 
+\psi = E_\textrm{in} f_\psi(E_\textrm{out})^\top
+\end{aligned}
+\end{equation}
+where $\phi \in \mathbb{R}^{|X|\times|Z|}$ and $\psi \in \mathbb{R}^{|Z|\times|Z|}$, and $f$ is an MLP. \footnote{For the MLP we  use the following neural network
 \begin{equation}
 \label{eqn:res}
 \begin{aligned}
@@ -330,57 +338,44 @@ f_i(E) &= g_i(\textrm{ReLU}(EW_{i1}))\\
 g_i(D) &= \textrm{LayerNorm}(\textrm{ReLU}(DW_{i2}) + D)
 \end{aligned}
 \end{equation}
-to define the distributional parameters,
-where $D$ has the same dimension as $E$
+where $D$ has the dimensions of $E$
 and $W_{i1},W_{i2} \in \mathbb{R}^{h \times h}$.
-Additionally, LayerNorm acts on the last dimension of its argument.
-Let $E_x \in \mathbb{R}^{|\mcX|\times h}$ be the token embeddings
-and $E_{\textrm{previous}},E_{\textrm{current}},E_\textrm{preterminal}
-\in \mathbb{R}^{|\mcZ|\times h}$ the state embeddings.
-The distributional parameters are given by
-\begin{equation}
-\begin{aligned}
-\phi &= E_x f_\phi(E_\textrm{preterminal})^\top\\
-\psi &= E_\textrm{current} f_\psi(E_\textrm{previous})^\top
-\end{aligned}
-\end{equation}
-where $\phi \in \mathbb{R}^{|X|\times|Z|}$ and $\psi \in \mathbb{R}^{|Z|\times|Z|}$.
+}
 
 Compared to fully representing $\phi,\psi$ with a scalar parameterization
 which would require $O(|\mcZ|^2 + |\mcX||\mcZ|)$ parameters,
 this neural parameterization takes $O(h^2 + h|\mcZ| + h|\mcX|)$ parameters
 where $h$ is in the 100s and $|\mcZ|,|\mcX|$ are on the order of 10k.
 
-Given the parameters, we can then perform marginal inference
-by first constructing a trellis
-via indexing into $\phi$ and $\psi$ (illustrated in Fig.~\ref{fig:trellis}),
-then computing marginals with dynamic programming.
+Given the distributional parameters, we can then perform marginal inference separately. 
+%by first constructing a trellis
+%via indexing into $\phi$ and $\psi$ (illustrated in Fig.~\ref{fig:trellis}),
+%then computing marginals with dynamic programming.
 The clean separation between the computation of the distributional parameters and marginal inference
 allows the distributional parameters to be computed and then cached for use in inference.
-In practice,  we compute the emission and transition distributions once per batch.
-This contrasts with recurrent neural networks and transformers,
-which must compute emission probabilities for every observation
-due to a theoretically infinite number of hidden states.
+For training, we can compute the emission and transition distributions once per batch.
+This contrasts with RNNs and other auto-regressive neural networks, which must compute emission probabilities for every observation. 
+
 
 \subsection{Inducing Blocked Transitions}
 Marginal inference for HMMs is quadratic in the size of the state space $|\mcZ|$.
 This limits the size of the state space to the order of 100s,
 which prevents models from having enough states to capture the full history.
 However, we can improve the complexity in special cases.
-In particular, if we know that the probability of emitting a word $x_t$ from a state $z_t$ is 0,
+For instance, if we know that the probability of emitting a word $x_t$ from a state $z_t$ is 0,
 i.e. $p(x_t \mid z_t) = 0$  then we can ignore transitions into and from that state during inference. 
 
 Inspired by cloned HMMs \citep{dedieu2019learning},
 we add parameterization constraints to ensure that this property holds.
 Specifically, we require that for an observed token $x$
-a only fixed number of states $z$ have $p(x \mid z) > 0$.
-For each word, we call this set $\mcC_x \subset \mcZ$.
+only a fixed number of states $z$ have $p(x \mid z) > 0$.
+For each word, we call this support set $\mcC_x \subset \mcZ$.
 This yields the following constrained emission distribution:
 \begin{equation}
 \label{eqn:sparse_emission}
-p(x \mid z) \propto 1(z \in \mcC_x)e^{\phi_{xz}}
+p(x \mid z) \propto \mathbf{1}(z \in \mcC_x)e^{\phi_{xz}}
 \end{equation}
-Exact marginal inference can be performed as
+Exact marginalization can be performed by computing,  
 \begin{equation}
 \label{eqn:sparse_marginalization}
 \begin{aligned}
@@ -399,7 +394,8 @@ This allows us to compute $p(\bx)$ with $T$ matrix-vector products,
 each matrix of dimension $|\mcC_{x_t-1}| \times |\mcC_{x_{t}}|$.
 We choose sets $\mcC_x$ such that $\forall x, |\mcC_x| = k$
 yielding a computation complexity of $O(Tk^2)$ rather than $O(T|\mcZ|^2)$.
-Please refer to Fig.~\ref{fig:trellis} for an illustration of this method.
+
+%Please refer to Fig.~\ref{fig:trellis} for an illustration of this method.
 
 \begin{figure}[!t]
 \begin{center}
@@ -407,7 +403,7 @@ Please refer to Fig.~\ref{fig:trellis} for an illustration of this method.
 \end{center}
 \caption{
 \label{fig:trellis}
-A depiction of the trellis for marginal inference
+State space of 
 after applying emission sparsity constraints and the state dropout method.
 The leftmost column depicts the state dropout mask $\mathbf{b}$,
 which is used to prevent states from being considered during inference.
@@ -466,16 +462,17 @@ Pseudocode for computing the likelihood of a corpus
 
 
 \subsection{Dropout as State Reduction}
-Although a neural parameterization has empirically been shown to find good optima,
-it requires that the distributional parameters be recomputed every time the
-model parameters are updated.
-This entails running a neural network $O(|\mcZ| + |\mcX|)$ times 
-at every iteration of gradient descent.
 
-We introduce a variant of dropout called state dropout that lessens
+To encourage redundancy and distribute state usage, we introduce dropout to the model. While we could use dropout on the parameterization alone, 
+
+variant of dropout called state dropout that lessens
 the computational burden of the neural parameterization at training time
 while also encouraging full use of the state space and 
 reducing the complexity of marginalization.
+
+
+
+
 
 State dropout prevents a state $z$ from being considered during training.
 This can be implemented by adding another constraint to the emission matrix.
@@ -498,9 +495,13 @@ transition and emission distributions that have been dropped.
 This reduces the cost of computing $\phi$ and $\psi$ from
 $O(|\mcZ|^2+|\mcZ||\mcX|)$ to $n^2 + n|\mcX|$.
 
-(Unsatisfied,
-seems like there's a big jump from description to understanding trellis.
-Think this means section 3 is incomplete)
+
+Although a neural parameterization has empirically been shown to find good optima,
+it requires that the distributional parameters be recomputed every time the
+model parameters are updated.
+This entails running a neural network $O(|\mcZ| + |\mcX|)$ times 
+at every iteration of gradient descent.
+
 
 \section{Experiments}
 \label{sec:experiments}
