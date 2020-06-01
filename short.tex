@@ -655,10 +655,10 @@ AWD-LSTM-MoS \citep{mos} & 35M & 63.9 & 61.5\\
 AWD-LSTM-DOC \citep{awddoc} & 37M & 60.3 & 58.0\\
 KN-5              & 5.7M       & 248.7 & 234.3\\
 \midrule
-256 dim FF 5-gram & 8.8M & 210.9     & 195.0\\
-2 layer 256 dim LSTM     & 9.6M    & 124.5     & 117.5\\
-32k state HMM (no fac)   & 17.3M   & 167       & -\\
-32k state HMM            & 13.7M   & -       & -\\
+256 dim FF 5-gram        & 8.8M    & 210.9  & 195.0\\
+2 layer 256 dim LSTM     & 9.6M    & 124.5  & 117.5\\
+%32k state HMM (no fac)   & 17.3M   & 166.7  & -\\
+32k state HMM            & 13.7M   & -      & -\\
 \bottomrule
 \end{tabular}
 \caption{\label{tbl:wt2-ppl}
@@ -797,12 +797,11 @@ Although the neural and scalar parameterizations reach a similar training perple
 the neural model generalizes better on validation.
 
 We additionally ablate the factored state embeddings,
-and find that performance of independent state embeddings is similar
-to a model with factored embeddings
-but with fewer parameters.
+and find that the performance of state embeddings with
+independent parameters is similar to a model with factored embeddings.
 We additionally found that if the number of clusters is too small
 (i.e. 64 or 32 as opposed to 128)
-while keeping the total number of hidden states fixed to 16384,
+while keeping the total number of hidden states fixed to 16k,
 performance on validation drops to 143 perplexity.
 
 \begin{table*}[!t]
@@ -865,227 +864,6 @@ Additionally,
 we found that incorporating pretrained embeddings in the HMMs did not improve performance.
 {\color{red} NEED ERROR ANALYSIS}
 \end{comment}
-
-\begin{comment}
-
-\begin{table}[!t]
-\centering
-\caption{\label{tbl:ppl-wikitext2}
-Perplexities on the \texttt{wikitext2} dataset.
-The FF model is a 256-dim 2-layer feedforward neural network
-with a window of 4 previous tokens with 0.3 dropout.
-The LSTM is a 256-dim 2-layer recurrent neural network with 0.3 dropout.
-The HMM is a 32k-state HMM with 0.5 state dropout.
-}
-\begin{tabular}{llll}
-\toprule
-Model & Num params & Valid PPL & Test PPL\\
-\midrule
-FF    &            & 209       & -       \\
-LSTM  &            & 125       & -       \\
-HMM   &            & 167       & -       \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\paragraph{Sparse emission constraint ablation}
-We ablate the emission sparsity constraints in Table \ref{tbl:ppl-assn-ablation},
-and find that the Brown emission constraints outperforms the uniform emission constraints
-in all model sizes.
-
-One explanation for the relative benefit of Brown emission constraints over uniform
-is due to the effect of Brown clusters.
-The goal of Brown clustering is to place two words in the same cluster
-if they are used in the same context.
-In Table \ref{tbl:entropy}, we observe that the entropy of the emission distribution
-for models with uniform emission
-constraints is lower than models with brown constraints,
-and the entropy of the transition distributions is higher.
-This implies that the burden of modeling ambiguity is pushed onto
-the transition distribution,
-since the uniform models are less likely to place words that appear in
-similar contexts together.
-
-% explain why this hurts the model? or is it already clear
-% compare entropies to exact 1k HMM.
-% probably find that brown is closer to exact. does this hold true for the 4 brown cluster HMM?
-
-% Include separate table with emission and transition entropies
-% am i computing those correctly?
-
-%Analysis
-%\begin{itemize}
-%\item Hypothesis: Brown Cluster assigns words that are emit in similar contexts.
-%Uniform assignment with too few states per word will not group words together
-%resulting in needing more states.
-%\item Evidence: check entropy of emission distribution / Uniform should be lower entropy.
-%\item Conclusion: Suboptimal assignments lead to needing more states
-%to achieve the same performance.
-%\end{itemize}
-
-\begin{table}[!t]
-\centering
-\caption{\label{tbl:ppl-assn-ablation}
-The perplexities for the different emission sparsity constraints
-in a 1024 state HMM as well as larger HMMs for which exact
-inference without sparsity is too expensive.
-The quantities $|\mcZ|$ and $k$ are the number of hidden
-states and the number of states per word respectively.
-The HMMs with 1024 states do not have any dropout,
-while the 8k and 16k state HMMs have unstructured dropout
-at a rate of 0.5.
-}
-
-\begin{tabular}{llll}
-\toprule
-Constraint & $|\mcZ|$ & $k$    & Valid PPL\\
-\midrule
-Uniform    & 8k       & 128    & 150*\\
-Brown      & 8k       & 128    & 142*\\
-Uniform    & 16k      & 128    & 146*\\
-Brown      & 16k      & 128    & 134*\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[!t]
-\centering
-\caption{\label{tbl:entropy}
-The average entropies of the the emission and
-transition distributions for HMMs
-with uniform and Brown cluster emission constraints.
-All models have $k=128$ states per word
-and use unstructured dropout with a rate of $p=0.5$.
-}
-
-\begin{tabular}{llll}
-\toprule
-Constraint & $|\mcZ|$ & H(emit)& H(transition)\\
-\midrule 
-Uniform    & 8k       & -      & - \\
-Brown      & 8k       & -      & - \\
-Uniform    & 16k      & -      & - \\
-Brown      & 16k      & -      & - \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-
-\paragraph{Dropout analysis}
-The effect of the different dropout strategies and rates is 
-shown in Table~\ref{tbl:dropout}.
-We found that state dropout outperformed unstructured dropout overall.
-This in addition to the computational benefits afforded by state dropout
-led us to prefer this strategy.
-
-Unstructured dropout was sensitive to batching strategies.
-We observed a larger gap between training and validation perplexities
-with the unshuffled batching strategy,
-whereas unstructured dropout appeared to be robust to the batching strategy.
-
-Analysis 1: Discuss what happens with just state dropout, without partitioning.
-(Too much variance in gradient estimator, would require variance reduction.
-Get numbers or just handwaive?
-Consider exact inference (in constrained model) this work.
-)
-
-\begin{table}[!t]
-\centering
-\caption{\label{tbl:dropout}
-State occupancies for the dropout strategies and rates.
-All models were HMMs with Brown cluster emission constraints,
-16k total states, and 128 states per word (and therefore 128 Brown clusters).
-}
-
-\begin{tabular}{llll}
-\toprule
-Dropout type & $p$  & Valid PPL & Occupancy\\
-\midrule 
-Unstructured & 0.25 & -         & - \\
-Unstructured & 0.5  & -         & - \\
-Unstructured & 0.75 & -         & - \\
-State        & 0.25 & -         & - \\
-State        & 0.5  & -         & - \\
-State        & 0.75 & -         & - \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\paragraph{Number of Brown clusters}
-We next examine the sensitivity of HMMs to the number of Brown clusters
-in Table \ref{tbl:ppl-spw-ablation}.
-We find that models at with 16k or 32k total states
-are not sensitive to the number of Brown clusters
-in the range where marginalization is computationally feasible.
-This contrasts with the observation that the number of Brown clusters
-influenced performance at 1k total states.
-% FILL IN HERE, reconcile differences
-
-\begin{table}[!t]
-\centering
-\caption{\label{tbl:ppl-spw-ablation}
-The perplexities for HMMs with 16k states
-and different numbers of Brown clusters
-for constraining the emission distribution of the HMMs.
-$|\mcZ|$ is the total number of hidden states.
-All models have 0.5 state dropout.
-}
-
-\begin{tabular}{llll}
-\toprule
-$|\mcZ|$ & Num clusters & Valid PPL\\
-\midrule
-16k      & 32           & 136\\
-16k      & 64           & 137\\
-16k      & 128          & 133\\
-16k      & 256          & 137\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\paragraph{Weight tying ablation}
-Analysis 1: Discuss performance using different tying methods
-(found this to not affect performance) and computational savings
-in terms of number of parameters.
-Discuss relative parameter inefficiency compared to LSTM / FF.
-
-\paragraph{State size ablation}
-We find that as we increase the number of total states
-while keeping the Brown clusters fixed,
-performance improves up until we have 65k states.
-
-Analysis 1: How does state usage change as clusters remain constant
-but the number of states (and states per word) increases?
-
-\begin{table}[!t]
-\centering
-\caption{\label{tbl:ppl-states-ablation}
-The perplexities for HMMs with 128 Brown clusters
-for constraining the emission distribution of the HMMs.
-$|\mcZ|$ is the total number of hidden states.
-All models have 0.5 state dropout.
-}
-
-\begin{tabular}{llll}
-\toprule
-$|\mcZ|$ & Num clusters & Valid PPL\\
-\midrule
-16k      & 128          & 133\\
-32k      & 256          & 126\\
-65k      & 512          & 124\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\paragraph{Parameterization ablation}
-Analysis 1: Is there a performance difference between neural / scalar parameterization,
-and is it consistent across state sizes?
-
-Discussion 1: Memory savings when working with state dropout to not instantiate the
-full matrices during training, which makes working with a neural parameterization
-beneficial.
-\end{comment}
-
 
 \section{Conclusion}
 
