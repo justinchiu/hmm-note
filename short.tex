@@ -373,7 +373,7 @@ and each partition ($\mathbf{E}_\pi \in \mathbb{R}^{M \times h}$).
 From these we can create representations for leaving a state, entering a state,
 and emitting a word: 
 \[ \mathbf{H}_{\textrm{out}},\mathbf{H}_{\textrm{in}},\mathbf{H}_\textrm{emit}
- = \text{MLP}(\mathbf{E}_\phi, \mathbf{E}_z ) \] 
+ = \text{MLP}(\mathbf{E}_\pi, \mathbf{E}_z ) \] 
 %which allows the number of parameters to scale linearly with the size of the state space.
 %We parameterize the transition and emission distributions using a residual network
 %with LayerNorm.
@@ -510,7 +510,7 @@ since it maintains block structure with fixed-height.
 %at every iteration of gradient descent.
 
 
-\section{Experiments: Language modeling}
+\section{HMM Language models}
 \label{sec:experiments}
 In this section we provide further details on the application
 of the methods described in the previous section
@@ -523,12 +523,10 @@ $p(\bw,\bz) = \prod_t p(w_t\mid z_t)p(z_t \mid z_{t-1})$.
 \paragraph{State and word partitions}
 We use Brown clusters \citep{brown1992,liang2005brown} to construct the state and word partitions.
 Brown clusters are obtained by assigning every token type in $\mcX$ a state in a HMM,
-then states are merged until a desired number of states is reached.
-Importantly, every word is emit by only a single state, yielding the word partition $\rho$
-with the number of partitions $m$ equal to the number of Brown clusters.
-We then create the state partition $\pi$ by assigning each of the states in the
-Brown model $k$ states in the resulting HMM.
-
+then states are merged until a desired number of states $M$ is reached.
+Importantly, every word is emit by only a single state, giving us the 
+word partitions $\mcX_m$.
+We then clone the states of the Brown HMM $|\mcZ|/M$ times to obtain the $\mcZ_x$.
 
 \subsection{Datasets}
 We evaluate on the \texttt{Penn Treebank} \citep{ptb}
