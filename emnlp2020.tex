@@ -301,9 +301,17 @@ latent dynamics.
 \section{Scaling HMMs}
 
 The hypothesis of this work is that by expanding the state space of HMMs while while maintaining 
-a regularized neural parameterization and efficient exact inference, we can build models that are competitive with RNNs. We propose three techniques for scaling these models: factored neural parameterization, induced block transitions, and state dropout.
+a regularized neural parameterization and efficient exact inference,
+we can build models that are competitive with RNNs.
+We propose three techniques for scaling these models:
+a factored neural parameterization, induced block transitions, and state dropout.
 
-Our approach assumes 
+Our approach starts by defining two partitions:
+one for the hidden states $\pi: \mcZ \to [m]$,
+where $m$ is the number of partitions and each $|\pi(z)| = k, \forall z$;
+and one for the observations $\sigma: \mcX \to [m]$.
+Given the structure defined by $\pi$ and $\sigma$, we build models with large
+capacity that admit tractable inference.
 
 \subsection{Factored Neural Parameterization}
 A neural parameterization allows us to precisely control the
@@ -319,20 +327,19 @@ and instead employ state embeddings which allow the number of parameters to scal
 %where $v$ is the number of embeddings and
 %$h$ is the hidden dimension of our neural network.
 
-
-
-
 Let $E_x \in \mathbb{R}^{|\mcX|\times h}$ be the token embeddings
-and $E_{\textrm{out}},E_{\textrm{in}},E_\textrm{emit}
-\in \mathbb{R}^{|\mcZ|\times h}$ be embeddings for leaving, entering, and emitting from a state respectively. 
-The distributional parameters are given by,
+and $E_{\textrm{out}},E_{\textrm{in}},E_\textrm{emit}\in \mathbb{R}^{|\mcZ|\times h}$
+be embeddings for leaving, entering, and emitting from a state respectively. 
+The distributional parameters are given by
 \begin{equation}
 \begin{aligned}
 \phi = E_x f_\phi(E_\textrm{emit})^\top \;\; 
-\psi = E_\textrm{in} f_\psi(E_\textrm{out})^\top
+\psi = E_\textrm{out} f_\psi(E_\textrm{in})^\top
 \end{aligned}
 \end{equation}
-where $\phi \in \mathbb{R}^{|X|\times|Z|}$ and $\psi \in \mathbb{R}^{|Z|\times|Z|}$, and $f$ is an MLP. \footnote{For the MLP we  use the following neural network
+where $\phi \in \mathbb{R}^{|X|\times|Z|}$ and
+$\psi \in \mathbb{R}^{|Z|\times|Z|}$,
+and $f$ is an MLP. \footnote{For the MLP we  use the following neural network
 \begin{equation}
 \label{eqn:res}
 \begin{aligned}
@@ -346,6 +353,23 @@ and $W_{i1},W_{i2} \in \mathbb{R}^{h \times h}$.
 (which would require $O(|\mcZ|^2 + |\mcX||\mcZ|)$ parameters)
 this neural parameterization takes $O(h^2 + h|\mcZ| + h|\mcX|)$ parameters.
 
+We further parameterize the embeddings $E_{in},E_{out},E_{emit}$
+by factoring them into partition and state embeddings.
+We introduce $m$ partition embeddings $e_p\in\mathbb{R}^{h/2}$,
+and construct the partition embeddings
+$E_\pi = [e_{\pi(1)}, e_{\pi(2)}, \ldots, e_{\pi(|\mcZ|)}] \in \mathbb{R}^{|\mcZ|\times h/2}$.
+Given state embeddings $E_\mcZ \in \mathbb{R}^{|\mcZ| \times h/2}$, we define
+%\begin{equation}
+%\label{eqn:emb}
+\begin{alignat}{4}
+&E_\textrm{in} &&=&& f_\textrm{in}&([E_\pi, E_\mcZ]) \\
+&E_\textrm{out} &&=&& f_\textrm{out}&([E_\pi, E_\mcZ]) \\
+&E_\textrm{emit} &&=&& f_\textrm{emit}&([E_\pi, E_\mcZ])
+\end{alignat}
+%\end{equation}
+This parameterization further reduces the number of model parameters
+to $O\left(h^2 + \frac{h}{2}|\mcZ| + \frac{h}{2}m + h|\mcX|\right)$.
+
 Given the distributional parameters, we can then perform marginal inference separately. 
 %by first constructing a trellis
 %via indexing into $\phi$ and $\psi$ (illustrated in Fig.~\ref{fig:trellis}),
@@ -353,7 +377,8 @@ Given the distributional parameters, we can then perform marginal inference sepa
 The clean separation between the computation of the distributional parameters and marginal inference
 allows the distributional parameters to be computed and then cached for use in inference.
 For training, we can compute the emission and transition distributions once per batch.
-This contrasts with RNNs and other auto-regressive neural networks, which must compute emission probabilities for every observation. 
+This contrasts with RNNs and other auto-regressive neural networks,
+which must compute emission probabilities for every observation. 
 
 
 \subsection{Inducing Blocked Transitions}
@@ -366,23 +391,19 @@ i.e. $p(x_t \mid z_t) = 0$  then we can ignore transitions into and from that st
 
 Inspired by cloned HMMs \citep{dedieu2019learning},
 we add parameterization constraints to ensure that this property holds.
-Specifically, we require that for an observed token $x$
-only a fixed number of states $z$ have $p(x \mid z) > 0$.
+Specifically, we require that each observed token $x$
+only has a fixed number of states $z$ with $p(x \mid z) > 0$.
 For each word, we call this support set $\mcC_x \subset \mcZ$.
 This yields the following constrained emission distribution:
 \begin{equation}
 \label{eqn:sparse_emission}
 p(x \mid z) \propto \mathbf{1}(z \in \mcC_x)e^{\phi_{xz}}
 \end{equation}
-Exact marginalization can be performed by computing,  
+Exact marginalization can be performed by computing  
 \begin{equation}
 \label{eqn:sparse_marginalization}
 \begin{aligned}
 &p(\bx)\\
-%&= \sum_{z_0} p(z_0)p(x_0 \mid z_0)
-%    \sum_{z_1}p(z_1\mid z_0)p(x_1 \mid z_1)\\
-%    &\qquad\cdots
-%    \sum_{z_T}p(z_T \mid z_{T-1})p(x_T \mid z_T)\\
 &= \sum_{z_0 \in \mcC_{x_0}} p(z_0)p(x_0 \mid z_0)
     \sum_{z_1 \in \mcC_{x_1}} p(z_1\mid z_0)p(x_1 \mid z_1)\\
     &\qquad\cdots
@@ -391,8 +412,12 @@ Exact marginalization can be performed by computing,
 \end{equation}
 This allows us to compute $p(\bx)$ with $T$ matrix-vector products,
 each matrix of dimension $|\mcC_{x_t-1}| \times |\mcC_{x_{t}}|$.
-We choose sets $\mcC_x$ such that $\forall x, |\mcC_x| = k$
-yielding a computation complexity of $O(Tk^2)$ rather than $O(T|\mcZ|^2)$.
+
+We choose the sets $\mcC_x$ by using the partitions of the
+states $\pi$ and and tokens $\rho$.
+We then have $\mcC_x = \set{z: \pi(z) = \rho(x)}$,
+yielding a computation complexity of $O(Tk^2)$ rather than $O(T|\mcZ|^2)$
+as each partition $|\pi(z)| = k, \forall z$.
 
 %Please refer to Fig.~\ref{fig:trellis} for an illustration of this method.
 
@@ -409,19 +434,21 @@ which is used to prevent states from being considered during inference.
 For every token $x_t$, the only incoming edges with nonzero mass are those
 whose source was not dropped out, i.e. $b_{z_t} = 1$,
 and is within the previous partition, i.e. $z_{t-1}\in\mcC_{x_{t-1}}$.
+The states are partitioned into groups of 8,
+with the observation partitions $\rho(x_1) = 1, \rho(x_2) = 2,$ and so on.
 }
 \end{figure}
 
 \begin{algorithm*}%[H]
 \begin{algorithmic}
 \State{Given: constraints $\mcC_x$ and model parameters}
-\Function{ComputeLikelihood}{}
-    \State{Compute parameters $\phi,\psi$ from model parameters}
-    \ForAll{examples $\bx$}
-        \State{Compute log potentials $\Phi = \Call{LogPotentials}{\phi,\psi,\bx,\mcC_x}$}
-        \State{Compute evidence $\log p(\bx) = \Call{Forward}{\Phi}$}
-    \EndFor
-\EndFunction
+%\Function{ComputeLikelihood}{}
+%    \State{Compute parameters $\phi,\psi$ from model parameters}
+%    \ForAll{examples $\bx$}
+%        \State{Compute log potentials $\Phi = \Call{LogPotentials}{\phi,\psi,\bx,\mcC_x}$}
+%        \State{Compute evidence $\log p(\bx) = \Call{Forward}{\Phi}$}
+%    \EndFor
+%\EndFunction
 \Function{ComputeLikelihoodDropout}{}
     \ForAll{examples $\bx$}
         \State{Sample dropout mask $\bb$}
@@ -455,20 +482,21 @@ and is within the previous partition, i.e. $z_{t-1}\in\mcC_{x_{t-1}}$.
 \end{algorithmic}
 \caption{
 \label{fig:algo}
-Pseudocode for computing the likelihood of a corpus
+Pseudocode for computing the likelihood of a corpus with state dropout
 }
 \end{algorithm*}
 
 
 \subsection{Dropout as State Reduction}
 
-Even with a factored parameterization, the very large state space of the model makes it possible for the model to use states to memorize training patterns. To encourage generalization through distributed state usage, we introduce dropout to the model. 
+Even with a factored parameterization,
+the very large state space of the model makes it possible for the model to use states to
+memorize training patterns.
+To encourage generalization through distributed state usage, we introduce dropout to the model. 
 
-We propose a form of HMM state dropout that removes states from use entirely for a batch. This forces the model to use different states while also leading to efficiency improvements for computing parameterization and inference. 
-
-%State dropout prevents a state $z$ from being considered during training.
-
-%State dropout is  implemented by adding another constraint to the emission matrix.
+We propose a form of HMM state dropout that removes states from use entirely for a batch.
+This forces the model to use different states while also leading to efficiency improvements
+for computing parameterization and inference. 
 
 Recall distributional parameters of the emission matrix
 $\phi \in \mathbb{R}^{|\mcX|\times|\mcZ|}$
@@ -483,9 +511,12 @@ we have the following emission distribution:
 p(x \mid z) \propto b_{z}1(z \in \mcC_x)e^{\phi_{xz}}
 \end{equation}
 
-
-Performing marginal inference with state dropout allows us to skip states that are removed. To ensure the block structure of the previous section
-
+Performing marginal inference with state dropout allows us to skip states that are removed.
+We utilize the constraint sets induced by $\pi$ and $\rho$
+to ensure that exactly $n$ states remain in each constraint set $\mcC_x$ after applying dropout.
+This is accomplished by subsampling $n$ states from each partition in the preimage of $\pi$,
+which preserves the block structure observed in Fig.~\ref{fig:trellis}
+and allows the number of outgoing edges at each timestep to remain equal to $n$.
 
 %requires $O(Tn^2)$ computation,
 %where $n = \max_x \left|\set{z:b_z=1,z \in \mcC_x}\right|$.
@@ -514,42 +545,23 @@ $\bw = \langle w_1,\ldots,w_T \rangle$ in a sentence.
 We thus learn a model over words and states
 $p(\bw,\bz) = \prod_t p(w_t\mid z_t)p(z_t \mid z_{t-1})$.
 
-\paragraph{Parameterization}
-We have two methods for parameterizing the state embeddings
-$E_j \in \mathbb{R}^{|\mcZ|\times h}$, where $h$ is the dimension of the neural components
-and $j \in \set{\textrm{previous},\textrm{current},\textrm{preterminal}}$.
-The first is by introducing one set of embeddings and sharing it for all $j$.
-The second is to introduce a set of embeddings $E_{\textrm{state}}\in\mathbb{R}^{|\mcZ|\times h/2}$,
-and another set of embeddings
-$E_{\textrm{cluster}}\in\mathbb{R}^{m \times h}$ for each Brown cluster,
-where $m$ is the number of Brown clusters.
-We then use a separate residual network $f_j$ (as defined in Eqn.~\ref{eqn:res})
-to obtain $E_j = f_j([E_\textrm{cluster}, E_\textrm{state}])$.
-We refer to this as a factored state embedding.
-This reduces the number of parameters, as there are many more states than Brown clusters.
-
-\paragraph{Emission constraints}
-We use Brown clusters \citep{brown1992} to create the emission constraints.
+\paragraph{State and word partitions}
+We use Brown clusters \citep{brown1992} to construct the state and word partitions.
 Brown clusters are obtained by assigning every token type in $\mcX$ a state in a HMM,
 then continually merging states until a desired number of states is reached.
-The merge at each iteration attempts to merge the two states that results in best likelihood.
+The merge at each iteration attempts to merge the two states that results in the best likelihood.
 
-To apply the Brown clusters as an emission constraint,
-every word $x$ in a Brown cluster is assigned the same constraint set $\mcC_x$.
-We choose the $\mcC_x$ such that they are all of size $k$.
-This constraint corresponds to learning a refinement of the Brown clusters
-by splitting each cluster into $k$ states.
+Importantly, every word is emit by only a single state, yielding the word partition $\rho$
+where the number of partitions $m$ equal to the number of Brown clusters.
+We then create the state partition $\pi$ by assigning each of the states in the
+Brown model $k$ states in the resulting HMM.
 
-We additionally compare the Brown cluster constraint with a uniform
+We additionally compare the partition induced by Brown clustering with a uniform
 constraint that samples each $\mcC_x$ of size $n$
-independently and uniformly from all subsets.
-
-\paragraph{State dropout}
-We apply state dropout such that each partition $\mcC_x$ has exactly
-$n = |\mcC_x|p$ dropped states, where $p$ is the dropout rate.
-We accomplish this by sampling from the uniform distribution over subsets
-of states in each partition,
-obtained by sampling iid Gumbel noise and selecting the top $n$ indices.
+independently and uniformly from all subsets of $\mcC$.
+This foregoes a partitioning, which makes it difficult to apply state dropout.
+We therefore apply a version of dropout that does not have block structure
+and zeroes out elements of the transition matrix randomly.
 
 \subsection{Sequence Tagging}
 We extend the language modeling HMM to part of speech (POS) tagging,
@@ -566,7 +578,7 @@ p(\bw, \by, \bz)
 \end{aligned}
 \end{equation}
 
-We use the same emission constraints and dropout strategy as language modeling,
+We use the same partitions, emission constraints, and dropout strategy as language modeling,
 but applied only to the word emission distribution $p(w_t \mid z_t)$.
 The tag emission distribution is unconstrained.
 
@@ -581,9 +593,7 @@ We therefore perform approximate inference at test time through the following tw
 procedure: 1) ignore the tag emission distributions and obtain the distributions
 $\hat{p}(z_t \mid \bx)$ for each position $t$, then 2) predict the tag using 
 $\sum_{z_t} p(y_t \mid z_t)\hat{p}(z_t \mid \bx)$.
-This method precludes interaction between tags, resulting in some loss
-in performance. Future work may consider using Gibbs sampling to perform
-marginal inference.
+This method limits interaction between tags.
 
 \subsection{Datasets}
 \paragraph{Language modeling}
@@ -633,14 +643,14 @@ See Appendix \ref{sec:hyperparams} for the hyperparameters for all models.
 % Tone: Made a lot of progress, and there is even more room for improvement.
 % Main avenue for improvement: emission constraints.
 We report perplexities 
-for \texttt{Penn Treebank} in Table \ref{tbl:ptb-ppl} and for 
-\texttt{wikitext2} in Table \ref{tbl:wt2-ppl}.
+for \texttt{Penn Treebank} in Table \ref{tbl:ptb-ppl}
+%and for \texttt{wikitext2} in Table \ref{tbl:wt2-ppl}.
 
 On \texttt{Penn Treebank}, we see in Tbl.~\ref{tbl:ptb-ppl}
-that a 32k state HMM is able to outperform the n-gram models (with cache)
+that a 32k state HMM is able to outperform the n-gram models
 as reported by \citet{mikolov2012rnn}, achieving a test perplexity of
-115.8 versus 125.7 respectively.
-However, we find that the HMM underperforms RNN-based models
+115.8 versus 141.2 respectively.
+However, we find that the HMM underperforms RNN-based models.
 (need longer-term dependency experiment, measure trend as num states is increased).
 
 
@@ -691,6 +701,7 @@ and $|\mcZ| = 256$ for the HMM.
 }
 \end{table*}
 
+\begin{comment}
 \begin{table*}[!t]
 \centering
 \begin{tabular}{llll}
@@ -712,6 +723,7 @@ while the bottom shows our results for the same
 models and hyperparameters applied to \texttt{Penn Treebank}.
 }
 \end{table*}
+\end{comment}
 
 \paragraph{Number of states}
 In Tbl.~\ref{tbl:states-ablation} we examine the effect of the 
@@ -763,11 +775,14 @@ and state dropout at 0.5.
 
 \paragraph{Emission constraint ablation}
 We next analyze the effect of the emission constraint and dropout on performance.
-We analyze first a 16k state HMM, keeping the total number of states fixed
+We analyze the performance of a 16k state HMM,
+keeping the total number of states fixed
 while varying the emission constraints and dropout.
 In the top section of Tbl.~\ref{tbl:constraint-ablation},
 we find that the performance is
 insensitive to the number of Brown clusters at 16k states.
+It is possible that 
+
 However, in the middle section,
 the model appears to be sensitive to the number of Brown clusters
 at 1k total states. 

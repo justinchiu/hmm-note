@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  31 MAY 2020 21:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  1 JUN 2020 04:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1176,13 +1176,34 @@ LaTeX Font Info:    Font shape `U/lasy/b/n' in size <9> not available
 (Font)              Font shape `U/lasy/m/n' tried instead on input line 275.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 282.
- [3]
-Overfull \hbox (9.98007pt too wide) detected at line 391
+
+Underfull \hbox (badness 6825) in paragraph at lines 356--364
+[]\OT1/ptm/m/n/10.95 (+20) We fur-ther pa-ram-e-ter-ize the em-bed-dings
+ []
+
+
+Underfull \hbox (badness 2512) in paragraph at lines 356--364
+\U/msb/m/n/10.95 R[]$\OT1/ptm/m/n/10.95 (+20) . Given state em-bed-dings $\OML/
+cmm/m/it/10.95 E[] \OMS/cmsy/m/n/10.95 2
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 368--372
+\OT1/ptm/m/n/10.95 (+20) This pa-ram-e-ter-i-za-tion fur-ther re-duces
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 368--372
+\OT1/ptm/m/n/10.95 (+20) the num-ber of model pa-ram-e-ters to
+ []
+
+[3]
+Overfull \hbox (9.98007pt too wide) detected at line 412
 [][]
  []
 
 
-Underfull \hbox (badness 4726) in paragraph at lines 391--396
+Underfull \hbox (badness 4726) in paragraph at lines 412--415
 \OT1/ptm/m/n/10.95 (+20) vector prod-ucts, each ma-trix of di-men-sion
  []
 
@@ -1190,40 +1211,30 @@ Underfull \hbox (badness 4726) in paragraph at lines 391--396
 Missing character: There is no k in font nullfont!
 Missing character: There is no k in font nullfont!
 ) Excluding 'comment' comment.
-Underfull \vbox (badness 2376) has occurred while \output is active []
-
-
-Underfull \hbox (badness 5446) in paragraph at lines 487--488
+Underfull \hbox (badness 5446) in paragraph at lines 514--520
 []\OT1/ptm/m/n/10.95 (+20) Performing marginal in-fer-ence with state
  []
 
-[4]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \hbox (badness 1014) in paragraph at lines 569--572
-[]\OT1/ptm/m/n/10.95 (+20) We use the same emis-sion con-straints and
- []
-
-[5]
-Underfull \hbox (badness 10000) in paragraph at lines 590--602
+[4] [5]
+Underfull \hbox (badness 10000) in paragraph at lines 600--612
  []\OT1/ptm/b/n/10.95 Language mod-el-ing \OT1/ptm/m/n/10.95 (+20) We eval-u-at
 e on the
  []
 
 
-Underfull \hbox (badness 1210) in paragraph at lines 590--602
+Underfull \hbox (badness 1210) in paragraph at lines 600--612
 \OT1/pcr/m/n/10.95 Penn Treebank \OT1/ptm/m/n/10.95 (+20) ([][]Mar-cus et al.[]
 [], [][]1993[][]) and
  []
 
-Excluding 'comment' comment. Excluding 'comment' comment. [6]
-Underfull \hbox (badness 1708) in paragraph at lines 823--823
-[]\OT1/ptm/m/n/10 Table 3: |[] Per-plex-i-ties on the \OT1/pcr/m/n/10 Penn Tree
+Excluding 'comment' comment. Excluding 'comment' comment.
+Excluding 'comment' comment. [6]
+Underfull \hbox (badness 1708) in paragraph at lines 838--838
+[]\OT1/ptm/m/n/10 Table 2: |[] Per-plex-i-ties on the \OT1/pcr/m/n/10 Penn Tree
 bank
  []
 
-Excluding 'comment' comment. [7] (./emnlp2020.bbl
+[7] Excluding 'comment' comment. (./emnlp2020.bbl
 Underfull \hbox (badness 2027) in paragraph at lines 6--9
 \OT1/ptm/m/n/10 and Chris-tian Jan-vin. 2003.  A neu-ral prob-a-
  []
@@ -1233,45 +1244,45 @@ Underfull \hbox (badness 3189) in paragraph at lines 68--73
 \OT1/ptm/m/n/10 mod-els and poly-grams for lan-guage mod-el-ing.[][]
  []
 
-
+[8]
 Underfull \hbox (badness 1147) in paragraph at lines 112--119
 []\OT1/ptm/m/n/10 Tomas Mikolov, Anoop De-o-ras, Ste-fan Kom-brink,
  []
 
-[8]
+
 Underfull \hbox (badness 1199) in paragraph at lines 171--175
 \OT1/ptm/m/n/10 2014.  [][]Re-cur-rent neu-ral net-work reg-u-lar-iza-tion[][].
 
  []
 
 )
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 1144
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 1159
 .
  (/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 1144.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 1159.
 
 
 Excluding 'comment' comment. [9]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1226.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1226.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1241.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1241.
  (./emnlp2020.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1226.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1226.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1241.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1241.
 
 Package rerunfilecheck Info: File `emnlp2020.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1226.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1241.
  )
 (\end occurred when \iffalse on line 352 was incomplete) 
 Here is how much of TeX's memory you used:
- 34878 strings out of 492649
- 827081 string characters out of 6129607
- 1185183 words of memory out of 5000000
- 37842 multiletter control sequences out of 15000+600000
- 51961 words of font info for 225 fonts, out of 8000000 for 9000
+ 34872 strings out of 492649
+ 827012 string characters out of 6129607
+ 1174570 words of memory out of 5000000
+ 37839 multiletter control sequences out of 15000+600000
+ 51842 words of font info for 223 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,16n,103p,1012b,1963s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): 
@@ -1304,10 +1315,10 @@ fonts/symbols/msbm10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/co
 urier/ucrr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmb
 8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></u
 sr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on emnlp2020.pdf (9 pages, 307925 bytes).
+Output written on emnlp2020.pdf (9 pages, 311235 bytes).
 PDF statistics:
- 432 PDF objects out of 1000 (max. 8388607)
- 375 compressed objects within 4 object streams
+ 430 PDF objects out of 1000 (max. 8388607)
+ 373 compressed objects within 4 object streams
  86 named destinations out of 1000 (max. 500000)
  35949 words of extra memory for PDF output out of 42996 (max. 10000000)
 
