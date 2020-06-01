@@ -733,10 +733,10 @@ the size of the state space, up until we reach 65k states.
 It is possible that at 65k states, we are bottlenecked by
 other aspects of the model, such as the expressive power
 or learnability of the neural parameterization. 
-Due to GPU memory constraints, we were unable to further
-explore larger parameterizations, both 
-in terms of the dimension of the neural components as well as 
-the size of the state space.
+%Due to GPU memory constraints, we were unable to further
+%explore larger parameterizations, both 
+%in terms of the dimension of the neural components as well as 
+%the size of the state space.
 However, we note that increasing the dimension of the neural component from 256 to
 512 dimensions with $|\mcZ| = 32,768$ total states did not improve performance.
 Another hypothesis is that the marginal gains in likelihood
