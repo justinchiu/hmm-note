@@ -549,14 +549,19 @@ See Appendix \ref{sec:hyperparams} for the hyperparameters for all models.
 % Main avenue for improvement: emission constraints.
 We report perplexities 
 for \texttt{Penn Treebank} in Table \ref{tbl:ptb-ppl}
-and for \texttt{wikitext2} in Table \ref{tbl:wt2-ppl}.
+and for \texttt{Wikitext-2} in Table \ref{tbl:wt2-ppl}.
 
 On \texttt{Penn Treebank}, we see in Tbl.~\ref{tbl:ptb-ppl}
 that a 32k state HMM is able to outperform the n-gram models
 as reported by \citet{mikolov2012rnn}, achieving a test perplexity of
 115.8 versus 141.2 respectively.
+We also find that the HMM 32k states vastly outperforms the vanilla HMM results from \citet{buys2018hmm},
+in addition to the 
+
 However, we find that the HMM underperforms RNN-based models.
-(need longer-term dependency experiment, measure trend as num states is increased).
+This trend persists in \texttt{Wikitext-2},
+with the HMM outperforming the 5-gram model at {\color{red}FILL IN} and 210.9 perplexity respectively.
+
 
 
 \begin{comment}
@@ -578,15 +583,15 @@ In the remainder of this section we ablate and analyze the HMMs on \texttt{Penn 
 Model & Num Params & Valid PPL & Test PPL\\
 \midrule
 KN-5 \citep{mikolov2012rnn}  & 2M & - & 141.2\\
-KN-5 + cache \citep{mikolov2012rnn}  & 2M & - & 125.7\\
+%KN-5 + cache \citep{mikolov2012rnn}  & 2M & - & 125.7\\
 RNN \citep{mikolov2012rnn}  & 2M & - & 124.7\\
 Medium LSTM \citep{zaremba2014lstm} & 20M & 86.2 & 82.7\\
 Large LSTM \citep{zaremba2014lstm} & 66M & 82.2 & 78.4\\
 AWD-LSTM \citep{merity2017awdlstm} & 24M & 60.0 & 57.3\\
-AWD-LSTM + cache \citep{merity2017awdlstm} & 24M & 53.9 & 52.8\\
+%AWD-LSTM + cache \citep{merity2017awdlstm} & 24M & 53.9 & 52.8\\
+KN-5 (do we cite KenLM here? software \citep{kenlm}) & 2.2M & 161.3 & 157.2\\
 HMM \citep{buys2018hmm} & 10M & 284.6 & -\\
 HMM + sigmoid + RNN emit \citep{buys2018hmm} & 10M & 142.3 & -\\
-KN-5 (do we cite KenLM here? software \citep{kenlm}) & 2.2M & 161.3 & 157.2\\
 \midrule
 256 dim FF 5-gram  & 2.9M     & 159.9      & 152.0  \\
 2 layer 256 dim LSTM  & 3.6M     & 93.6       & 88.8   \\
@@ -678,44 +683,7 @@ and state dropout at 0.5.
 }
 \end{figure}
 
-
-\paragraph{Emission constraint ablation}
-We next analyze the effect of the emission constraint and dropout on performance.
-We analyze the performance of a 16k state HMM,
-keeping the total number of states fixed
-while varying the emission constraints and dropout.
-In the top section of Tbl.~\ref{tbl:constraint-ablation},
-we find that the performance is
-insensitive to the number of Brown clusters at 16k states.
-However, in the middle section,
-the model is sensitive to the number of Brown clusters
-at 1k total states.
-The 1k state HMM with 4 Brown clusters matches the unconstrained 1k state HMM,
-while the HMM with 8 Brown clusters underperforms.
-This implies that there may be a loss in performance due to the emission
-constraints.
-
-We additionally compare the partition induced by Brown clustering with a uniform
-constraint that samples each $\mcC_x$ of size $n$
-independently and uniformly from all subsets of $\mcC$.
-This foregoes a partitioning, which makes it difficult to apply state dropout.
-We therefore apply a version of dropout that does not have block structure
-and zeroes out elements of the transition matrix randomly.
-In the bottom section of Tbl.~\ref{tbl:constraint-ablation},
-we find that models with uniform constraints
-are consistently outperformed by models with Brown cluster constraints
-as measured by validation perplexity.
-The models with uniform constraints also had poor validation perplexities
-despite better training perplexities, a symptom of overfitting.
-
-In conclusion,
-we find the Brown cluster emission constraints to achieve reasonable performance
-in HMMs with large state spaces.
-We also observe that model performance is sensitive to the emission constraints,
-motivating future work towards exploring learning emission constraints
-while keeping inference tractable. 
-
-\begin{table}[!t]
+\begin{table}[h]
 \centering
 \begin{tabular}{lllll}
 \toprule
@@ -746,6 +714,41 @@ which have no dropout.
 We use $m$ to indicate the number of clusters.
 }
 \end{table}
+
+\paragraph{Emission constraint ablation}
+We next analyze the effect of the emission constraint and dropout on performance.
+We fix the total number of states at 16k 
+and vary the emission constraints and dropout rate.
+In the top section of Tbl.~\ref{tbl:constraint-ablation},
+we find that the performance is
+insensitive to the number of Brown clusters at 16k states.
+However, in the middle section,
+the model is sensitive to the number of Brown clusters
+at 1k total states.
+The 1k state HMM with 4 Brown clusters matches the unconstrained 1k state HMM,
+while the HMM with 8 Brown clusters underperforms.
+This implies that there may be a loss in performance due to the emission constraints.
+
+We additionally compare the partition induced by Brown clustering with a uniform
+constraint that samples each $\mcC_x$ of size $n$
+independently and uniformly from all subsets of $\mcC$.
+This foregoes a partitioning, which makes it difficult to apply state dropout.
+We therefore apply a version of dropout that does not have block structure
+and zeroes out elements of the transition matrix randomly.
+In the bottom section of Tbl.~\ref{tbl:constraint-ablation},
+we find that models with uniform constraints
+are consistently outperformed by models with Brown cluster constraints
+as measured by validation perplexity.
+The models with uniform constraints also had poor validation perplexities
+despite better training perplexities, a symptom of overfitting.
+
+In conclusion,
+we find the Brown cluster emission constraints to achieve reasonable performance
+in HMMs with large state spaces.
+We also observe that model performance is sensitive to the emission constraints,
+motivating future work towards exploring learning emission constraints
+while keeping inference tractable. 
+
 
 \paragraph{Dropout and parameterization ablation}
 We ablate state dropout and model parameterization in Tbl.~\ref{tbl:dropout-param-ablation}.
@@ -1050,9 +1053,6 @@ full matrices during training, which makes working with a neural parameterizatio
 beneficial.
 \end{comment}
 
-\subsection{Error analysis}
-\paragraph{}
-%\paragraph{}
 
 \section{Conclusion}
 
