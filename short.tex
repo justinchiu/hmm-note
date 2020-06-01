@@ -615,7 +615,6 @@ and $|\mcZ| = 256$ for the HMM.
 }
 \end{table*}
 
-\begin{comment}
 \begin{table*}[!t]
 \centering
 \begin{tabular}{llll}
@@ -624,10 +623,11 @@ Model & Num Params & Valid PPL & Test PPL\\
 \midrule
 A     & b          & c         & d       \\
 \midrule
-KN-5 & 2.2M       & 248.7 & 234.3\\
-256 dim FF 5-gram &            & 210.9       & 195.0       \\
-LSTM              &            & 125       & -       \\
-HMM               &            & 167       & -       \\
+KN-5              & 5.7M       & 248.7 & 234.3\\
+256 dim FF 5-gram & 8.8M    & 210.9     & 195.0\\
+LSTM              & 9.6M    & 124.5     & 117.5\\
+HMM               & 17.3M   & 167       & -\\
+HMM               & 13.7M   & -       & -\\
 \bottomrule
 \end{tabular}
 \caption{\label{tbl:wt2-ppl}
@@ -637,7 +637,6 @@ while the bottom shows our results for the same
 models and hyperparameters applied to \texttt{Penn Treebank}.
 }
 \end{table*}
-\end{comment}
 
 \paragraph{Number of states}
 In Tbl.~\ref{tbl:states-ablation} we examine the effect of the 
@@ -695,11 +694,9 @@ while varying the emission constraints and dropout.
 In the top section of Tbl.~\ref{tbl:constraint-ablation},
 we find that the performance is
 insensitive to the number of Brown clusters at 16k states.
-It is possible that 
-
 However, in the middle section,
-the model appears to be sensitive to the number of Brown clusters
-at 1k total states. 
+the model is sensitive to the number of Brown clusters
+at 1k total states.
 The 1k state HMM with 4 Brown clusters matches the unconstrained 1k state HMM,
 while the HMM with 8 Brown clusters underperforms.
 This implies that there may be a loss in performance due to the emission
