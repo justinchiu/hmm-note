@@ -24,7 +24,7 @@
 \usepackage{microtype}
 
 \usepackage{mystyle}
-\usepackage{subcaption}
+\usepackage{subcaption} 
 
 % trellis
 \usepackage{tikz}%
@@ -359,7 +359,7 @@ This gives a serial complexity of $O(T(|Z|/M)^2)$
 
 
 
-Even with blocked emissions, the scalar parameterization of an HMM grows quadratically with states due to the transition matrix. We instead employ a neural parameterization. The approach is to embed each state $\cal Z$ ($\mathbf{E}_z \in \mathbb{R}^{|\mcZ| \times h}$), each token $\cal X$ ($\mathbf{E}_x \in \mathbb{R}^{|\mcX| \times h}$), and each partition ($\mathbf{E}_\pi \in \mathbb{R}^{M \times h}$). From these we can create representations for leaving a state, entering a state, and emitting a word: 
+Even with blocked emissions, the scalar parameterization of an HMM grows quadratically with states due to the transition matrix. We instead employ a neural parameterization. The approach is to embed each state in $\cal Z$ ($\mathbf{E}_z \in \mathbb{R}^{|\mcZ| \times h}$), each token in $\cal X$ ($\mathbf{E}_x \in \mathbb{R}^{|\mcX| \times h}$), and each partition ($\mathbf{E}_\pi \in \mathbb{R}^{M \times h}$). From these we can create representations for leaving a state, entering a state, and emitting a word: 
 \[ \mathbf{H}_{\textrm{out}},\mathbf{H}_{\textrm{in}},\mathbf{H}_\textrm{emit}  = \text{MLP}(\mathbf{E}_\phi, \mathbf{E}_z ) \] 
 %which allows the number of parameters to scale linearly with the size of the state space.
 %We parameterize the transition and emission distributions using a residual network
@@ -386,12 +386,8 @@ Note that parameter computation is independent of inference and can be cache at 
 %The clean separation between the computation of the distributional parameters and marginal inference
 %allows the distributional parameters to be computed and then cached for use in inference.
 For training we compute them once per batch. 
-For RNNs and similar models, transition activations must be recomputed for each token. 
-
-
-
-%Please refer to Fig.~\ref{fig:trellis} for an illustration of this method.
-
+For RNNs and similar models, %transition activations 
+emission probabilities must be recomputed for each token. 
 
 
 \begin{algorithm}[t]
@@ -456,7 +452,7 @@ We propose a form of HMM state dropout that removes states from use entirely, wh
 %and the emission sparsity constraints which associate each token $x$
 %with a set of states $\mcC_x$.
 
-State dropout acts on each emission block $\mathbf{O}_1 \ldots \mathbf{O}_M$ independently. Recall each block has $|{\cal Z}| / M$ rows. For each, we sample a binary dropout mask by sampling $ \lambda_{\text{drop}} \times(|{\cal Z}| / M)$ dropped row indices uniformly without replacement. We concatenate these to a global vector $\mathbf{b}$, which, along with the previous constraints,  ensures,
+State dropout acts on each emission block $\mathbf{O}_1 \ldots \mathbf{O}_M$ independently. Recall each block has $|{\cal Z}| / M$ columns. For each, we sample a binary dropout mask by sampling $ \lambda_{\text{drop}} \times(|{\cal Z}| / M)$ dropped row indices uniformly without replacement. We concatenate these to a global vector $\mathbf{b}$, which, along with the previous constraints,  ensures,
 \begin{equation}
 \label{eqn:state_dropout}
 p(x \mid z) \propto b_{z}1(z \in \mcZ_x)e^{\phi_{xz}}
@@ -490,14 +486,12 @@ State dropout gives a larger practical speed up for both parameter computation a
 %at every iteration of gradient descent.
 
 
-\section{Experiments}
+\section{Experiments: Language modeling}
 \label{sec:experiments}
 In this section we provide further details on the application
 of the methods described in the previous section
-to language modeling and sequence tagging.
-
-\subsection{Language modeling}
-In word-level language modeling the tokens $\bx$ correspond to the words
+to word-level language modeling,
+where the tokens $\bx$ correspond to the words
 $\bw = \langle w_1,\ldots,w_T \rangle$ in a sentence.
 We thus learn a model over words and states
 $p(\bw,\bz) = \prod_t p(w_t\mid z_t)p(z_t \mid z_{t-1})$.
@@ -520,8 +514,6 @@ This foregoes a partitioning, which makes it difficult to apply state dropout.
 We therefore apply a version of dropout that does not have block structure
 and zeroes out elements of the transition matrix randomly.
 
-
-
 \subsection{Datasets}
 We evaluate on the \texttt{Penn Treebank} \citep{ptb}
 and \texttt{wikitext2} \citep{wikitext} datasets.
@@ -536,6 +528,7 @@ Casing is preserved, and all words outside the vocab are unked.
 Both datasets contain inter-sentence dependencies,
 due to the use of documents consisting of more than a single sentence.
 
+We construct the Brown clusters on the training portions of both datasets.
 
 
 \begin{comment}
@@ -564,7 +557,7 @@ See Appendix \ref{sec:hyperparams} for the hyperparameters for all models.
 % Main avenue for improvement: emission constraints.
 We report perplexities 
 for \texttt{Penn Treebank} in Table \ref{tbl:ptb-ppl}
-%and for \texttt{wikitext2} in Table \ref{tbl:wt2-ppl}.
+and for \texttt{wikitext2} in Table \ref{tbl:wt2-ppl}.
 
 On \texttt{Penn Treebank}, we see in Tbl.~\ref{tbl:ptb-ppl}
 that a 32k state HMM is able to outperform the n-gram models
