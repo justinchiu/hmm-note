@@ -77,7 +77,6 @@ We propose methods for scaling HMMs to massive state spaces, while maintaining c
 
 \section{Introduction}
 
-
 % Hidden Markov models are classic models that have been abandoned.
 Hidden Markov models (HMMs) are a fundamental latent-variable model for sequential data.
 %They are core to time-series problems in bioinformatics, reinforcement learning, and,
@@ -328,7 +327,7 @@ The HMM distributional parameters are given by,
 where $\phi \in \mathbb{R}^{|X|\times|Z|}$ and
 $\psi \in \mathbb{R}^{|Z|\times|Z|}$.
 The MLP architecture follows \cite{kim2019cpcfg}.
-Please refer to the supplementary material for details. 
+Please refer to the appendix for details. 
 This neural parameterization takes $O(h^2 + h|\mcZ| + h|\mcX|)$ parameters (shown in Figure~\ref{fig:emit})
 
 
@@ -443,13 +442,6 @@ since it maintains block structure with fixed-height (as shown in Figure~\ref{fi
 
 \section{Experimental Setup}
 \label{sec:experiments}
-%In this section we provide further details on the application
-%of the methods described in the previous section
-%to word-level language modeling,
-%where the tokens $\bx$ correspond to the words
-%$\bw = \langle w_1,\ldots,w_T \rangle$ in a sentence.
-%We thus learn a model over words and states
-%$p(\bw,\bz) = \prod_t p(w_t\mid z_t)p(z_t \mid z_{t-1})$.
 
 \textbf{Emission Blocks}
 The model requires partitioning token types into blocks $\mcX_m$. 
@@ -475,7 +467,9 @@ which discards the latent variable formulation \citep{buys2018hmm};
 a KN 5-gram model \citep{mikolov2012rnn,kenlm},
 a 256 dimension FF model,
 and a 2-layer 256 dimension LSTM.
-We compare these models with our very large HMM (VL-HMM, $|\mcZ|=2^{15}$) that considers 256 latent states at every timestep at test time. See the supplementary for the hyperparameters for all models.
+We compare these models with our very large HMM (VL-HMM, $|\mcZ|=2^{15}$)
+that considers 256 latent states at every timestep at test time.
+See the appendix for the hyperparameters for all models.
 
 \begin{comment}
 \paragraph{Implementation}
@@ -540,7 +534,6 @@ This trend persists in \texttt{Wikitext-2},
 with the HMM outperforming the 5-gram model at 158.2
 and 210.9 perplexity, while an LSTM achieves 117.5.
 
-
 Fig.~\ref{tbl:states-ablation} examines the effect of state size.
 We find that performance continuously improving significantly as we grow to $2^{16}$ states.
 Table~\ref{tbl:dropout-param-ablation} considers other ablations.
@@ -587,16 +580,16 @@ Perplexity on \texttt{PTB} by state size $|\mcZ|$ ($\lambda =0.5$ and $M=128$).
 \toprule
 Model                           & Size & Train  & Val  &  Time \\
 \midrule
-VL-HMM ($2^{14}$)       & 5.6M       & 122    & 136  & 159\\
-\quad - dropout              & 5.6M       & 89     & 145  & 363\\
-\quad - block emb & 7.2M     & 115    & 134  & 142\\
-\quad - neural param & 423M  & 119    & 169 & 520
+VL-HMM ($2^{14}$)       & 5.6M       & 122    & 136  & 48\\
+\quad - dropout              & 5.6M       & 89     & 145  & 100\\
+\quad - block emb & 7.2M     & 115    & 134  & 40\\
+\quad - neural param & 423M  & 119    & 169 & 14
 \\
 \bottomrule
 \end{tabular}
 \caption{\label{tbl:dropout-param-ablation}
 Ablations on \texttt{PTB} ($\lambda =0.5$ and $M=128$). 
-Time is seconds per epoch (Run on RTX 2080).
+Time is ms per eval batch (Run on RTX 2080).
 }
 \end{table}
 
@@ -608,24 +601,16 @@ and state dropout. These contributions lead to an HMM that outperforms n-gram mo
 This work demonstrates the classical probabilistic models can scale on modern hardware and are
 interesting option for fitting NLP datasets. 
 
-% \footnote{The scalar parameterization should be faster per epoch than the
-% neural parameterization. We attribute this slowdown
-% to the speed of indexing in PyTorch.
-% When working with dropout
-% the neural parameterization computes subsets
-% of $\phi$ and $\psi$ lazily via a matmul,
-% whereas the scalar parameterization already has $\phi$ and $\psi$
-% available but must index into them to obtain the
-% un-dropped values.}
-
-
 \bibliographystyle{acl_natbib}
 \bibliography{anthology,emnlp2020}
 
+\clearpage
 \appendix
 
-\section{Hyperparameters}
+\section{Appendices}
+\subsection{Hyperparameters}
 \label{sec:hyperparams}
+
 For \texttt{Penn Treebank} and \texttt{Wikitext-2}, we trained the following baselines:
 a two layer feedforward 5-gram model and a two layer LSTM.
 The feedforward model is given by the following:
@@ -651,7 +636,7 @@ and a learning rate of 1e-3 for \texttt{Wikitext-2}.
 
 All weights are initialized with the Kaiming uniform initialization.
 
-\section{HMM Parameterization}
+\subsection{HMM Parameterization}
 We use the following residual network:
 \begin{equation}
 \label{eqn:res}
@@ -672,38 +657,43 @@ apply $f$ to obtain
 \end{aligned}
 \end{equation}
 
-\section{Emission constraint ablation}
-The top section of Tbl.~\ref{tbl:constraint-ablation}
-shows that the performance is
-insensitive to the number of Brown clusters with $|\mcZ|=2^{14}$.
-However, in the middle section,
-the model with $|\mcZ|=2^{10}$ is sensitive to the number of Brown clusters.
-With $M=4$ blocks, the block-sparse HMM matches the unconstrained HMM.
-However, when $M=8$, the block-sparse model underperforms.
-This implies that there may be a loss in performance due to the emission constraints.
+\subsection{Emission constraint ablation}
+Tbl.~\ref{tbl:constraint-ablation} shows the results from 
+emission constraint ablations.
+For the ablations in this section,
+we do not use the factored state embedding
+and instead directly learn embeddings $\mathbf{E}_z\in\mathbb{R}^{|\mcZ|\times h}$.
+We examine the effect of factored state embeddings in the next section.
 
-We additionally compare the partitions induced by Brown clustering with a uniform
+With a VL-HMM that has $|\mcZ|=2^{14}$ states,
+the model is insensitive to the number of blocks $M$.
+However, with fewer states $|\mcZ|=2^{10}$ where we are able to
+able to use fewer blocks to examine whether the block-sparsity
+of the emission results in a performance loss.
+With $M=4$ blocks, the block-sparse HMM matches an unconstrained HMM
+with the same number of states.
+When $M=8$, the block-sparse model underperforms,
+implying there may be room for improvement with the larger
+HMMs that use $M > 8$ blocks.
+
+We additionally compare the blocks induced by Brown clustering with a uniform
 constraint that samples subsets of states of size $n$
 independently and uniformly from $\mcZ$.
-This foregoes a partitioning, which makes it difficult to apply state dropout.
-We therefore apply a version of dropout that does not have block structure
-and zeroes out elements of the transition matrix randomly.
-In the bottom section of Tbl.~\ref{tbl:constraint-ablation},
+This does not admit a partitioning, which makes it difficult to apply state dropout.
+We therefore zero out half of the logits of the transition matrix randomly
+before normalization.
+In the bottom of Tbl.~\ref{tbl:constraint-ablation},
 we find that models with uniform constraints
 are consistently outperformed by models with Brown cluster constraints
 as measured by validation perplexity.
-The models with uniform constraints also had poor validation perplexities
-despite better training perplexities, a symptom of overfitting.
+The models with uniform constraints also had poor validation performance
+despite better training performance, a symptom of overfitting.
 
-In conclusion,
-we find the Brown cluster emission constraints to achieve reasonable performance
-in HMMs with large state spaces.
-We also observe that model performance is sensitive to the emission constraints,
-motivating future work towards exploring learning emission constraints
-while keeping inference tractable. 
+These ablations demonstrate that the constraints based on
+Brown clusters used in this work may not be optimal,
+motivating future work that learns sparsity structure.
 
-
-\begin{table}[h]
+\begin{table}[t]
 \centering
 \begin{tabular}{lllll}
 \toprule
@@ -725,23 +715,47 @@ Brown      & 16384   & 128    & 128 & 136\\
 \bottomrule
 \end{tabular}
 \caption{\label{tbl:constraint-ablation}
-Perplexities on the \texttt{Penn Treebank} dataset.
-We ablate the effect of the number of Brown clusters,
-examine whether there may be a drop in performance due to the emission sparsity constraint,
-and compare the Brown cluster constraint to a uniform baseline.
-All models have 0.5 state dropout, except for the 1k state HMMs,
-which have no dropout.
-We use $m$ to indicate the number of clusters.
+Emission constraint ablations on \texttt{Penn Treebank}.
 }
 \end{table}
 
-\section{}
-We additionally ablate the factored state embeddings,
-and find that the performance of state embeddings with
-independent parameters is similar to a model with factored embeddings.
-We additionally found that if the number of clusters is too small
-(i.e. 64 or 32 as opposed to 128)
-while keeping the total number of hidden states fixed to 16k,
-performance on validation drops to 143 perplexity.
+\subsection{Factored state embedding ablation}
+The results of the factored state ablation are in Fig.~\ref{fig:fac-ablation}.
+We find that the performance of independent state embeddings with
+is similar to a model with factored embeddings,
+until the number of blocks is $\le 64$.
+
+\begin{figure}[!t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$M$,
+    ylabel=PPL,
+    xmode=log,
+    log basis x={2},
+    xtick={},
+    width=7cm,
+    height=5cm
+]
+  \addplot plot coordinates {
+    (32,  136.58)
+    (64,  137.55)
+    (128, 134.06)
+    (256, 135.75)
+  };
+  \addlegendentry{ind}
+  \addplot plot coordinates {
+    (32,  142.528)
+    (64,  143.02)
+    (128, 137.415)
+    (256, 137.708)
+  };
+  \addlegendentry{fac}
+\end{axis}
+\end{tikzpicture}
+\caption{\label{fig:fac-ablation}
+Perplexity on \texttt{PTB} by state size $|\mcZ|$ ($\lambda =0.5$ and $M=128$).
+}
+\end{figure}
 
 \end{document}

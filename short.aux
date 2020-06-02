@@ -57,7 +57,7 @@
 \bibdata{anthology,emnlp2020}
 \newlabel{tbl:ppl}{{1}{4}{Perplexities on the \texttt {PTB / Wikitext-2}. \relax }{table.caption.3}{}}
 \newlabel{tbl:states-ablation}{{3}{4}{Perplexity on \texttt {PTB} by state size $|\mcZ |$ ($\lambda =0.5$ and $M=128$). \relax }{figure.caption.4}{}}
-\newlabel{tbl:dropout-param-ablation}{{2}{4}{Ablations on \texttt {PTB} ($\lambda =0.5$ and $M=128$). Time is seconds per epoch (Run on RTX 2080). \relax }{table.caption.5}{}}
+\newlabel{tbl:dropout-param-ablation}{{2}{4}{Ablations on \texttt {PTB} ($\lambda =0.5$ and $M=128$). Time is ms per eval batch (Run on RTX 2080). \relax }{table.caption.5}{}}
 \bibcite{bengio2003nlm}{{1}{2003}{{Bengio et~al.}}{{Bengio, Ducharme, Vincent, and Janvin}}}
 \bibcite{bradbury2016qrnn}{{2}{2016}{{Bradbury et~al.}}{{Bradbury, Merity, Xiong, and Socher}}}
 \bibcite{brown1992}{{3}{1992}{{Brown et~al.}}{{Brown, deSouza, Mercer, Pietra, and Lai}}}
@@ -82,6 +82,7 @@
 \bibcite{vogel1996hmm}{{22}{1996}{{Vogel et~al.}}{{Vogel, Ney, and Tillmann}}}
 \bibcite{wiseman2018hsmm}{{23}{2018}{{Wiseman et~al.}}{{Wiseman, Shieber, and Rush}}}
 \bibcite{zaremba2014lstm}{{24}{2014}{{Zaremba et~al.}}{{Zaremba, Sutskever, and Vinyals}}}
-\newlabel{sec:hyperparams}{{A}{5}{Hyperparameters}{appendix.A}{}}
-\newlabel{eqn:res}{{7}{6}{HMM Parameterization}{equation.B.7}{}}
-\newlabel{tbl:constraint-ablation}{{3}{6}{Perplexities on the \texttt {Penn Treebank} dataset. We ablate the effect of the number of Brown clusters, examine whether there may be a drop in performance due to the emission sparsity constraint, and compare the Brown cluster constraint to a uniform baseline. All models have 0.5 state dropout, except for the 1k state HMMs, which have no dropout. We use $m$ to indicate the number of clusters. \relax }{table.caption.7}{}}
+\newlabel{sec:hyperparams}{{A.1}{6}{Hyperparameters}{subsection.A.1}{}}
+\newlabel{eqn:res}{{7}{6}{HMM Parameterization}{equation.A.7}{}}
+\newlabel{tbl:constraint-ablation}{{3}{6}{Emission constraint ablations on \texttt {Penn Treebank}. \relax }{table.caption.7}{}}
+\newlabel{fig:fac-ablation}{{4}{7}{Perplexity on \texttt {PTB} by state size $|\mcZ |$ ($\lambda =0.5$ and $M=128$). \relax }{figure.caption.8}{}}
