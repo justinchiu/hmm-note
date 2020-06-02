@@ -575,7 +575,7 @@ AWD-LSTM & 33M & 68.6 & 65.8\\
 256 FF 5-gram        & 8.8M    & 210.9  & 195.0\\
 2x256  LSTM     & 9.6M    & 124.5  & 117.5\\
 %32k state HMM (no fac)   & 17.3M   & 166.7  & -\\
-VL-HMM ($|\mcZ|=2^{15}$)           & 13.7M   & -      & -\\
+VL-HMM ($|\mcZ|=2^{15}$)           & 13.7M   & 169.0      & 158.2\\
 \bottomrule
 \end{tabular}
 \caption{\label{tbl:ppl}
@@ -592,7 +592,7 @@ Table \ref{tbl:ppl} gives the main results. On \texttt{PTB}, VL-HMM is able achi
 The VL-HMM also outperforms the HMM+RNN extension of \citet{buys2018hmm}. These results indicate that HMMs are a much stronger model on this benchmark than previously claimed.
 However, we do find that the HMM is outperformed by LSTM-based models.
 This trend persists in \texttt{Wikitext-2},
-with the HMM outperforming the 5-gram model at {\color{red}FILL IN}
+with the HMM outperforming the 5-gram model at 158.2
 and 210.9 perplexity, while an LSTM achieves 117.5.
 
 
@@ -657,7 +657,11 @@ Time is seconds per epoch (Run on RTX 2080).
 
 
 \section{Conclusion}
-This work demonstrates that scaling HMMs to large states spaces results in gains in performance. We introduced three contributions: a blocked emission constraint, a neural parameterization, and state dropout. These contributions lead to an HMM that outperforms n-gram models and prior HMMs. This work demonstrates the classical probabilistic models can scale on modern hardware and are interesting option for fitting NLP datasets. 
+This work demonstrates that scaling HMMs to large states spaces results in gains in performance.
+We introduced three contributions: a blocked emission constraint, a neural parameterization,
+and state dropout. These contributions lead to an HMM that outperforms n-gram models and prior HMMs.
+This work demonstrates the classical probabilistic models can scale on modern hardware and are
+interesting option for fitting NLP datasets. 
 
 % \footnote{The scalar parameterization should be faster per epoch than the
 % neural parameterization. We attribute this slowdown
@@ -668,37 +672,6 @@ This work demonstrates that scaling HMMs to large states spaces results in gains
 % whereas the scalar parameterization already has $\phi$ and $\psi$
 % available but must index into them to obtain the
 % un-dropped values.}
-\begin{comment}
-\subsection{Part-of-Speech Tagging}
-
-\begin{table*}[!t]
-\centering
-\begin{tabular}{llll}
-\toprule
-Model                               & Num params & Valid Acc & Test Acc\\
-\midrule
-BRNN \citep{ma2016crf}              & -          & 96.56     & 96.76    \\ 
-BLSTM \citep{ma2016crf}             & -          & 96.88     & 96.93    \\ 
-BLSTM + CNN \citep{ma2016crf}       & -          & 97.34     & 97.33    \\ 
-BLSTM + CNN + CRF \citep{ma2016crf} & -          & 97.46     & 97.55    \\ 
-\midrule
-HMM                                 & 19M        & 96.25     & 96.50    \\
-HMM + CNN Emit                      & 9M         & 96.73     & 96.95    \\
-\bottomrule
-\end{tabular}
-\caption{\label{tbl:pos}
-Tagging accuracies on the Wall Street Journal (WSJ) portion of the
-\texttt{Penn Treebank}.
-We use a HMM with 32k states and 0.5 state dropout.
-}
-\end{table*}
-
-We find in Tbl.~\ref{tbl:pos} that the HMM outperforms the BRNN and BLSTM baselines
-of \citep{ma2016crf}, but underperforms the BLSTM with CNN and CRF variants.
-Additionally,
-we found that incorporating pretrained embeddings in the HMMs did not improve performance.
-{\color{red} NEED ERROR ANALYSIS}
-\end{comment}
 
 
 
