@@ -217,23 +217,11 @@ Hidden Markov models (HMMs) specify a joint distribution over
 observed tokens $\bx$ and discrete latent states $\bz = \langle z_1, \ldots, z_T \rangle$,
 with each $z_t$ from finite set $\mcZ$.
 For notational convenience, we define the starting state $z_0=\epsilon$.
-%The model is defined by the following generative process (shown in figure~\ref{fig:hmm}):
-%For every time step $t \in \set{0,\ldots,T}$, choose a state given the previous state
-%$z_t \mid z_{t-1}$ from the transition distribution $p(z_t \mid z_{t-1})$.
-%Then choose a token given the current state $x_t \mid z_t$
-%from the emission distribution $p(x_t \mid z_t)$.
 This yields the joint distribution
 \begin{equation}
 p(\bx, \bz; \theta)
 = \prod_{t=1}^T p(x_t\mid z_t)p(z_t \mid z_{t-1})
 \end{equation}
-%By virtue of modeling the joint distribution over $\bx_{0:T},\bz_{0:T}$,
-%HMMs maintain uncertainty over both observed words the unobserved latent states.
-%Contrast this with another class of language models, recurrent neural networks (RNNs),
-%which only maintain uncertainty over the observed $\bx_{0:T}$.
-%At every timestep $t$, the generative process bottlenecks all information from the past
-%through a single discrete state $z_t$ from a finite set.
-%This contrasts 
 \noindent The distributions are parameterized as follows
 \begin{equation}
 \label{param}
@@ -257,18 +245,7 @@ which becomes prohibitive if the number of latent states $|\mcZ|$ is large.
 We can then optimize the likelihood 
 with gradient ascent (or alternative variants of expectation maximization).
 
-%\footnote{An alternative method would be to employ expectation maximization,
-%however there is no closed form solution for the M-step with a neural parameterization.
-%Gradient ascent is applicable to both the scalar and neural parameterizations.}
-
 \noindent \textbf{HMMs and RNNs}
-% Motivate HMMs over RNNs.
-% Simplicity.
-% Faithful to generative process.
-% Computational reasons.
-%Recurrent neural networks (RNNs) %are one of the main alternatives to HMMs,
-%also model data with sequential structure and often achieve stronger performance. 
-%HMMs though are a useful alternative approach. 
 Recurrent neural networks (RNNs) do not attempt to decouple the latent dynamics from the observed.
 This often leads to improved accuracy,
 but does not allow for posterior inference or for directly incorporating additional
@@ -279,18 +256,11 @@ via the prefix-sum algorithm \cite{ladner1980prefix}.\footnote{Quasi-RNNs \citep
 by applying the same prefix-sum trick, but do not model uncertainty over
 latent dynamics.}
 
-%Our approach starts by defining two partitions:
-%one for the hidden states $\pi: \mcZ \to [m]$,
-%where $m$ is the number of partitions and each $|\pi(z)| = k, \forall z$;
-%and one for the observations $\sigma: \mcX \to [m]$.
-%Given the structure defined by $\pi$ and $\sigma$, we build models with large
-%capacity that admit tractable inference.
-
 \section{Scaling HMMs}
 
 \begin{figure}[t]
 \centering
-\includegraphics[height=2in]{img/mat.pdf}
+\includegraphics[height=1.7in]{img/mat.pdf}
 \caption{\label{fig:emit}
 The emission matrix as a set of blocks $\mathbf{O}_1, \ldots, \mathbf{O}_4$ (shown in transpose). Each active cell is constructed from word, state, and block embeddings. 
 }
@@ -303,28 +273,12 @@ The emission matrix as a set of blocks $\mathbf{O}_1, \ldots, \mathbf{O}_4$ (sho
 \caption{
 \label{fig:trellis}
 HMM search space with block emissions and state dropout.
-%The leftmost column depicts the state dropout mask $\mathbf{b}$,
-%which is used to prevent states from being considered during inference.
-%For every token $x_t$, the only incoming edges with nonzero mass are those
-%whose source was not dropped out, i.e. $b_{z_t} = 1$,
-%and is within the previous partition, i.e. $z_{t-1}\in\mcC_{x_{t-1}}$.
-%The states are partitioned into groups of 8,
-%with the observation partitions $\rho(x_1) = 1, \rho(x_2) = 2,$ and so on.
 }
 \end{figure}
-
-%The hypothesis of this work is that by expanding the state space of HMMs while while maintaining 
-%a regularized neural parameterization and efficient exact inference,
-%we can build models that are competitive with RNNs.
-%We propose three techniques for scaling these models:
-%a factored neural parameterization, induced block transitions, and state dropout.
-
 
 \noindent
 \textbf{Blocked Emissions} Efficiency of marginal inference inherently limits 
 the state space of general HMMs.
-%This limits the size of the state space to the order of 100s,
-%which prevents models from having enough states to capture the full history.
 However, we can improve inference complexity in special cases.
 For instance, inspired by cloned HMMs \citep{dedieu2019learning} if we know that the probability of emitting a word $x_t$ from a state $z_t$ is 0,
 i.e. $p(x_t \mid z_t) = 0$  then we can ignore transitions into and from that state during inference. 
@@ -343,15 +297,7 @@ p(\bx) &= \sum_{z_1 \in \mcZ_{x_1}} p(z_1\mid z_0)p(x_1 \mid z_1) \times\\
 \end{equation}
 This gives a serial complexity of $O(T(|Z|/M)^2)$
 
-
-
 \vspace{0.2cm}
-
-%We choose the sets $\mcC_x$ by using the partitions of the
-%states $\pi$ and and tokens $\rho$.
-%We then have $\mcC_x = \set{z: \pi(z) = \rho(x)}$,
-%yielding a computation complexity of $O(Tk^2)$ rather than $O(T|\mcZ|^2)$
-%as each partition $|\pi(z)| = k, \forall z$.
 
 \noindent
 \textbf{Factored Neural Parameterization} Even with blocked emissions, the scalar parameterization of an HMM grows quadratically
@@ -364,15 +310,6 @@ From these we can create representations for leaving a state, entering a state,
 and emitting a word: 
 \[ \mathbf{H}_{\textrm{out}},\mathbf{H}_{\textrm{in}},\mathbf{H}_\textrm{emit}
  = \text{MLP}(\mathbf{E}_m, \mathbf{E}_z ) \] 
-%which allows the number of parameters to scale linearly with the size of the state space.
-%We parameterize the transition and emission distributions using a residual network
-%with LayerNorm.
-%Let $E\in\mathbb{R}^{v \times h}$ be an embedding matrix,
-%where $v$ is the number of embeddings and
-%$h$ is the hidden dimension of our neural network.
-%Let $E_x \in \mathbb{R}^{|\mcX|\times h}$ be the token embeddings
-%and $E_{\textrm{out}},E_{\textrm{in}},E_\textrm{emit}\in \mathbb{R}^{|\mcZ|\times h}$
-%be embeddings for leaving, entering, and emitting from a state respectively. 
 The HMM distributional parameters are given by,
 \begin{equation}
 \begin{aligned}
@@ -672,7 +609,6 @@ interesting option for fitting NLP datasets.
 % whereas the scalar parameterization already has $\phi$ and $\psi$
 % available but must index into them to obtain the
 % un-dropped values.}
-
 
 
 \bibliographystyle{acl_natbib}
