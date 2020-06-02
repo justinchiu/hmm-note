@@ -97,11 +97,8 @@ exact posterior inference.
 %HMMs were explored in work by \citet{kuhn1994hmmlm,huang2011thesis}
 %but were not revisited until recently \citep{krakovna2016hmm,dedieu2019learning}.
 
-State-of-the-art systems in NLP have moved away from utilizing latent hidden states and toward deterministic deep neural models.
-%particularly for structured models. For instance in the area of language modeling, systems primarily model observed words using n-gram models, feedforward neural networks \citep{bengio2003nlm}, recurrent neural networks \citep{mikolov2010rnn,zaremba2014lstm,merity2017awdlstm}
-%or transformers \citep{radford2019language}.
-%This progress has led to the common wisdom that latent-variable models like HMMs are not
-%competitive with fully observed models.
+State-of-the-art systems in NLP have moved away from utilizing latent hidden states
+and toward deterministic deep neural models.
 We take several lessons from the success of deep neural models for NLP tasks:
 (a) the right factorization is critically important for representation learning, e.g. a feedforward model \cite{bengio2003nlm}
 can have the same probabilistic structure as an n-gram model while performing significantly better;
@@ -110,11 +107,14 @@ e.g. overly large LSTMs \cite{zaremba2014lstm} show marked improvements in perfo
 (c) regularization choices are necessary to find good solutions for different model parameterizations,
 e.g. experiments by \citet{merity2017awdlstm} outline a variety of training choices.
 
-We revisit HMMs for language modeling, positing that competitive performance may require very large models. 
-%To scale to large state-spaces, we need scalable parameterizations, efficient inference, and  effective regularization.
+We revisit HMMs for language modeling,
+positing that competitive performance may require very large models. 
+%To scale to large state-spaces,
+%we need scalable parameterizations, efficient inference, and  effective regularization.
 We develop a neural parameterization for HMMs that extends 
 them to comparable size and structure of deep models.
-We combine this parameterization with a modeling constraint that allows us to utilize HMMs with large state spaces, while maintaining efficient exact inference.
+We combine this parameterization with a modeling constraint that allows us to
+utilize HMMs with large state spaces, while maintaining efficient exact inference.
 Finally we incorporate a variant of dropout that both improves accuracy
 and reduces the computational overhead by an order of magnitude during training. 
 
@@ -123,10 +123,16 @@ It also performs comparably to neural counterparts with a similar number of para
 while maintaining uncertainty over the state dynamics.
 
 \section{Related Work}
+\label{sec:rw}
 
 Several recent papers have combined HMMs with 
 neural networks. \citet{buys2018hmm}
-develop an approach to relax HMMs, but show results that either perform poorly or require altering the probabilistic structure to look more like an RNN.  \citet{krakovna2016hmm} utilize model combination with an RNN to connect both approaches in a 20 state model. We demonstrate how to scale to orders of magnitude more states and show stronger performance.
+develop an approach to relax HMMs,
+but show results that either perform poorly or require altering the probabilistic structure
+to look more like an RNN. 
+\citet{krakovna2016hmm} utilize model combination with an RNN to connect both approaches in a
+20 state model.
+We demonstrate how to scale to orders of magnitude more states and show stronger performance.
 
 % Prior work has tried neural parameterizations, but with small state spaces.
 Prior work has considered neural parameterization of structured generative models. 
@@ -257,6 +263,7 @@ by applying the same prefix-sum trick, but do not model uncertainty over
 latent dynamics.}
 
 \section{Scaling HMMs}
+\label{sec:methods}
 
 \begin{figure}[t]
 \centering
@@ -280,7 +287,8 @@ HMM search space with block emissions and state dropout.
 \textbf{Blocked Emissions} Efficiency of marginal inference inherently limits 
 the state space of general HMMs.
 However, we can improve inference complexity in special cases.
-For instance, inspired by cloned HMMs \citep{dedieu2019learning} if we know that the probability of emitting a word $x_t$ from a state $z_t$ is 0,
+For instance, inspired by cloned HMMs \citep{dedieu2019learning}
+if we know that the probability of emitting a word $x_t$ from a state $z_t$ is 0,
 i.e. $p(x_t \mid z_t) = 0$  then we can ignore transitions into and from that state during inference. 
 
 We enforce a stronger constraint that our HMMs have rectangular fixed-width blocked emissions,
@@ -618,12 +626,12 @@ interesting option for fitting NLP datasets.
 
 \section{Hyperparameters}
 \label{sec:hyperparams}
-For \texttt{Penn Treebank} and \texttt{Wikitext-2}, we had the following baselines:
+For \texttt{Penn Treebank} and \texttt{Wikitext-2}, we trained the following baselines:
 a two layer feedforward 5-gram model and a two layer LSTM.
 The feedforward model is given by the following:
 \begin{equation}
 \begin{aligned}
-p(w_t \mid w_{<t})
+p(w_t \mid \bw_{<t})
 &= W_x\textrm{ReLU}(\textrm{Conv}(\bw_{t-4:t-1}))
 \end{aligned}
 \end{equation}
@@ -635,10 +643,15 @@ For both baseline models we use a learning rate of 1e-3 and a dropout rate of 0.
 Both models use a hidden dimension of 256 throughout.
 These same hyperparameters were applied on both \texttt{Penn Treebank} and \texttt{Wikitext-2}.
 
-For the HMMs also use a batch size of 16 and a BPTT length of 32. We use state dropout with a rate of 0.5. We use a learning rate of 1e-2 for \texttt{Penn Treebank}, and a learning rate of 1e-3 for \texttt{Wikitext-2}.
+For the HMMs we use a batch size of 16 and a BPTT length of 32.
+We use state dropout with $\lambda = 0.5$.
+We use a learning rate of 1e-2 for \texttt{Penn Treebank},
+and a learning rate of 1e-3 for \texttt{Wikitext-2}.
+
+All weights are initialized with the Kaiming uniform initialization.
 
 \section{HMM Parameterization}
-The HMMs use the following residual network:
+We use the following residual network:
 \begin{equation}
 \label{eqn:res}
 \begin{aligned}
@@ -647,35 +660,30 @@ g_i(D) &= \textrm{LayerNorm}(\textrm{ReLU}(DW_{i2}) + D)
 \end{aligned}
 \end{equation}
 with $i \in \set{\textrm{out},\textrm{in},\textrm{emit}}$.
-We then have
+
+For the factored state embeddings in Sec.~\ref{sec:methods}, we
+apply $f$ to obtain
 \begin{equation}
 \begin{aligned}
-\mathbf{H}_\textrm{out} &= f_\textrm{out}(f_o([\mathbb{E}_\pi,\mathbb{E}_z]))\\
-\mathbf{H}_\textrm{in} &= f_\textrm{in}(f_i([\mathbb{E}_\pi,\mathbb{E}_z]))\\
-\mathbf{H}_\textrm{emit} &= f_\textrm{emit}(f_e([\mathbb{E}_\pi,\mathbb{E}_z]))
+\mathbf{H}_\textrm{out} &= f_\textrm{out}(f_o([\mathbf{E}_m,\mathbf{E}_z]))\\
+\mathbf{H}_\textrm{in} &= f_\textrm{in}(f_i([\mathbf{E}_m,\mathbf{E}_z]))\\
+\mathbf{H}_\textrm{emit} &= f_\textrm{emit}(f_e([\mathbf{E}_m,\mathbf{E}_z]))
 \end{aligned}
 \end{equation}
-where we have further have another residual network to combine $\mathbb{E}_\pi$ and $\mathbb{E}_z$ for each set of embeddings.
 
 \section{Emission constraint ablation}
-
-\paragraph{Emission constraint ablation}
-We next analyze the effect of the emission constraint and dropout on performance.
-We fix the total number of states at 16k 
-and vary the emission constraints and dropout rate.
-In the top section of Tbl.~\ref{tbl:constraint-ablation},
-we find that the performance is
-insensitive to the number of Brown clusters at 16k states.
+The top section of Tbl.~\ref{tbl:constraint-ablation}
+shows that the performance is
+insensitive to the number of Brown clusters with $|\mcZ|=2^{14}$.
 However, in the middle section,
-the model is sensitive to the number of Brown clusters
-at 1k total states.
-The 1k state HMM with 4 Brown clusters matches the unconstrained 1k state HMM,
-while the HMM with 8 Brown clusters underperforms.
+the model with $|\mcZ|=2^{10}$ is sensitive to the number of Brown clusters.
+With $M=4$ blocks, the block-sparse HMM matches the unconstrained HMM.
+However, when $M=8$, the block-sparse model underperforms.
 This implies that there may be a loss in performance due to the emission constraints.
 
-We additionally compare the partition induced by Brown clustering with a uniform
-constraint that samples each $\mcC_x$ of size $n$
-independently and uniformly from all subsets of $\mcC$.
+We additionally compare the partitions induced by Brown clustering with a uniform
+constraint that samples subsets of states of size $n$
+independently and uniformly from $\mcZ$.
 This foregoes a partitioning, which makes it difficult to apply state dropout.
 We therefore apply a version of dropout that does not have block structure
 and zeroes out elements of the transition matrix randomly.
