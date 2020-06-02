@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  2 JUN 2020 05:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  2 JUN 2020 05:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1220,31 +1220,33 @@ Underfull \hbox (badness 1199) in paragraph at lines 157--161
 
  []
 
-) [5]
-Underfull \hbox (badness 1708) in paragraph at lines 734--734
+)
+Overfull \hbox (5.48268pt too wide) detected at line 637
+[][]
+ []
+
+[5]
+Underfull \hbox (badness 1708) in paragraph at lines 735--735
 []\OT1/ptm/m/n/10 Table 3: |[] Per-plex-i-ties on the \OT1/pcr/m/n/10 Penn Tree
 bank
  []
 
 [6]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 748.
- [7
-
-]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 748.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 747.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 747.
  (./short.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 748.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 748.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 747.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 747.
 Package rerunfilecheck Info: File `short.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 748.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 747.
  )
 (\end occurred when \iffalse on line 352 was incomplete) 
 Here is how much of TeX's memory you used:
- 34761 strings out of 492649
- 825042 string characters out of 6129607
- 1179865 words of memory out of 5000000
- 37766 multiletter control sequences out of 15000+600000
+ 34758 strings out of 492649
+ 825008 string characters out of 6129607
+ 1179820 words of memory out of 5000000
+ 37765 multiletter control sequences out of 15000+600000
  50403 words of font info for 213 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,11n,103p,1008b,1958s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1269,10 +1271,10 @@ crr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.p
 fb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/l
 ocal/texlive/2018/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texli
 ve/2018/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on short.pdf (7 pages, 344695 bytes).
+Output written on short.pdf (6 pages, 344060 bytes).
 PDF statistics:
- 360 PDF objects out of 1000 (max. 8388607)
- 301 compressed objects within 4 object streams
- 61 named destinations out of 1000 (max. 500000)
+ 351 PDF objects out of 1000 (max. 8388607)
+ 294 compressed objects within 3 object streams
+ 59 named destinations out of 1000 (max. 500000)
  32882 words of extra memory for PDF output out of 35830 (max. 10000000)
 

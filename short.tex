@@ -632,10 +632,11 @@ The feedforward model is given by the following:
 \begin{equation}
 \begin{aligned}
 p(w_t \mid \bw_{<t})
-&= W_x\textrm{ReLU}(\textrm{Conv}(\bw_{t-4:t-1}))
+&= W_x\textrm{ReLU}(\textrm{Conv}(\mathbf{E}_w(\bw_{t-4:t-1})))
 \end{aligned}
 \end{equation}
-where $\bw$ gives the word embeddings and $W_x\in\mathbb{R}^{|\mcX|\times h}$ is weight-tied to the embeddings.
+where $\mathbf{E}_w$ gives the word embeddings and
+$W_x\in\mathbb{R}^{|\mcX|\times h}$ is weight-tied to the embeddings.
 
 For the feedforward model we use a batch size of 128 and a bptt length of 64, as we found the model needed a larger batch size to train.
 For the LSTM, we use a batch size of 16 and a BPTT length of 32.
@@ -743,6 +744,4 @@ We additionally found that if the number of clusters is too small
 while keeping the total number of hidden states fixed to 16k,
 performance on validation drops to 143 perplexity.
 
-\section{Supplemental Material}
-\label{sec:supplemental}
 \end{document}
