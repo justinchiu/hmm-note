@@ -97,7 +97,7 @@ exact posterior inference.
 %HMMs were explored in work by \citet{kuhn1994hmmlm,huang2011thesis}
 %but were not revisited until recently \citep{krakovna2016hmm,dedieu2019learning}.
 
-In recent years, most state-of-the-art systems in NLP have moved away from utilizing latent hidden states and toward deterministic deep neural models.
+State-of-the-art systems in NLP have moved away from utilizing latent hidden states and toward deterministic deep neural models.
 %particularly for structured models. For instance in the area of language modeling, systems primarily model observed words using n-gram models, feedforward neural networks \citep{bengio2003nlm}, recurrent neural networks \citep{mikolov2010rnn,zaremba2014lstm,merity2017awdlstm}
 %or transformers \citep{radford2019language}.
 %This progress has led to the common wisdom that latent-variable models like HMMs are not
@@ -110,8 +110,8 @@ e.g. overly large LSTMs \cite{zaremba2014lstm} show marked improvements in perfo
 (c) regularization choices are necessary to find good solutions for different model parameterizations,
 e.g. experiments by \citet{merity2017awdlstm} outline a variety of training choices.
 
-In this work, we revisit HMMs for language modeling, positing that competitive performance requires very large HMM (VL-HMMs). To scale to large state-spaces, we need  shared parameterizations, efficient inference, and 
-effective regularization.
+We revisit HMMs for language modeling, positing that competitive performance may just require very large models. 
+%To scale to large state-spaces, we need scalable parameterizations, efficient inference, and  effective regularization.
 We develop a neural parameterization for HMMs that extends 
 them to comparable size and structure of deep models.
 We combine this parameterization with a modeling constraint that allows us to utilize HMMs with very large state spaces,
