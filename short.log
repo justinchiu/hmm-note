@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  1 JUN 2020 20:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  1 JUN 2020 23:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1177,11 +1177,11 @@ er-ence for
 
 pdfTeX warning: pdflatex (file ./img/mat.pdf): PDF inclusion: found PDF version
  <1.7>, but at most version <1.5> allowed
-<img/mat.pdf, id=122, 387.4475pt x 255.95625pt>
+<img/mat.pdf, id=122, 559.08875pt x 310.15875pt>
 File: img/mat.pdf Graphic file (type pdf)
 <use img/mat.pdf>
 Package pdftex.def Info: img/mat.pdf  used on input line 374.
-(pdftex.def)             Requested size: 164.0925pt x 108.405pt.
+(pdftex.def)             Requested size: 195.40247pt x 108.405pt.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <7> not available
 (Font)              Font shape `U/lasy/m/n' tried instead on input line 377.
 Excluding 'comment' comment. Excluding 'comment' comment.
@@ -1280,7 +1280,7 @@ onts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/typ
 e1/urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/tim
 es/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmri8a
 .pfb>
-Output written on short.pdf (7 pages, 338395 bytes).
+Output written on short.pdf (7 pages, 336929 bytes).
 PDF statistics:
  378 PDF objects out of 1000 (max. 8388607)
  320 compressed objects within 4 object streams
