@@ -35,8 +35,8 @@
 \usepackage{pgfplots}
 
 %% ADD BACK!!!!!!!!!!!!!!!!!
-\aclfinalcopy % Uncomment this line for the final submission
-\def\aclpaperid{***} %  Enter the acl Paper ID here
+%\aclfinalcopy % Uncomment this line for the final submission
+%\def\aclpaperid{***} %  Enter the acl Paper ID here
 
 %\setlength\titlebox{5cm}
 % You can expand the titlebox if you need extra space
@@ -66,13 +66,13 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-The Hidden Markov model (HMM) is a fundamental tool for sequence modeling that 
+The hidden Markov model (HMM) is a fundamental tool for sequence modeling that 
 cleanly separates the hidden state from the emission structure.
 However, this clean separation makes HMMs difficult to fit to large datasets in modern NLP, 
 and they have fallen out of use due to very poor performance 
 compared to fully observed models. This work revisits the challenge of 
-scaling HMMs to supervised datasets, taking ideas from recent approaches to neural modeling.
-We propose methods for scaling HMMs to massive state spaces, while maintaining compact parameterization, effective regularization, and efficient exact inference. Experiments show that this approach leads to models that are much more accurate than previous HMMs and ngram-based methods while nearing the performance of  NN models. 
+scaling HMMs to language modeling datasets, taking ideas from recent approaches to neural modeling.
+We propose methods for scaling HMMs to massive state spaces, while maintaining compact parameterization, effective regularization, and efficient exact inference. Experiments show that this approach leads to models that are much more accurate than previous HMMs and ngram-based methods while nearing the performance of NN models. 
 \end{abstract}
 
 \section{Introduction}
@@ -277,7 +277,7 @@ Recurrent neural networks (RNNs) do not attempt to decouple the latent dynamics 
 This often leads to improved accuracy,
 but does not allow for posterior inference or for directly incorporating additional
 state information.
-A further benefits of HMMs is that, unlike RNNs,
+A further benefit of HMMs is that, unlike RNNs,
 their associative structure allows for parallel inference
 via the prefix-sum algorithm \cite{ladner1980prefix}.\footnote{Quasi-RNNs \citep{bradbury2016qrnn} also have a logarithmic dependency on $T$
 by applying the same prefix-sum trick, but do not model uncertainty over
@@ -577,7 +577,7 @@ See Appendix \ref{sec:hyperparams} for the hyperparameters for all models.
 \end{comment}
 
 \section{Results}
-\subsection{Language Modeling}
+%\subsection{Language Modeling}
 % Tone: Made a lot of progress, and there is even more room for improvement.
 % Main avenue for improvement: emission constraints.
 We report perplexities 
@@ -881,87 +881,44 @@ we found that incorporating pretrained embeddings in the HMMs did not improve pe
 
 \section{Hyperparameters}
 \label{sec:hyperparams}
-LSTM
-\begin{itemize}
-\item 2 layers
-\end{itemize}
-
-\begin{comment}
-\section{Parameter estimation}
-We maximize the evidence of the observed sentences
-$\log p(\bx) = \log \sum_{\bz} p(\bx, \bz)$
-via gradient ascent.
-
-\subsection{Gradient of the evidence}
-Let $\psi_0(z_0, z_1) = \log p(x_0, z_0)$ and
-$\psi_t(z_{t}, z_{t+1}) = \log p(x_{t+1}, z_{t+1} \mid z_{t})$ for $t \in \set{1, \ldots, T-1}$.
-Additionally, let $\oplus$ and $\otimes$ be addition and multiplication in the log semiring.
-After conditioning on the observed $\bx$, we can express the evidence as the following:
+For \texttt{Penn Treebank} and \texttt{Wikitext-2}, we had the following baselines:
+a two layer feedforward 5-gram model and a two layer LSTM.
+The feedforward model is given by the following:
 \begin{equation}
-\label{eqn:evidence}
-A_x = \log p(\bx) = \bigoplus_{\bz}\bigotimes_{t=0}^{T-1} \psi_t(z_t, z_{t+1})
-\end{equation}
-where $A_\bx$ is the clamped log partition function (after observing $\bx_{0:T}$).
-
-We show that the gradient of the log partition function with respect to the $\psi_t(z_t, z_{t+1})$
-is the first moment (a general result for the cumulant generating function
-of exponential family distributions). Given the value of the derivative
-$\frac{\partial A_\bx}{\partial \psi_t(z_t, z_{t+1})}$,
-we can then apply the chain rule to compute the total derivative with respect to
-downstream parameters. For example, the gradient with respect to the transition matrix
-of the HMM is given by
-$$\frac{\partial A_\bx}{\partial \theta_{ij}}
-= \sum_t \frac{\partial A_\bx}{\partial \psi_t(i,j)}
-\frac{\partial \psi_t(i,j)}{\partial \theta_{ij}}$$
-
-Recall that the derivative of logaddexp ($\oplus$ in the log semiring) is
-\begin{equation}
-\label{eqn:lse_derivative}
 \begin{aligned}
-\frac{\partial}{\partial x} x \oplus y
-&= \frac{\partial}{\partial x} \log e^x + e^ y\\
-&= \frac{e^x}{e^x + e^y}\\
-&= \exp(x - (x \oplus y))
+p(w_t \mid w_{<t})
+&= W_x\textrm{ReLU}(\textrm{Conv}(\bw_{t-4:t-1}))
 \end{aligned}
 \end{equation}
-while the derivative of addition ($\otimes$ in the log semiring) is
+where $\bw$ gives the word embeddings and $W_x\in\mathbb{R}^{|\mcX|\times h}$ is weight-tied to the embeddings.
+
+For the feedforward model we use a batch size of 128 and a bptt length of 64, as we found the model needed a larger batch size to train.
+For the LSTM, we use a batch size of 16 and a BPTT length of 32.
+For both baseline models we use a learning rate of 1e-3 and a dropout rate of 0.3 on the activations in the model.
+Both models use a hidden dimension of 256 throughout.
+These same hyperparameters were applied on both \texttt{Penn Treebank} and \texttt{Wikitext-2}.
+
+For the HMMs also use a batch size of 16 and a BPTT length of 32. We use state dropout with a rate of 0.5. We use a learning rate of 1e-2 for \texttt{Penn Treebank}, and a learning rate of 1e-3 for \texttt{Wikitext-2}.
+
+\section{HMM Parameterization}
+The HMMs use the following residual network:
 \begin{equation}
-\label{eqn:plus_derivative}
-\frac{\partial}{\partial x} x \otimes y = 1
+\label{eqn:res}
+\begin{aligned}
+f_i(E) &= g_i(\textrm{ReLU}(EW_{i1}))\\
+g_i(D) &= \textrm{LayerNorm}(\textrm{ReLU}(DW_{i2}) + D)
+\end{aligned}
 \end{equation}
-
-%(TODO name variables to make this readable in 2col format)
-The derivative of the clamped log partition function $A_\bx$ is given by
-\begin{align*}
-&\frac{\partial A_\bx}{\partial \psi_t(i,j)}\\
-&= \frac{\partial}{\partial \psi_t(i,j)} \bigoplus_{\bz}
-    \bigotimes_{t'} \psi_{t'}(z_{t'}, z_{t'+1})\\
-&= \frac{\partial}{\partial \psi_t(i,j)} \Bigg(
-        \Bigg(\bigoplus_{\bz:z_t = i, z_{t+1} = j}
-        \bigotimes_{t'} \psi_{t'}(z_{t'}, z_{t'+1})\Bigg)\\
-& \qquad \bigoplus
-        \Bigg(\bigoplus_{\bz:z_t \ne i, z_{t+1} \ne j}
-        \bigotimes_{t'} \psi_{t'}(z_{t'}, z_{t'+1})\Bigg)
-    \Bigg)\\
-&= \exp\Bigg(\Bigg(\bigoplus_{\bz:z_t = i, z_{t+1} = j} 
-    \bigotimes_{t'} \psi_{t'}(z_{t'}, z_{t'+1})\Bigg)\\
-&\qquad - \Bigg(\Bigg(\bigoplus_{\bz:z_t = i, z_{t+1} = j}
-        \bigotimes_{t'} \psi_{t'}(z_{t'}, z_{t'+1})\Bigg)\\
-    &\qquad \qquad \bigoplus
-        \Bigg(\bigoplus_{\bz:z_t \ne i, z_{t+1} \ne j}
-        \bigotimes_{t'} \psi_{t'}(z_{t'}, z_{t'+1})\Bigg)
-    \Bigg)\Bigg)\\
-&= \exp\left(\left(\bigoplus_{\bz:z_t = i, z_{t+1} = j} 
-    \bigotimes_{t'} \psi_{t'}(z_{t'}, z_{t'+1})\right)
-    - A_\bx\right)
-\end{align*} 
-which is the value at $i$ and $j$ of the
-edge marginal for $z_t, z_{t+1}$ obtained via the forward-backward algorithm.
-The second equality is a result of the associativity of $\oplus$;
-the third equality is a result of Eqn. \ref{eqn:lse_derivative};
-and the fourth equality from Eqn. \ref{eqn:plus_derivative}.
-\end{comment}
-
+with $i \in \set{\textrm{out},\textrm{in},\textrm{emit}}$.
+We then have
+\begin{equation}
+\begin{aligned}
+\mathbf{H}_\textrm{out} &= f_\textrm{out}(f_o([\mathbb{E}_\pi,\mathbb{E}_z]))\\
+\mathbf{H}_\textrm{in} &= f_\textrm{in}(f_i([\mathbb{E}_\pi,\mathbb{E}_z]))\\
+\mathbf{H}_\textrm{emit} &= f_\textrm{emit}(f_e([\mathbb{E}_\pi,\mathbb{E}_z]))
+\end{aligned}
+\end{equation}
+where we have further have another residual network to combine $\mathbb{E}_\pi$ and $\mathbb{E}_z$ for each set of embeddings.
 
 \section{Supplemental Material}
 \label{sec:supplemental}
