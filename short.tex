@@ -118,7 +118,7 @@ positing that competitive performance may require very large models.
 %we need scalable parameterizations, efficient inference, and  effective regularization.
 Our contributions are as follows:
 We demonstrate large improvements in an HMM language model by scaling the state space.
-Additionally, we introduce three techniques to scale HMMs:
+Additionally, we introduce three techniques to do so:
 a modeling constraint that allows us to use a large number of states 
 while maintaining efficient exact inference,
 a neural parameterization that improves
@@ -454,12 +454,12 @@ Perplexities on the \texttt{PTB / Wikitext-2}.
 % Tone: Made a lot of progress, and there is even more room for improvement.
 % Main avenue for improvement: emission constraints.
 Table \ref{tbl:ppl} gives the main results.
-On \texttt{PTB}, the VL-NHMM is able achieve 115.8 perplexity on the test set,
-outperforming a FF baseline
-and vastly outperforming the 900-state HMM from \citet{buys2018hmm}.
-The VL-NHMM also outperforms the HMM+RNN extension of \citet{buys2018hmm}.
+On \texttt{PTB}, the VL-NHMM is able achieve 125.0 perplexity on the valid set,
+outperforming a FF baseline (159.9)
+and vastly outperforming the 900-state HMM from \citet{buys2018hmm} (284.6).
 \footnote{\citet{buys2018hmm} only report validation perplexity
-for the HMM and HMM+RNN models.}
+for the HMM and HMM+RNN models, so we compare accordingly.}
+The VL-NHMM also outperforms the HMM+RNN extension of \citet{buys2018hmm} (142.3).
 These results indicate that HMMs are a much stronger model
 on this benchmark than previously claimed.
 However, the VL-NHMM is outperformed by LSTMs.
@@ -552,7 +552,8 @@ p(w_t \mid \bw_{<t})
 where $\mathbf{E}_w$ gives the word embeddings and
 $W_x\in\mathbb{R}^{|\mcX|\times h}$ is weight-tied to the embeddings.
 
-For the feedforward model we use a batch size of 128 and a bptt length of 64, as we found the model needed a larger batch size to train.
+For the (5-gram) feedforward model we use a batch size of 128 and a bptt length of 64,
+as we found the model needed a larger batch size to train.
 For the LSTM, we use a batch size of 16 and a BPTT length of 32.
 For both baseline models we use AdamW \citep{adamw} with a learning rate of 1e-3 and a dropout rate of 0.3 on the activations in the model.
 Both models use a hidden dimension of 256 throughout.
@@ -750,16 +751,15 @@ This is because generating parameters from a neural network
 takes strictly more time than having those parameters available,
 similar to a hierarchical Bayesian model.
 
-We observe that when we remove the block embeddings and directly parameterize
-the state representations performance the model is faster
-due to not needing to recompute state representations.
-This contrast is even more obvious when removing neural components altogether,
+When block embeddings are removed and the state representations are
+directly parameterized,
+the model is faster due to not needing to recompute state representations.
+This contrast is even more pronounced when removing neural components altogether,
 with an almost 3x speedup.
-However, we note that the drop in generalization is large
+However, we note that the drop in generalization is large,
 indicating the neural parameterization helps with learning.
 Therefore we use the neural parameterization at training time,
 then cache the resulting HMM parameters (the transition and emission matrices)
 for use during inference.
-
 
 \end{document}
