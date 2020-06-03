@@ -563,8 +563,21 @@ We use AdamW \citep{adamw} with a learning rate of 1e-2 for \texttt{Penn Treeban
 and a learning rate of 1e-3 for \texttt{Wikitext-2}.
 
 All weights are initialized with the Kaiming uniform initialization.
+Validation likelihood was checked 4 times per epoch, and
+learning rates were decayed by a factor of 4 if the validation performance
+did not improve after 8 checks.
 
-Hyperparameter search was performed manually, using validation perplexity.
+Hyperparameter search was performed manually, using the best
+validation perplexity achieved in a run.
+Bounds:
+\begin{enumerate}
+\item Learning rate $\in \set{0.0001, 0.001, 0.01, 0.1}$
+\item Dropout $\lambda \in \set{0, 0.25, 0.5, 0.75}$
+\item Hidden dimension $h \in \set{128,256,512}$
+\item Batch size $\in \set{16, 32, 64, 128}$
+\end{enumerate}
+
+Experiments were run on RTX 2080 GPUs.
 
 \subsection{HMM Parameterization}
 Let $\mathbf{E},\mathbf{D}\in\mathbb{R}^{v \times h}$ be an
