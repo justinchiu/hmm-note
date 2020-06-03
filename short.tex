@@ -432,10 +432,10 @@ which discards the latent variable formulation \citep{buys2018hmm};
 a KN 5-gram model \citep{mikolov2012rnn,kenlm},
 a 256 dimension FF model,
 and a 2-layer 256 dimension LSTM.
-We compare these models with our very large HMM (VL-HMM, $|\mcZ|=2^{15}$)
+We compare these models with our very large neural HMM (VL-NHMM, $|\mcZ|=2^{15}$)
 that considers 256 latent states at every timestep at test time.
 \footnote{
-The 256 dim FF and LSTM models have comparable computational complexity to the VL-HMM,
+The 256 dim FF and LSTM models have comparable computational complexity to the VL-NHMM,
 taking computation $O(256^2 T)$.
 }
 See the appendix for all hyperparameters.
@@ -454,7 +454,7 @@ AWD-LSTM  & 24M & 60.0 & 57.3\\
 2x256 dim LSTM  & 3.6M     & 93.6       & 88.8   \\
 HMM+RNN   & 10M & 142.3 & -\\
 HMM ($|\mcZ|$=900) & 10M & 284.6 & -\\
-VL-HMM ($|\mcZ|=2^{15}$)   & 7.7M     & 125.0      & 115.8  \\
+VL-NHMM ($|\mcZ|=2^{15}$)   & 7.7M     & 125.0      & 115.8  \\
 \midrule
 \texttt{WikiText}\\
 \midrule
@@ -463,7 +463,7 @@ AWD-LSTM & 33M & 68.6 & 65.8\\
 256 FF 5-gram        & 8.8M    & 210.9  & 195.0\\
 2x256  LSTM     & 9.6M    & 124.5  & 117.5\\
 %32k state HMM (no fac)   & 17.3M   & 166.7  & -\\
-VL-HMM ($|\mcZ|=2^{15}$)           & 13.7M   & 169.0      & 158.2\\
+VL-NHMM ($|\mcZ|=2^{15}$)           & 13.7M   & 169.0      & 158.2\\
 \bottomrule
 \end{tabular}
 \caption{\label{tbl:ppl}
@@ -477,13 +477,13 @@ Perplexities on the \texttt{PTB / Wikitext-2}.
 % Tone: Made a lot of progress, and there is even more room for improvement.
 % Main avenue for improvement: emission constraints.
 Table \ref{tbl:ppl} gives the main results.
-On \texttt{PTB}, the VL-HMM is able achieve 115.8 perplexity on the test set,
+On \texttt{PTB}, the VL-NHMM is able achieve 115.8 perplexity on the test set,
 outperforming a FF baseline
 and vastly outperforming the 900-state HMM from \citet{buys2018hmm}.
-The VL-HMM also outperforms the HMM+RNN extension of \citet{buys2018hmm}.
+The VL-NHMM also outperforms the HMM+RNN extension of \citet{buys2018hmm}.
 \footnote{\citet{buys2018hmm} only report validation perplexity.}
 These results indicate that HMMs are a much stronger model on this benchmark than previously claimed.
-However, the VL-HMM is outperformed by LSTMs.
+However, the VL-NHMM is outperformed by LSTMs.
 This trend persists in \texttt{Wikitext-2},
 with the HMM outperforming the FF model but underperforming an LSTM.
 
@@ -493,7 +493,8 @@ Table~\ref{tbl:dropout-param-ablation} considers other ablations.
 We find that state dropout results in both an improvement in perplexity and
 a large improvement in time per epoch.
 Although neural and scalar parameterizations reach similar training perplexity,
-the neural model generalizes better on validation.
+the neural model generalizes better on validation
+with almost 100x fewer parameters.
 
 \begin{figure}[!t]
 \centering
@@ -530,7 +531,7 @@ Perplexity on \texttt{PTB} by state size $|\mcZ|$ ($\lambda =0.5$ and $M=128$).
 \toprule
 Model                           & Size & Train  & Val  &  Time \\
 \midrule
-VL-HMM ($2^{14}$)       & 5.6M       & 122    & 136  & 48\\
+VL-NHMM ($2^{14}$)       & 5.6M       & 122    & 136  & 48\\
 \quad - dropout              & 5.6M       & 89     & 145  & 100\\
 \quad - block emb & 7.2M     & 115    & 134  & 40\\
 \quad - neural param & 423M  & 119    & 169 & 14
@@ -619,7 +620,7 @@ we do not use the factored state embedding
 and instead directly learn embeddings $\mathbf{E}_z\in\mathbb{R}^{|\mcZ|\times h}$.
 We examine the effect of factored state embeddings in the next section.
 
-With a VL-HMM that has $|\mcZ|=2^{14}$ states,
+With a VL-NHMM that has $|\mcZ|=2^{14}$ states,
 the model is insensitive to the number of blocks $M$.
 However, with fewer states $|\mcZ|=2^{10}$ where we are able to
 able to use fewer blocks to examine whether the block-sparsity
