@@ -76,7 +76,8 @@ We propose methods for scaling HMMs to massive state spaces
 while maintaining compact parameterization,
 effective regularization, and efficient exact inference.
 Experiments show that this approach leads to models that are much more accurate
-than previous HMMs and n-gram-based methods while nearing the performance of NN models. 
+than previous HMMs and n-gram-based methods,
+making progress towards the performance of state-of-the-art NN models. 
 \end{abstract}
 
 \section{Introduction}
@@ -102,35 +103,36 @@ while allowing for exact posterior inference.
 
 State-of-the-art systems in NLP have moved away from utilizing latent hidden states
 and toward deterministic deep neural models.
-We take several lessons from the success of deep neural models for NLP tasks:
-(a) the right factorization is critically important for representation learning,
+We take several lessons from the success of neural models for NLP tasks:
+(a) model size is critical for finding better local optima,
+e.g. large LSTMs \cite{zaremba2014lstm} show marked improvements in performance;
+(b) the right factorization is critically important for representation learning,
 e.g. a feedforward model \cite{bengio2003nlm}
 can have the same probabilistic structure as an n-gram model while performing significantly better;
-(b) overparameterization is critical for finding better local optima,
-e.g. overly large LSTMs \cite{zaremba2014lstm} show marked improvements in performance;
-(c) regularization choices are necessary to find good solutions for different model parameterizations,
-e.g. experiments by \citet{merity2017awdlstm} outline a variety of training choices.
+(c) dropout is key to achieving strong performance on smaller datasets \citep{zaremba2014lstm,merity2017awdlstm}.
 
 We revisit HMMs for language modeling,
 positing that competitive performance may require very large models. 
 %To scale to large state-spaces,
 %we need scalable parameterizations, efficient inference, and  effective regularization.
-We develop a neural parameterization for HMMs that extends 
-them to a size and structure comparable to that of neural models.
-We combine this parameterization with a modeling constraint that allows us to
+We make the following contributions:
+1) We introduce a modeling constraint that allows us to
 utilize HMMs with large state spaces while maintaining efficient exact inference.
-Finally we incorporate a variant of dropout that both improves accuracy
+2) We develop a neural parameterization that improves
+generalization while remaining faithful to the
+probabilistic structure of the HMM.
+3) Finally, we create a variant of dropout that both improves accuracy
 and reduces the computational overhead by an order of magnitude during training. 
 
-Experiments employ HMMs on two language modeling datasets.
-We find that our HMM extension significantly outperforms past HMMs as well as n-gram models. 
-It also performs comparably to neural counterparts with a similar number of parameters
-while maintaining uncertainty over the state dynamics.
+Experiments employ HMMs on two language modeling datasets,
+where we study the effect of scaling the state space of HMMs.
+Our three contributions allow us to train an HMM with tens of thousands of states,
+significantly outperforming past HMMs as well as n-gram models.
 
 \section{Related Work}
 \label{sec:rw}
-
-Several recent papers have combined HMMs with neural networks.
+In order to improve the performance of HMMs on language modeling,
+several recent papers have combined HMMs with neural networks.
 \citet{buys2018hmm} develop an approach to relax HMMs,
 but their models either perform poorly or alter the probabilistic structure to resemble an RNN. 
 \citet{krakovna2016hmm} utilize model combination with an RNN to connect both approaches in a
@@ -138,47 +140,33 @@ but their models either perform poorly or alter the probabilistic structure to r
 We demonstrate how to scale to orders of magnitude more states and show stronger performance.
 
 % Prior work has tried neural parameterizations, but with small state spaces.
-Prior work has considered neural parameterization of structured generative models. 
-For HMMs, \citet{tran2016hmm} demonstrate improvements in POS induction with a
+Prior work has considered neural parameterizations of HMMs. 
+\citet{tran2016hmm} demonstrate improvements in POS induction with a
 neural parameterization of an HMM.
-Other work has used neural parameterization for models, such as 
+They consider small state spaces,
+as the goal was tag induction rather than language modeling.
+\footnote{
+Other work has used neural parameterization for structured models, such as 
 dependency models \citep{han2017dependency},
 hidden semi-Markov models \citep{wiseman2018hsmm},
 and context free grammars \citep{kim2019cpcfg}.
-These works use latent variables with relatively small state spaces,
-as the goal of both was structure induction rather than language modeling.
-%We extend the neural parameterization with the aim of supervised modeling.
+}
 
 % Prior work has tried large state spaces with scalar parameterizations.
-\begin{comment}
-We also draw inspiration from the experiments with
-cloned HMMs by \citet{dedieu2019learning},
-who propose to introduce sparsity constraints in scalar
-emission distribution of HMMs in order to make conditional inference
-tractable in large state spaces.
-They train a 30k state HMM on character-level language modeling
-by constraining every state to emit only a single character type.
-This particular constraint is problematic for language modeling at the word level,
-where the vocabulary size is much larger.
-We build on their work by proposing a sparsity constraint based on
-Brown clustering \citep{brown1992} which allows us to extend their
-work to vocabularies that are larger than the state space.
-\end{comment}
-
+Prior work has also used HMMs with many states.
+\citet{dedieu2019learning} introduce a sparsity constraint
+in order to train a 30K state HMM for character-level language modeling;
+however, their constraint precludes application to large vocabularies.
+We overcome this limitation and train models on word-level language modeling.
 
 % State splitting / refinement
-Finally, another approach to scaling to larger state spaces is to initialize
-with a small state space then grow the state space via a split-merge process
+Finally, another approach to scaling to large state spaces is to
+grow from small to big via a split-merge process
 \citep{petrov2006splitmerge,huang2011thesis}.
 In particular, \citet{huang2011thesis} learn an HMM for language modeling
 via this process.
-%Additionally, the cloned HMM \citep{dedieu2019learning} can be seen
-%as an HMM that starts with a single state per word,
-%then splits every state into $k$ states at the start
-%with no subsequent splits or merges.
-Fixed-size state spaces are significantly easier to optimize for 
-current hardware, e.g. GPUs, we therefore leave split-merge
-procedures for future work. 
+As fixed-size state spaces are significantly easier to optimize for 
+GPUs, we leave split-merge procedures for future work. 
 
 %There are also extensions of HMMs, such as factorial HMMs \cite{zoubin1997fhmm,nepal2013fhmm}
 %and context free grammars \citep{kim2019cpcfg}.
@@ -261,8 +249,8 @@ Recurrent neural networks (RNNs) do not attempt to decouple the latent dynamics 
 This often leads to improved accuracy,
 but does not allow for posterior inference or for directly incorporating additional
 state information.
-We consider these inherently interesting properties worth exploring as alternatives.
-A further benefit of HMMs is that, unlike RNNs,
+These are inherently interesting properties worth exploring.
+A further benefit of HMMs over RNNs is that
 their associative structure allows for parallel inference
 via the prefix-sum algorithm \cite{ladner1980prefix}.
 \footnote{Quasi-RNNs \citep{bradbury2016qrnn} also have a logarithmic dependency on $T$
@@ -286,7 +274,9 @@ The emission matrix as a set of blocks $\mathbf{O}_1, \ldots, \mathbf{O}_4$ (sho
 \end{center}
 \caption{
 \label{fig:trellis}
-HMM search space with block emissions and state dropout.
+Computation of $p(\bx)$ is greatly reduced by blocked emissions
+and state dropout. Edges between nodes in the trellis indicate
+nonzero transition probabilities after clamping $\bx$.
 }
 \end{figure}
 
@@ -294,11 +284,10 @@ HMM search space with block emissions and state dropout.
 \textbf{Blocked Emissions} Efficiency of marginal inference inherently limits 
 the state space of general HMMs.
 However, we can improve inference complexity in special cases.
-For instance, inspired by cloned HMMs \citep{dedieu2019learning}
-if the probability of emitting a word $x_t$ from a state $z_t$ is 0, i.e. $p(x_t \mid z_t) = 0$,
-then we can ignore transitions into and from that state during inference. 
-
-We enforce a stronger constraint that our HMMs have rectangular fixed-width blocked emissions,
+As states in an HMM are used to represent context, a reasonable assumption
+is that not every word should be used in every context.
+Inspired by cloned HMMs \citep{dedieu2019learning},
+we constrain our HMMs to have rectangular fixed-width blocked emissions,
 \[\mathbf{O} = \begin{bmatrix} \mathbf{O}^1 & 0 & 0 \\ 0 & $\dots$ & 0 \\ 0 & 0 & \mathbf{O}^M \\
 \end{bmatrix}\]
 where each $\mathbf{O}_m \in \mathbb{R}^{ {\cal X}_m \times |{\cal Z}|/M}$
@@ -314,18 +303,18 @@ p(\bx) &= \sum_{z_1 \in \mcZ_{x_1}} p(z_1\mid z_0)p(x_1 \mid z_1) \times\\
     \sum_{z_T \in \mcZ_{x_T}} p(z_T \mid z_{T-1})p(x_T \mid z_T)
 \end{aligned}
 \end{equation}
-This gives a serial complexity of $O(T(|Z|/M)^2)$.
+This gives a serial complexity of $O(T(|\mcZ|/M)^2)$.
 
 \vspace{0.2cm}
 
 \noindent
-\textbf{Factored Neural Parameterization} Even with blocked emissions, the scalar parameterization of an HMM grows quadratically
-with states.
+\textbf{Factored Neural Parameterization}
+Even with blocked emissions, the scalar parameterization of an HMM grows as $O(|\mcZ|^2)$.
 We instead employ a neural parameterization.
-The approach is to embed each state in $\cal Z$ ($\mathbf{E}_z \in \mathbb{R}^{|\mcZ| \times h/2}$),
+The approach is to embed each state in $\mcZ$ ($\mathbf{E}_z \in \mathbb{R}^{|\mcZ| \times h/2}$),
 each token in $\cal X$ ($\mathbf{E}_x \in \mathbb{R}^{|\mcX| \times h}$),
 and each block ($\mathbf{E}_m \in \mathbb{R}^{M \times h/2}$).
-From these we can create representations for leaving a state, entering a state,
+From these we can create representations for leaving and entering a state,
 and emitting a word: 
 \[ \mathbf{H}_{\textrm{out}},\mathbf{H}_{\textrm{in}},\mathbf{H}_\textrm{emit}
  = \text{MLP}(\mathbf{E}_m, \mathbf{E}_z ) \] 
@@ -336,16 +325,14 @@ The HMM distributional parameters are given by,
 \psi = \mathbf{H}_\textrm{out} \mathbf{H}_\textrm{in}^\top
 \end{aligned}
 \end{equation}
-where $\phi \in \mathbb{R}^{|X|\times|Z|}$ and
-$\psi \in \mathbb{R}^{|Z|\times|Z|}$.
-The MLP architecture follows \cite{kim2019cpcfg}.
-Please refer to the appendix for details. 
+where $\phi \in \mathbb{R}^{|\mcX|\times|\mcZ|}$ and
+$\psi \in \mathbb{R}^{|\mcZ|\times|\mcZ|}$.
+The MLP architecture follows \cite{kim2019cpcfg}, with details in the appendix.
 This neural parameterization takes $O(h^2 + h|\mcZ| + h|\mcX|)$ parameters
 (shown in Figure~\ref{fig:emit}).
 
-Note that parameter computation is independent of inference and can be cached completely at test-time.
-%The clean separation between the computation of the distributional parameters and marginal inference
-%allows the distributional parameters to be computed and then cached for use in inference.
+Note that parameter computation is independent of inference
+and can be cached completely at test-time.
 For training, we compute them once per batch (shown in Alg~\ref{fig:algo}). 
 For RNNs and similar models, %transition activations 
 emissions must be recomputed for each token. 
@@ -354,13 +341,6 @@ emissions must be recomputed for each token.
 \begin{algorithm}[t]
 \begin{algorithmic}
 \State{Given: block structure and model parameters}
-%\Function{ComputeLikelihood}{}
-%    \State{Compute parameters $\phi,\psi$ from model parameters}
-%    \ForAll{examples $\bx$}
-%        \State{Compute log potentials $\Phi = \Call{LogPotentials}{\phi,\psi,\bx,\mcC_x}$}
-%        \State{Compute evidence $\log p(\bx) = \Call{Forward}{\Phi}$}
-%    \EndFor
-%\EndFunction
     \State{Sample block-wise dropout mask $\bb$}
     \State{Compute $\phi,\psi$ ignoring $b_z = 0$}
     \ForAll{batch examples $\bx$}
@@ -368,26 +348,6 @@ emissions must be recomputed for each token.
         \State{$\log p(\bx) = \Call{Forward}{\Phi}$}
     \EndFor
     \State{Update embeddings $\mathbf{E_z, E_x, E_\pi}$ }
-\begin{comment}
-\Function{LogPotentials}{}
-    \State{Given sequence $\bx = \langle x_1,\ldots,x_T \rangle$,
-    constraints $\mcC_x$ with $|\mcC_x| = k$,
-    transition parameters $\psi$,
-    and emission parameters $\phi$}
-    \State{Initialize $\Phi \in \mathbb{R}^{T \times k \times k} = 0$}
-    \ForAll{$t\in \set{1,\ldots,T}$}
-        \State{Set $\Phi[t,:,:] += \psi[x]$}
-        \State{Set $\Phi[t,:,:] += \psi[x]$}
-    \EndFor
-    \State \Return meh \Comment{$O(1)$}
-\EndFunction
-\Function{Forward}{}
-    \For{meh}
-        \State{meh}
-    \EndFor
-    \State \Return meh \Comment{$O(1)$}
-\EndFunction
-\end{comment}
 \end{algorithmic}
 \caption{
 \label{fig:algo}
@@ -399,23 +359,17 @@ HMM Training
 
 \noindent
 \textbf{Dropout as State Reduction}
-To encourage generalization through distributed state usage, we introduce dropout to the model. 
+To encourage full use of the state space,
+we introduce dropout that prevents the model from favoring specific states. 
 We propose a form of HMM state dropout that removes states from use entirely,
 which has the added benefit of speeding up inference.
 
-%This forces the model to use different states while also leading to efficiency improvements
-%for computing parameterization and inference. 
-
-%Recall distributional parameters of the emission matrix
-%$\phi \in \mathbb{R}^{|\mcX|\times|\mcZ|}$
-%and the emission sparsity constraints which associate each token $x$
-%with a set of states $\mcC_x$.
-
-State dropout acts on each emission block $\mathbf{O}_1 \ldots \mathbf{O}_M$ independently.
-Recall each block has $|{\cal Z}| / M$ columns.
-For each, we sample a binary dropout mask by sampling
-$ \lambda \times(|{\cal Z}| / M)$ dropped row indices uniformly without replacement.
-We concatenate these to a global vector $\mathbf{b}$, which, along with the previous constraints,  ensures,
+State dropout acts on each emission block $\mathbf{O}_1, \ldots, \mathbf{O}_M$ independently.
+For each block (with $|{\cal Z}| / M$ columns), we sample a binary dropout mask by sampling
+$ \lambda \times(|{\cal Z}| / M)$ dropped row indices uniformly without replacement,
+where $\lambda$ is the dropout rate.
+We concatenate these to a global vector $\mathbf{b}$, which, along with the previous constraints, 
+ensures,
 \begin{equation}
 \label{eqn:state_dropout}
 p(x \mid z) \propto b_{z}1(z \in \mcZ_x)e^{\phi_{xz}}
@@ -457,17 +411,17 @@ since it maintains block structure with fixed-height (as shown in Figure~\ref{fi
 \textbf{Emission Blocks}
 The model requires partitioning token types into blocks $\mcX_m$. 
 While there are many partitioning methods, a natural choice
-is Brown clusters \citep{brown1992,liang2005brown} also based on HMMs.
+is Brown clusters \citep{brown1992,liang2005brown} which are also based on HMMs.
 Brown clusters are obtained by assigning every token type in $\mcX$ a state in an HMM,
-then states are merged until a desired number of partitions $M$ is reached.
+then merging states until a desired number of partitions $M$ is reached.
 We construct the Brown clusters on the training portions of the datasets.
-
 
 \noindent \textbf{Datasets}
 We evaluate on the \texttt{Penn Treebank} \citep{ptb} (929k train tokens, 10k vocab)
 and \texttt{wikitext2} \citep{wikitext} (2M train tokens, 33k vocab) datasets.
 For \texttt{Penn Treebank} we use the preprocessing from \citet{mikolov-2011},
-which lowercases all words and substitutes words outside of the vocabulary with unks.  For \texttt{Wikitext2}  casing is preserved, and all words outside the vocab are replaced with the unk token.
+which lowercases all words and substitutes OOV words with unks. 
+For \texttt{Wikitext2} casing is preserved, and all OOV words are unked.
 %Both datasets contain inter-sentence dependencies,
 %due to the use of documents consisting of more than a single sentence.
 
@@ -480,28 +434,12 @@ a 256 dimension FF model,
 and a 2-layer 256 dimension LSTM.
 We compare these models with our very large HMM (VL-HMM, $|\mcZ|=2^{15}$)
 that considers 256 latent states at every timestep at test time.
-See the appendix for the hyperparameters for all models.
+\footnote{
+The 256 dim FF and LSTM models have comparable computational complexity to the VL-HMM,
+taking computation $O(256^2 T)$.
+}
+See the appendix for all hyperparameters.
 
-\begin{comment}
-\paragraph{Implementation}
-We train two-layer LSTM recurrent neural networks with 256 units,
-as well as two-layer feed-forward neural networks with 256 units.
-The HMMs we train follow the sparsity constraints outlined in the previous
-section with a dropout rate of 0.5,
-and we vary the total number of states as well as states per word.
-We optimize all models with AdamW \citep{adamw}.
-
-We experimented with a couple batching strategies:
-On \texttt{Penn Treebank},
-the first strategy discarded the inter-sentence dependencies and shuffled all sentences,
-and the second treated the corpus as a single flat document without shuffling.
-On \texttt{Wikitext2}, we either shuffled at the document level or treated the corpus as a
-single document.
-Prior work on both corpuses treated the corpora as single documents.
-
-See supplementary material for the hyperparameters for all models.
-
-\end{comment}
 \begin{table}[!t]
 \centering
 \begin{tabular}{llrr}
@@ -538,22 +476,23 @@ Perplexities on the \texttt{PTB / Wikitext-2}.
 %\subsection{Language Modeling}
 % Tone: Made a lot of progress, and there is even more room for improvement.
 % Main avenue for improvement: emission constraints.
-Table \ref{tbl:ppl} gives the main results. On \texttt{PTB}, VL-HMM is able achieve 115.8 perplexity on the test set, outperforming a strong 5-gram baseline which obtained a perplexity of 141.2 and vastly outperforming a vanilla HMM  from \citet{buys2018hmm}.
-The VL-HMM also outperforms the HMM+RNN extension of \citet{buys2018hmm}. These results indicate that HMMs are a much stronger model on this benchmark than previously claimed.
-However, we do find that the HMM is outperformed by LSTM-based models.
+Table \ref{tbl:ppl} gives the main results.
+On \texttt{PTB}, the VL-HMM is able achieve 115.8 perplexity on the test set,
+outperforming a FF baseline
+and vastly outperforming the 900-state HMM from \citet{buys2018hmm}.
+The VL-HMM also outperforms the HMM+RNN extension of \citet{buys2018hmm}.
+\footnote{\citet{buys2018hmm} only report validation perplexity.}
+These results indicate that HMMs are a much stronger model on this benchmark than previously claimed.
+However, the VL-HMM is outperformed by LSTMs.
 This trend persists in \texttt{Wikitext-2},
-with the HMM outperforming the 5-gram model at 158.2
-and 210.9 perplexity, while an LSTM achieves 117.5.
+with the HMM outperforming the FF model but underperforming an LSTM.
 
 Fig.~\ref{tbl:states-ablation} examines the effect of state size.
 We find that performance continuously improving significantly as we grow to $2^{16}$ states.
 Table~\ref{tbl:dropout-param-ablation} considers other ablations.
-We find that state dropout results in both an improvement in perplexity,
- a large improvement in time per epoch, and a reduction in training/val performance gap.
-%State dropout greatly reduces the gap between training and validation performance, highlighting the effectiveness of state dropout as regularization.
-The scalar parameterization has a massive number of model parameters at 423M, compared to the
-neural parameterization with 5.6M parameters.
-Although both parameterizations reach similar training perplexity,
+We find that state dropout results in both an improvement in perplexity and
+a large improvement in time per epoch.
+Although neural and scalar parameterizations reach similar training perplexity,
 the neural model generalizes better on validation.
 
 \begin{figure}[!t]
@@ -658,7 +597,9 @@ f_i(E) &= g_i(\textrm{ReLU}(EW_{i1}))\\
 g_i(D) &= \textrm{LayerNorm}(\textrm{ReLU}(DW_{i2}) + D)
 \end{aligned}
 \end{equation}
-with $i \in \set{\textrm{out},\textrm{in},\textrm{emit}}$.
+with $i \in \set{\textrm{out},\textrm{in},\textrm{emit}}$,
+$W_{i1},W_{i2} \in \mathbb{R}^{h \times h}$
+where $h$ is the hidden dimension.
 
 For the factored state embeddings in Sec.~\ref{sec:methods}, we
 apply $f$ to obtain

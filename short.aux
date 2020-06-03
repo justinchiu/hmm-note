@@ -19,16 +19,17 @@
 \citation{rabiner1990tut}
 \citation{vogel1996hmm}
 \citation{kuhn1994hmmlm,huang2011thesis}
-\citation{bengio2003nlm}
 \citation{zaremba2014lstm}
-\citation{merity2017awdlstm}
+\citation{bengio2003nlm}
+\citation{zaremba2014lstm,merity2017awdlstm}
 \citation{buys2018hmm}
 \citation{krakovna2016hmm}
-\newlabel{sec:rw}{{2}{1}{Related Work}{section.2}{}}
 \citation{tran2016hmm}
 \citation{han2017dependency}
 \citation{wiseman2018hsmm}
 \citation{kim2019cpcfg}
+\newlabel{sec:rw}{{2}{1}{Related Work}{section.2}{}}
+\citation{dedieu2019learning}
 \citation{petrov2006splitmerge,huang2011thesis}
 \citation{huang2011thesis}
 \citation{ladner1980prefix}
@@ -43,7 +44,7 @@
 \citation{ptb}
 \citation{wikitext}
 \citation{mikolov-2011}
-\newlabel{fig:trellis}{{2}{3}{HMM search space with block emissions and state dropout. \relax }{figure.caption.2}{}}
+\newlabel{fig:trellis}{{2}{3}{Computation of $p(\bx )$ is greatly reduced by blocked emissions and state dropout. Edges between nodes in the trellis indicate nonzero transition probabilities after clamping $\bx $. \relax }{figure.caption.2}{}}
 \newlabel{eqn:sparse_marginalization}{{3}{3}{Scaling HMMs}{equation.4.3}{}}
 \newlabel{fig:algo}{{1}{3}{HMM Training \relax }{algorithm.1}{}}
 \newlabel{eqn:state_dropout}{{5}{3}{Scaling HMMs}{equation.4.5}{}}
@@ -53,12 +54,13 @@
 \citation{mikolov2012rnn,kenlm}
 \citation{buys2018hmm}
 \citation{buys2018hmm}
+\citation{buys2018hmm}
 \bibstyle{acl_natbib}
 \bibdata{anthology,emnlp2020}
-\bibcite{bengio2003nlm}{{1}{2003}{{Bengio et~al.}}{{Bengio, Ducharme, Vincent, and Janvin}}}
 \newlabel{tbl:ppl}{{1}{4}{Perplexities on the \texttt {PTB / Wikitext-2}. \relax }{table.caption.3}{}}
 \newlabel{tbl:states-ablation}{{3}{4}{Perplexity on \texttt {PTB} by state size $|\mcZ |$ ($\lambda =0.5$ and $M=128$). \relax }{figure.caption.4}{}}
 \newlabel{tbl:dropout-param-ablation}{{2}{4}{Ablations on \texttt {PTB} ($\lambda =0.5$ and $M=128$). Time is ms per eval batch (Run on RTX 2080). \relax }{table.caption.5}{}}
+\bibcite{bengio2003nlm}{{1}{2003}{{Bengio et~al.}}{{Bengio, Ducharme, Vincent, and Janvin}}}
 \bibcite{bradbury2016qrnn}{{2}{2016}{{Bradbury et~al.}}{{Bradbury, Merity, Xiong, and Socher}}}
 \bibcite{brown1992}{{3}{1992}{{Brown et~al.}}{{Brown, deSouza, Mercer, Pietra, and Lai}}}
 \bibcite{buys2018hmm}{{4}{2018}{{Buys et~al.}}{{Buys, Bisk, and Choi}}}

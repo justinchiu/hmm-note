@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex short"] 1591142523 "short.aux" "short.bbl" "short" 1591143971
+["bibtex short"] 1591155038 "short.aux" "short.bbl" "short" 1591155202
   "./acl_natbib.bst" 1571355934 47585 c671f071a8f3957857acb307a7173505 ""
-  "anthology.bib" 1591049507 21756 34099d8b2e36ae9b4649684bced2ec41 ""
+  "anthology.bib" 1591147666 22300 5989a258f7964522fe7deb5e8b36aa61 ""
   "emnlp2020.bib" 1571355934 1974 4d7084b2f3a55753e2f48da8052bb437 ""
-  "short.aux" 1591142920 5130 b40ab47ffe9c8ddf74da40d97f397b41 ""
+  "short.aux" 1591155202 5326 1cabb4b6da55d526d28ad1160a84e14c ""
   (generated)
   "short.blg"
   "short.bbl"
-["pdflatex"] 1591142919 "short.tex" "short.pdf" "short" 1591143971
+["pdflatex"] 1591155201 "short.tex" "short.pdf" "short" 1591155202
   "/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1480098688 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -82,6 +82,7 @@
   "/usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1480098733 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "/usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb" 1480098733 32762 224316ccc9ad3ca0423a14971cfa7fc1 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1480098733 32726 0a1aea6fcd6468ee2cf64d891f5c43c8 ""
+  "/usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb" 1480098733 33993 9b89b85fd2d9df0482bd47194d1d3bf3 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1480098733 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "/usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb" 1480098733 32587 1788b0c1c5b39540c96f5e42ccd6dae8 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1480098733 32626 4f5c1b83753b1dd3a97d1b399a005b4b ""
@@ -310,12 +311,12 @@
   "img/mat.pdf" 1591084678 91494 f1f4d316bfb48a11234d6ff6530872af ""
   "img/trellis.tex" 1590915002 35287 3901ed877a9a0357acd34c2c297e1fcc ""
   "mystyle.sty" 1590908742 2661 21f6bc81fda55e7d97bece70f7a902f0 ""
-  "short.aux" 1591142920 5130 b40ab47ffe9c8ddf74da40d97f397b41 ""
-  "short.bbl" 1591142523 7367 34b331df27a74161e9c65777c6b1b43d "bibtex short"
-  "short.out" 1591142919 0 d41d8cd98f00b204e9800998ecf8427e ""
-  "short.tex" 1591143967 31383 51d1af8cb8a32c44ba8c8417f9504d6f ""
+  "short.aux" 1591155202 5326 1cabb4b6da55d526d28ad1160a84e14c ""
+  "short.bbl" 1591155038 7367 34b331df27a74161e9c65777c6b1b43d "bibtex short"
+  "short.out" 1591155201 0 d41d8cd98f00b204e9800998ecf8427e ""
+  "short.tex" 1591155200 28011 8df88ef7c2705106dcb82c2f97e8aa7f ""
   (generated)
-  "short.aux"
   "short.log"
-  "short.pdf"
   "short.out"
+  "short.pdf"
+  "short.aux"
