@@ -68,13 +68,14 @@
 \begin{abstract}
 The hidden Markov model (HMM) is a fundamental tool for sequence modeling that 
 cleanly separates the hidden state from the emission structure.
-However, this clean separation makes it difficult to fit HMMs to large datasets in modern NLP, 
+However, this separation makes it difficult to fit HMMs to large datasets in modern NLP, 
 and they have fallen out of use due to very poor performance 
 compared to fully observed models. This work revisits the challenge of 
-scaling HMMs to language modeling datasets, taking ideas from recent approaches to neural modeling.
+scaling HMMs to language modeling datasets,
+taking ideas from recent approaches to neural modeling.
 We propose methods for scaling HMMs to massive state spaces
-while maintaining compact parameterization,
-effective regularization, and efficient exact inference.
+while maintaining a efficient exact inference, a compact parameterization,
+and effective regularization.
 Experiments show that this approach leads to models that are much more accurate
 than previous HMMs and n-gram-based methods,
 making progress towards the performance of state-of-the-art NN models. 
@@ -115,18 +116,19 @@ We revisit HMMs for language modeling,
 positing that competitive performance may require very large models. 
 %To scale to large state-spaces,
 %we need scalable parameterizations, efficient inference, and  effective regularization.
-We make the following contributions:
-1) We introduce a modeling constraint that allows us to
-utilize HMMs with large state spaces while maintaining efficient exact inference.
-2) We develop a neural parameterization that improves
+Our contributions are as follows:
+We demonstrate large improvements in an HMM language model by scaling the state space.
+Additionally, we introduce three techniques to scale HMMs:
+a modeling constraint that allows us to use a large number of states 
+while maintaining efficient exact inference,
+a neural parameterization that improves
 generalization while remaining faithful to the
-probabilistic structure of the HMM.
-3) Finally, we create a variant of dropout that both improves accuracy
-and reduces the computational overhead by an order of magnitude during training. 
+probabilistic structure of the HMM,
+and a variant of dropout that both improves accuracy
+and halves the computational overhead during training. 
 
-Experiments employ HMMs on two language modeling datasets,
-where we study the effect of scaling the state space of HMMs.
-Our three contributions allow us to train an HMM with tens of thousands of states,
+Experiments employ HMMs on two language modeling datasets.
+Our three techniques allow us to train an HMM with tens of thousands of states,
 significantly outperforming past HMMs as well as n-gram models.
 
 \section{Related Work}
@@ -411,7 +413,7 @@ We compare these with our very large neural HMM (VL-NHMM, $|\mcZ|=2^{15}$)
 that considers 256 states at every timestep at test time.
 \footnote{
 The 256 dim FF, LSTM, and VL-NHMM in particular
-have comparable computations complexity: $O(256^2 T)$.
+have comparable computational complexity: $O(256^2 T)$.
 }
 See the appendix for all hyperparameters.
 
@@ -464,14 +466,14 @@ However, the VL-NHMM is outperformed by LSTMs.
 This trend persists in \texttt{Wikitext-2},
 with the VL-NHMM outperforming the FF model but underperforming an LSTM.
 
-Fig.~\ref{tbl:states-ablation} examines the effect of state size.
+Fig.~\ref{tbl:states-ablation} examines the effect of state size:
 We find that performance continuously improving significantly as we grow to $2^{16}$ states.
-Table~\ref{tbl:dropout-param-ablation} considers other ablations.
-We find that state dropout results in both an improvement in perplexity and
-a large improvement in time per epoch.
+Table~\ref{tbl:dropout-param-ablation} considers other ablations:
 Although neural and scalar parameterizations reach similar training perplexity,
 the neural model generalizes better on validation
 with almost 100x fewer parameters.
+We find that state dropout results in both an improvement in perplexity and
+a large improvement in computation.
 
 \begin{figure}[!t]
 \centering
@@ -506,13 +508,12 @@ Perplexity on \texttt{PTB} by state size $|\mcZ|$ ($\lambda =0.5$ and $M=128$).
 \centering
 \begin{tabular}{llrrr}
 \toprule
-Model                           & Size & Train  & Val  &  Time \\
+Model                & Size & Train  & Val  &  Time \\
 \midrule
-VL-NHMM ($2^{14}$)       & 5.6M       & 122    & 136  & 48\\
-\quad - dropout              & 5.6M       & 89     & 145  & 100\\
-\quad - block emb & 7.2M     & 115    & 134  & 40\\
-\quad - neural param & 423M  & 119    & 169 & 14
-\\
+VL-NHMM ($2^{14}$)   & 5.6M & 122    & 136  & 48\\
+\quad - neural param & 423M & 119    & 169 & 14\\
+\quad - dropout      & 5.6M & 89     & 145  & 100\\
+\quad - block emb    & 7.2M & 115    & 134  & 40\\
 \bottomrule
 \end{tabular}
 \caption{\label{tbl:dropout-param-ablation}
@@ -633,7 +634,7 @@ Emission constraint ablations on \texttt{Penn Treebank}.
 \end{table}
 
 
-\subsection{Emission constraint ablation}
+\subsection{Emission Constraint Ablation}
 Tbl.~\ref{tbl:constraint-ablation} shows the results from 
 emission constraint ablations.
 For the ablations in this section,
@@ -669,8 +670,20 @@ These ablations demonstrate that the constraints based on
 Brown clusters used in this work may not be optimal,
 motivating future work that learns sparsity structure.
 
-\subsection{Factored state embedding ablation}
-The results of the factored state ablation are in Fig.~\ref{fig:fac-ablation}.
+\subsection{Factored State Representation Ablation}
+We examine the effect of factoring state representations into block embeddings
+and independent state embeddings.
+Recall that factored state representations were parameterized via 
+\[ \mathbf{H}_{\textrm{out}},\mathbf{H}_{\textrm{in}},\mathbf{H}_\textrm{emit}
+ = \text{MLP}(\mathbf{E}_m, \mathbf{E}_z ) \] 
+with the block and state embeddings 
+$\mathbf{E}_m,\mathbf{E}_z \in \mathbb{R}^{|\mcZ| \times h/2}$).
+We ablate this by comparing to the following independent state representation:
+\[ \mathbf{H}_{\textrm{out}},\mathbf{H}_{\textrm{in}},\mathbf{H}_\textrm{emit}
+ = \mathbf{E}_z' \] 
+with $\mathbf{E_z'}\in\mathbb{R}^{|\mcZ| \times h}$.
+The results of the factored state ablation are in Fig.~\ref{fig:fac-ablation},
+
 We find that the performance of independent state embeddings with
 is similar to a model with factored embeddings,
 until the number of blocks is $\le 64$.
@@ -704,8 +717,49 @@ until the number of blocks is $\le 64$.
 \end{axis}
 \end{tikzpicture}
 \caption{\label{fig:fac-ablation}
-Perplexity on \texttt{PTB} by state size $|\mcZ|$ ($\lambda =0.5$ and $M=128$).
+Perplexity on \texttt{PTB} by number of blocks $M$ ($\lambda =0.5$ and $|\mcZ|=2^{14}$).
 }
 \end{figure}
+
+\subsection{Computational Considerations}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{llrrr}
+\toprule
+Model                & Size & Train  & Val & Time \\
+\midrule
+VL-NHMM ($2^{14}$)   & 5.6M & 122    & 136 & 48\\
+\quad - neural param & 423M & 119    & 169 & 14\\
+\quad - dropout      & 5.6M & 89     & 145 & 100\\
+\quad - block emb    & 7.2M & 115    & 134 & 40\\
+\bottomrule
+\end{tabular}
+\caption{\label{tbl:dropout-param-ablation-repeat}
+Ablations on \texttt{PTB} ($\lambda =0.5$ and $M=128$). 
+Time is ms per eval batch (Run on RTX 2080).
+}
+\end{table}
+
+We reproduce the technique ablation table here in
+Tbl.~\ref{tbl:dropout-param-ablation-repeat} for reference.
+As we remove neural components, 
+the number of parameters increases but the time of the
+forward pass decreases.
+This is because generating parameters from a neural network
+takes strictly more time than having those parameters available,
+similar to a hierarchical Bayesian model.
+
+We observe that when we remove the block embeddings and directly parameterize
+the state representations performance the model is faster
+due to not needing to recompute state representations.
+This contrast is even more obvious when removing neural components altogether,
+with an almost 3x speedup.
+However, we note that the drop in generalization is large
+indicating the neural parameterization helps with learning.
+Therefore we use the neural parameterization at training time,
+then cache the resulting HMM parameters (the transition and emission matrices)
+for use during inference.
+
 
 \end{document}
