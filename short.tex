@@ -89,8 +89,8 @@ Hidden Markov models (HMMs) are a fundamental latent-variable model for sequenti
 Historically they have been used extensively in NLP for tasks such as
 sequence modeling \citep{rabiner1990tut}, alignment \citep{vogel1996hmm},
 and even, in a few cases, to language modeling \citep{kuhn1994hmmlm,huang2011thesis}. 
-Compared to other approaches for sequence models, HMMs are naturally appealing since they 
-fully separate out the process of sequential memory from the process of generation,
+Compared to other sequence models, HMMs are naturally appealing since they 
+fully separate the process of sequential memory from the process of generation,
 while allowing for exact posterior inference. 
 
 %MMs remain an appealing modeling tool that separates out the facets of discrete model memory from
@@ -276,7 +276,7 @@ The emission matrix as a set of blocks $\mathbf{O}_1, \ldots, \mathbf{O}_4$ (sho
 \label{fig:trellis}
 Computation of $p(\bx)$ is greatly reduced by blocked emissions
 and state dropout. Edges between nodes in the trellis indicate
-nonzero transition probabilities after clamping $\bx$.
+nonzero transition probabilities after clamping potentials with $\bx$.
 }
 \end{figure}
 
@@ -333,9 +333,8 @@ This neural parameterization takes $O(h^2 + h|\mcZ| + h|\mcX|)$ parameters
 
 Note that parameter computation is independent of inference
 and can be cached completely at test-time.
-For training, we compute them once per batch (shown in Alg~\ref{fig:algo}). 
-For RNNs and similar models, %transition activations 
-emissions must be recomputed for each token. 
+For training, we compute them once per batch (shown in Alg~\ref{fig:algo}),
+while RNNs and similar models recompute emissions every token.
 
 
 \begin{algorithm}[t]
@@ -381,30 +380,6 @@ This structured dropout is also easier to exploit on GPU,
 since it maintains block structure with fixed-height (as shown in Figure~\ref{fig:trellis}).
 
 
-%Performing marginal inference with state dropout allows us to skip states that are removed 
-
-%Additionally, we do not need to compute the parameters of the
-%transition and emission distributions that have been dropped. 
-%This reduces the cost of computing $\phi$ and $\psi$ from
-%$O(|\mcZ|^2+|\mcZ||\mcX|)$ to $n^2 + n|\mcX|$.
-
-
-%We utilize the constraint sets induced by $\pi$ and $\rho$
-%to ensure that exactly $n$ states remain in each constraint set $\mcC_x$ after applying dropout.
-%This is accomplished by subsampling $n$ states from each partition in the preimage of $\pi$,
-%which preserves the block structure observed in Fig.~\ref{fig:trellis}
-%and allows the number of outgoing edges at each timestep to remain equal to $n$.
-
-%requires $O(Tn^2)$ computation,
-%where $n = \max_x \left|\set{z:b_z=1,z \in \mcC_x}\right|$.
-
-
-%Although a neural parameterization has empirically been shown to find good optima,
-%it requires that the distributional parameters be %recomputed every time the
-%model parameters are updated.
-%This entails running a neural network $O(|\mcZ| + |\mcX|)$ times 
-%at every iteration of gradient descent.
-
 \section{Experimental Setup}
 \label{sec:experiments}
 
@@ -428,15 +403,15 @@ For \texttt{Wikitext2} casing is preserved, and all OOV words are unked.
 \noindent \textbf{Baselines}
 Baselines include AWD-LSTM \citep{merity2017awdlstm};
 a 900-state scalar HMM and HMM+RNN extension,
-which discards the latent variable formulation \citep{buys2018hmm};
+which discards the HMM assumptions \citep{buys2018hmm};
 a KN 5-gram model \citep{mikolov2012rnn,kenlm},
 a 256 dimension FF model,
 and a 2-layer 256 dimension LSTM.
-We compare these models with our very large neural HMM (VL-NHMM, $|\mcZ|=2^{15}$)
-that considers 256 latent states at every timestep at test time.
+We compare these with our very large neural HMM (VL-NHMM, $|\mcZ|=2^{15}$)
+that considers 256 states at every timestep at test time.
 \footnote{
-The 256 dim FF and LSTM models have comparable computational complexity to the VL-NHMM,
-taking computation $O(256^2 T)$.
+The 256 dim FF, LSTM, and VL-NHMM in particular
+have comparable computations complexity: $O(256^2 T)$.
 }
 See the appendix for all hyperparameters.
 
@@ -481,11 +456,13 @@ On \texttt{PTB}, the VL-NHMM is able achieve 115.8 perplexity on the test set,
 outperforming a FF baseline
 and vastly outperforming the 900-state HMM from \citet{buys2018hmm}.
 The VL-NHMM also outperforms the HMM+RNN extension of \citet{buys2018hmm}.
-\footnote{\citet{buys2018hmm} only report validation perplexity.}
-These results indicate that HMMs are a much stronger model on this benchmark than previously claimed.
+\footnote{\citet{buys2018hmm} only report validation perplexity
+for the HMM and HMM+RNN models.}
+These results indicate that HMMs are a much stronger model
+on this benchmark than previously claimed.
 However, the VL-NHMM is outperformed by LSTMs.
 This trend persists in \texttt{Wikitext-2},
-with the HMM outperforming the FF model but underperforming an LSTM.
+with the VL-NHMM outperforming the FF model but underperforming an LSTM.
 
 Fig.~\ref{tbl:states-ablation} examines the effect of state size.
 We find that performance continuously improving significantly as we grow to $2^{16}$ states.
@@ -546,11 +523,11 @@ Time is ms per eval batch (Run on RTX 2080).
 
 
 \section{Conclusion}
-This work demonstrates that scaling HMMs to large states spaces results in gains in performance.
-We introduced three contributions: a blocked emission constraint, a neural parameterization,
-and state dropout. These contributions lead to an HMM that outperforms n-gram models and prior HMMs.
-This work demonstrates the classical probabilistic models can scale on modern hardware and are
-interesting option for fitting NLP datasets. 
+This work demonstrates that scaling HMMs to large states spaces results in performance gains.
+We make three contributions: a blocked emission constraint, a neural parameterization,
+and state dropout, which lead to an HMM that outperforms n-gram models and prior HMMs.
+This work demonstrates that classic HMMs can scale on modern hardware,
+and are worthy of consideration for NLP tasks. 
 
 \bibliographystyle{acl_natbib}
 \bibliography{anthology,emnlp2020}
