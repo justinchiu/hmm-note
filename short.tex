@@ -576,13 +576,13 @@ $W_x\in\mathbb{R}^{|\mcX|\times h}$ is weight-tied to the embeddings.
 
 For the feedforward model we use a batch size of 128 and a bptt length of 64, as we found the model needed a larger batch size to train.
 For the LSTM, we use a batch size of 16 and a BPTT length of 32.
-For both baseline models we use a learning rate of 1e-3 and a dropout rate of 0.3 on the activations in the model.
+For both baseline models we use AdamW \citep{adamw} with a learning rate of 1e-3 and a dropout rate of 0.3 on the activations in the model.
 Both models use a hidden dimension of 256 throughout.
 These same hyperparameters were applied on both \texttt{Penn Treebank} and \texttt{Wikitext-2}.
 
 For the HMMs we use a batch size of 16 and a BPTT length of 32.
 We use state dropout with $\lambda = 0.5$.
-We use a learning rate of 1e-2 for \texttt{Penn Treebank},
+We use AdamW \citep{adamw} with a learning rate of 1e-2 for \texttt{Penn Treebank},
 and a learning rate of 1e-3 for \texttt{Wikitext-2}.
 
 All weights are initialized with the Kaiming uniform initialization.
@@ -590,12 +590,15 @@ All weights are initialized with the Kaiming uniform initialization.
 Hyperparameter search was performed manually, using validation perplexity.
 
 \subsection{HMM Parameterization}
+Let $\mathbf{E},\mathbf{D}\in\mathbb{R}^{v \times h}$ be an
+embedding matrix and a matrix of the same size,
+where $v$ is the size of the vocab and $h$ the hidden dimension.
 We use the following residual network:
 \begin{equation}
 \label{eqn:res}
 \begin{aligned}
-f_i(E) &= g_i(\textrm{ReLU}(EW_{i1}))\\
-g_i(D) &= \textrm{LayerNorm}(\textrm{ReLU}(DW_{i2}) + D)
+f_i(\mathbf{E}) &= g_i(\textrm{ReLU}(\mathbf{E}W_{i1}))\\
+g_i(\mathbf{D}) &= \textrm{LayerNorm}(\textrm{ReLU}(\mathbf{D}W_{i2}) + \mathbf{D})
 \end{aligned}
 \end{equation}
 with $i \in \set{\textrm{out},\textrm{in},\textrm{emit}}$,
@@ -603,7 +606,8 @@ $W_{i1},W_{i2} \in \mathbb{R}^{h \times h}$
 where $h$ is the hidden dimension.
 
 For the factored state embeddings in Sec.~\ref{sec:methods}, we
-apply $f$ to obtain
+introduce residual networks $f_j,j\in\set{o,i,e}$
+to compose block and state embeddings, yielding
 \begin{equation}
 \begin{aligned}
 \mathbf{H}_\textrm{out} &= f_\textrm{out}(f_o([\mathbf{E}_m,\mathbf{E}_z]))\\
@@ -611,6 +615,33 @@ apply $f$ to obtain
 \mathbf{H}_\textrm{emit} &= f_\textrm{emit}(f_e([\mathbf{E}_m,\mathbf{E}_z]))
 \end{aligned}
 \end{equation}
+
+\begin{table}[t]
+\centering
+\begin{tabular}{lllll}
+\toprule
+Constraint & $|\mcZ|$ & $|\mcC_x|$ & $m$ & Val PPL\\
+\midrule
+Brown & 16384 & 512 & 32  & 137\\
+Brown & 16384 & 256 & 64  & 138\\
+Brown & 16384 & 128 & 128 & 134\\
+Brown & 16384 & 64  & 256 & 136\\
+\midrule
+None  & 1024 & - & - & 180\\
+Brown & 1024 & 256 & 4 & 182\\
+Brown & 1024 & 128 & 8 & 194\\
+\midrule
+Uniform    & 8192    & 128    & -   & 150\\
+Brown      & 8192    & 128    & 64  & 142\\
+Uniform    & 16384   & 128    & -   & 146\\
+Brown      & 16384   & 128    & 128 & 136\\
+\bottomrule
+\end{tabular}
+\caption{\label{tbl:constraint-ablation}
+Emission constraint ablations on \texttt{Penn Treebank}.
+}
+\end{table}
+
 
 \subsection{Emission constraint ablation}
 Tbl.~\ref{tbl:constraint-ablation} shows the results from 
@@ -648,39 +679,13 @@ These ablations demonstrate that the constraints based on
 Brown clusters used in this work may not be optimal,
 motivating future work that learns sparsity structure.
 
-\begin{table}[t]
-\centering
-\begin{tabular}{lllll}
-\toprule
-Constraint & $|\mcZ|$ & $|\mcC_x|$ & $m$ & Val PPL\\
-\midrule
-Brown & 16384 & 512 & 32  & 137\\
-Brown & 16384 & 256 & 64  & 138\\
-Brown & 16384 & 128 & 128 & 134\\
-Brown & 16384 & 64  & 256 & 136\\
-\midrule
-None  & 1024 & - & - & 180\\
-Brown & 1024 & 256 & 4 & 182\\
-Brown & 1024 & 128 & 8 & 194\\
-\midrule
-Uniform    & 8192    & 128    & -   & 150\\
-Brown      & 8192    & 128    & 64  & 142\\
-Uniform    & 16384   & 128    & -   & 146\\
-Brown      & 16384   & 128    & 128 & 136\\
-\bottomrule
-\end{tabular}
-\caption{\label{tbl:constraint-ablation}
-Emission constraint ablations on \texttt{Penn Treebank}.
-}
-\end{table}
-
 \subsection{Factored state embedding ablation}
 The results of the factored state ablation are in Fig.~\ref{fig:fac-ablation}.
 We find that the performance of independent state embeddings with
 is similar to a model with factored embeddings,
 until the number of blocks is $\le 64$.
 
-\begin{figure}[!t]
+\begin{figure}[h]
 \centering
 \begin{tikzpicture}
 \begin{axis}[

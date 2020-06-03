@@ -1,4 +1,4 @@
-\begin{thebibliography}{24}
+\begin{thebibliography}{25}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{Bengio et~al.(2003)Bengio, Ducharme, Vincent, and
@@ -83,6 +83,12 @@ Richard~E. Ladner and Michael~J. Fischer. 1980.
 Percy Liang. 2005.
 \newblock Semi-supervised learning for natural language.
 \newblock In \emph{MASTER’S THESIS, MIT}.
+
+\bibitem[{Loshchilov and Hutter(2017)}]{adamw}
+Ilya Loshchilov and Frank Hutter. 2017.
+\newblock \href {http://arxiv.org/abs/1711.05101} {Fixing weight decay
+  regularization in adam}.
+\newblock \emph{CoRR}, abs/1711.05101.
 
 \bibitem[{Marcus et~al.(1993)Marcus, Santorini, and Marcinkiewicz}]{ptb}
 Mitchell~P. Marcus, Beatrice Santorini, and Mary~Ann Marcinkiewicz. 1993.
