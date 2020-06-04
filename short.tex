@@ -111,7 +111,7 @@ e.g. large LSTMs \cite{zaremba2014lstm} show marked improvements in performance;
 (b) the right factorization is critically important for representation learning,
 e.g. a feedforward model \cite{bengio2003nlm}
 can have the same probabilistic structure as an n-gram model while performing significantly better;
-(c) dropout is key to achieving strong performance on smaller datasets \citep{zaremba2014lstm,merity2017awdlstm}.
+(c) dropout is key to achieving strong performance \citep{zaremba2014lstm,merity2017awdlstm}.
 
 We revisit HMMs for language modeling,
 positing that competitive performance may require very large models. 
@@ -137,7 +137,7 @@ significantly outperforming past HMMs as well as n-gram models.
 In order to improve the performance of HMMs on language modeling,
 several recent papers have combined HMMs with neural networks.
 \citet{buys2018hmm} develop an approach to relax HMMs,
-but their models either perform poorly or alter the probabilistic structure to resemble an RNN. 
+but their models either perform poorly or alters the probabilistic structure to resemble an RNN. 
 \citet{krakovna2016hmm} utilize model combination with an RNN to connect both approaches in a
 20 state model.
 We instead improve pure HMMs by scaling to many states.
@@ -157,9 +157,10 @@ and context free grammars \citep{kim2019cpcfg}.
 % Prior work has tried large state spaces with scalar parameterizations.
 Prior work has also used HMMs with many states.
 \citet{dedieu2019learning} introduce a sparsity constraint
-in order to train a 30K state HMM for character-level language modeling;
+in order to train a 30K state non-neural HMM for character-level language modeling;
 however, their constraint precludes application to large vocabularies.
-We overcome this limitation and train models on word-level language modeling.
+We overcome this limitation and train models with 
+neural parameterizations on word-level language modeling.
 
 % State splitting / refinement
 Finally, another approach for scaling state spaces is to
@@ -215,7 +216,7 @@ $\bx = \langle x_1, \ldots, x_T \rangle$, with each token $x_t$
 an element of the finite vocabulary $\mcX$.
 Hidden Markov models (HMMs) specify a joint distribution over 
 observed tokens $\bx$ and discrete latent states $\bz = \langle z_1, \ldots, z_T \rangle$,
-with each $z_t$ from finite set $\mcZ$.
+with each $z_t$ from the finite set $\mcZ$.
 For notational convenience, we define the starting state $z_0=\epsilon$.
 This yields the joint distribution
 \begin{equation}
@@ -365,7 +366,8 @@ HMM Training (a single batch)
 \textbf{Dropout as State Reduction}
 To encourage full use of the state space,
 we introduce dropout that prevents the model from favoring specific states. 
-We propose a form of HMM state dropout that removes states from use entirely,
+We propose a form of HMM state dropout that removes states from use entirely
+at each batch,
 which has the added benefit of speeding up inference.
 
 State dropout acts on each emission block $\mathbf{O}_1, \ldots, \mathbf{O}_M$ independently.
@@ -380,7 +382,7 @@ p(x \mid z) \propto b_{z}1(z \in \mcZ_x)e^{\phi_{zx}}
 \end{equation}
 State dropout gives a large practical speed up for both parameter computation and inference.
 For $\lambda=0.5$ we get a $4\times$ speed improvement for both,
-due to reduction of possible transitions.
+due to the reduction in possible transitions.
 This structured dropout is also easy to exploit on GPU,
 as it maintains block structure with fixed-height (as shown in Figure~\ref{fig:trellis}).
 
@@ -398,7 +400,7 @@ We construct the Brown clusters on the training portions of the datasets.
 
 \noindent \textbf{Datasets}
 We evaluate on the \texttt{Penn Treebank} \citep{ptb} (929k train tokens, 10k vocab)
-and \texttt{wikitext2} \citep{wikitext} (2M train tokens, 33k vocab) datasets.
+and \texttt{Wikitext2} \citep{wikitext} (2M train tokens, 33k vocab) datasets.
 For \texttt{Penn Treebank} we use the preprocessing from \citet{mikolov-2011},
 which lowercases all words and substitutes OOV words with unks. 
 For \texttt{Wikitext2} casing is preserved, and all OOV words are unked.
@@ -412,8 +414,8 @@ which discards the HMM assumptions \citep{buys2018hmm};
 a KN 5-gram model \citep{mikolov2012rnn,kenlm},
 a 256 dimension FF model,
 and a 2-layer 256 dimension LSTM.
-We compare these with our very large neural HMM (VL-NHMM, $|\mcZ|=2^{15}$)
-which has $2^{15}$ total states but only considers 256 states at every timestep at
+We compare these with our very large neural HMM (VL-NHMM)
+which has $|\mcZ|=2^{15}$ total states but only considers 256 states at every timestep at
 test time.\footnote{
 The 256 dim FF, LSTM, and VL-NHMM in particular
 have comparable computational complexity: $O(256^2 T)$.
@@ -457,7 +459,7 @@ Perplexities on the \texttt{PTB / Wikitext-2}.
 % Tone: Made a lot of progress, and there is even more room for improvement.
 % Main avenue for improvement: emission constraints.
 Table \ref{tbl:ppl} gives the main results.
-On \texttt{PTB}, the VL-NHMM is able achieve 125.0 perplexity on the valid set,
+On \texttt{PTB}, the VL-NHMM is able to achieve 125.0 perplexity on the valid set,
 outperforming a FF baseline (159.9)
 and vastly outperforming the 900-state HMM from \citet{buys2018hmm} (284.6).\footnote{
 \citet{buys2018hmm} only report validation perplexity
@@ -477,7 +479,7 @@ Although neural and scalar parameterizations reach similar training perplexity,
 the neural model generalizes better on validation
 with almost 100x fewer parameters.
 We find that state dropout results in both an improvement in perplexity and
-a large improvement in computation.
+a large improvement in computational speed.
 
 \begin{figure}[!t]
 \centering
@@ -529,7 +531,8 @@ Time is ms per eval batch (Run on RTX 2080).
 
 \section{Conclusion}
 This work demonstrates that scaling HMMs to large states spaces results in performance gains.
-We make three contributions: a blocked emission constraint, a neural parameterization,
+In order to scale, we introduce three techniques:
+a blocked emission constraint, a neural parameterization,
 and state dropout, which lead to an HMM that outperforms n-gram models and prior HMMs.
 This work demonstrates that classic HMMs can scale on modern hardware,
 and are worthy of consideration for NLP tasks. 
@@ -545,8 +548,8 @@ and are worthy of consideration for NLP tasks.
 \label{sec:hyperparams}
 
 For \texttt{Penn Treebank} and \texttt{Wikitext-2}, we trained the following baselines:
-a two layer feedforward 256-dim 5-gram model and a two layer 256-dim LSTM.
-The feedforward model is given by the following:
+a two layer FF 256-dim 5-gram model and a two layer 256-dim LSTM.
+The FF model is given by the following:
 \begin{equation}
 \begin{aligned}
 p(w_t \mid \bw_{<t})
@@ -556,7 +559,7 @@ p(w_t \mid \bw_{<t})
 where $\mathbf{E}_w$ gives the word embeddings and
 $W_x\in\mathbb{R}^{|\mcX|\times h}$ is weight-tied to the embeddings.
 
-For the (5-gram) feedforward model we use a batch size of 128 and a bptt length of 64,
+For the (5-gram) FF model we use a batch size of 128 and a bptt length of 64,
 as we found the model needed a larger batch size to achieve decent performance.
 For the LSTM, we use a batch size of 16 and a BPTT length of 32.
 For both baseline models we use AdamW \citep{adamw} with a learning rate of 1e-3 and a dropout rate of 0.3 on the activations in the model.
@@ -596,7 +599,7 @@ gradients through marginal inference.
 Let $\mathbf{E},\mathbf{D}\in\mathbb{R}^{v \times h}$ be an
 embedding matrix and a matrix of the same size,
 where $v$ is the size of the vocab and $h$ the hidden dimension.
-We use the following residual network:
+We use the following residual network as our MLP:
 \begin{equation}
 \label{eqn:res}
 \begin{aligned}
