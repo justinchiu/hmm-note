@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex emnlp2020"] 1591147953 "emnlp2020.aux" "emnlp2020.bbl" "emnlp2020" 1591234538
+["bibtex emnlp2020"] 1591235358 "emnlp2020.aux" "emnlp2020.bbl" "emnlp2020" 1591235358
   "./acl_natbib.bst" 1571355934 47585 c671f071a8f3957857acb307a7173505 ""
-  "anthology.bib" 1591147666 22300 5989a258f7964522fe7deb5e8b36aa61 ""
+  "anthology.bib" 1591235315 23080 a3bd11c1b8640cdf3988a9322b7e9943 ""
   "emnlp2020.aux" 1591083274 7197 008d7daf200c5e476d4ef682ba0b5532 ""
   "emnlp2020.bib" 1571355934 1974 4d7084b2f3a55753e2f48da8052bb437 ""
   (generated)
   "emnlp2020.bbl"
   "emnlp2020.blg"
-["pdflatex"] 1591083273 "emnlp2020.tex" "emnlp2020.pdf" "emnlp2020" 1591234538
+["pdflatex"] 1591083273 "emnlp2020.tex" "emnlp2020.pdf" "emnlp2020" 1591235358
   "/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1480098688 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -315,18 +315,18 @@
   "/usr/local/texlive/2018/texmf-var/web2c/pdftex/pdflatex.fmt" 1526780453 4219895 d646d013bf99294ff1d974bf7a525ca5 ""
   "/usr/local/texlive/2018/texmf.cnf" 1526780430 455 5b996dcaa0eb4ef14a83b026bc0a008c ""
   "emnlp2020.aux" 1591083274 7197 008d7daf200c5e476d4ef682ba0b5532 ""
-  "emnlp2020.bbl" 1591147953 7856 d961a66e3fdd4c364bbd45c5d047e865 "bibtex emnlp2020"
+  "emnlp2020.bbl" 1591235358 7856 d961a66e3fdd4c364bbd45c5d047e865 "bibtex emnlp2020"
   "emnlp2020.out" 1591083273 0 d41d8cd98f00b204e9800998ecf8427e ""
   "emnlp2020.sty" 1577480256 22046 23868bb911b26009f0fd06fe069f4c26 ""
   "emnlp2020.tex" 1591069566 51387 fa34748cf69c1942b97278db5fcd392a ""
   "img/trellis.tex" 1590915002 35287 3901ed877a9a0357acd34c2c297e1fcc ""
   "mystyle.sty" 1590908742 2661 21f6bc81fda55e7d97bece70f7a902f0 ""
   (generated)
-  "emnlp2020.pdf"
-  "emnlp2020.sin.gnuplot"
-  "emnlp2020.x.gnuplot"
-  "emnlp2020.aux"
   "emnlp2020.log"
+  "emnlp2020.x.gnuplot"
   "emnlp2020.exp.gnuplot"
+  "emnlp2020.sin.gnuplot"
+  "emnlp2020.pdf"
   "trellis.aux"
+  "emnlp2020.aux"
   "emnlp2020.out"

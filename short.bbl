@@ -1,4 +1,4 @@
-\begin{thebibliography}{25}
+\begin{thebibliography}{26}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{Bengio et~al.(2003)Bengio, Ducharme, Vincent, and
@@ -24,6 +24,14 @@ Peter~F. Brown, Peter~V. deSouza, Robert~L. Mercer, Vincent J.~Della Pietra,
 \bibitem[{Buys et~al.(2018)Buys, Bisk, and Choi}]{buys2018hmm}
 Jan Buys, Yonatan Bisk, and Yejin Choi. 2018.
 \newblock Bridging hmms and rnns through architectural transformations.
+
+\bibitem[{Chen et~al.(2018)Chen, Moreau, Jiang, Shen, Yan, Wang, Hu, Ceze,
+  Guestrin, and Krishnamurthy}]{tvm}
+Tianqi Chen, Thierry Moreau, Ziheng Jiang, Haichen Shen, Eddie~Q. Yan, Leyuan
+  Wang, Yuwei Hu, Luis Ceze, Carlos Guestrin, and Arvind Krishnamurthy. 2018.
+\newblock \href {http://arxiv.org/abs/1802.04799} {{TVM:} end-to-end
+  optimization stack for deep learning}.
+\newblock \emph{CoRR}, abs/1802.04799.
 
 \bibitem[{Dedieu et~al.(2019)Dedieu, Gothoskar, Swingle, Lehrach,
   Lázaro-Gredilla, and George}]{dedieu2019learning}
