@@ -608,8 +608,7 @@ g_i(\mathbf{D}) &= \textrm{LayerNorm}(\textrm{ReLU}(\mathbf{D}W_{i2}) + \mathbf{
 \end{aligned}
 \end{equation}
 with $i \in \set{\textrm{out},\textrm{in},\textrm{emit}}$,
-$W_{i1},W_{i2} \in \mathbb{R}^{h \times h}$
-where $h$ is the hidden dimension.
+$W_{i1},W_{i2} \in \mathbb{R}^{h \times h}$.
 
 For the factored state embeddings in Sec.~\ref{sec:methods}, we
 introduce residual networks $f_j,j\in\set{o,i,e}$
