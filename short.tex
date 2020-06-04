@@ -91,7 +91,8 @@ Historically they have been used extensively in NLP for tasks such as
 sequence modeling \citep{rabiner1990tut}, alignment \citep{vogel1996hmm},
 and even, in a few cases, language modeling \citep{kuhn1994hmmlm,huang2011thesis}. 
 Compared to other sequence models, HMMs are naturally appealing since they 
-fully separate the process of sequential memory from the process of generation,
+%fully separate the process of sequential memory from the process of generation,
+fully separate the process of generating hidden states from observations,
 while allowing for exact posterior inference. 
 
 %MMs remain an appealing modeling tool that separates out the facets of discrete model memory from
@@ -118,7 +119,7 @@ positing that competitive performance may require very large models.
 %we need scalable parameterizations, efficient inference, and  effective regularization.
 Our contributions are as follows:
 We demonstrate large improvements in an HMM language model by scaling the state space.
-Additionally, we introduce three techniques to do so:
+Towards that goal, we introduce three techniques:
 a modeling constraint that allows us to use a large number of states 
 while maintaining efficient exact inference,
 a neural parameterization that improves
