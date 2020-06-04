@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex short"] 1591233649 "short.aux" "short.bbl" "short" 1591234379
+["bibtex short"] 1591234539 "short.aux" "short.bbl" "short" 1591234540
   "./acl_natbib.bst" 1571355934 47585 c671f071a8f3957857acb307a7173505 ""
   "anthology.bib" 1591147666 22300 5989a258f7964522fe7deb5e8b36aa61 ""
   "emnlp2020.bib" 1571355934 1974 4d7084b2f3a55753e2f48da8052bb437 ""
-  "short.aux" 1591233999 5691 d1e8d3f88d8ed9b95e41c8c1381e8edc ""
+  "short.aux" 1591234540 5691 d1e8d3f88d8ed9b95e41c8c1381e8edc ""
   (generated)
   "short.bbl"
   "short.blg"
-["pdflatex"] 1591233999 "short.tex" "short.pdf" "short" 1591234379
+["pdflatex"] 1591234539 "short.tex" "short.pdf" "short" 1591234540
   "/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1480098688 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -312,12 +312,12 @@
   "img/mat.pdf" 1591084678 91494 f1f4d316bfb48a11234d6ff6530872af ""
   "img/trellis.tex" 1590915002 35287 3901ed877a9a0357acd34c2c297e1fcc ""
   "mystyle.sty" 1590908742 2661 21f6bc81fda55e7d97bece70f7a902f0 ""
-  "short.aux" 1591233999 5691 d1e8d3f88d8ed9b95e41c8c1381e8edc ""
-  "short.bbl" 1591233649 7592 9452872d9474c75a8f3b7fabfe9c6506 "bibtex short"
-  "short.out" 1591233999 0 d41d8cd98f00b204e9800998ecf8427e ""
-  "short.tex" 1591234375 29825 f6ea8f5ba5138cfd80fb5c34b2386acd ""
+  "short.aux" 1591234540 5691 d1e8d3f88d8ed9b95e41c8c1381e8edc ""
+  "short.bbl" 1591234539 7592 9452872d9474c75a8f3b7fabfe9c6506 "bibtex short"
+  "short.out" 1591234540 0 d41d8cd98f00b204e9800998ecf8427e ""
+  "short.tex" 1591234540 29820 106c9dc60879e4bdfaca0fe04f56e723 ""
   (generated)
+  "short.out"
   "short.log"
   "short.pdf"
   "short.aux"
-  "short.out"

@@ -380,8 +380,8 @@ p(x \mid z) \propto b_{z}1(z \in \mcZ_x)e^{\phi_{zx}}
 State dropout gives a large practical speed up for both parameter computation and inference.
 For $\lambda=0.5$ we get a $4\times$ speed improvement for both,
 due to reduction of possible transitions.
-This structured dropout is also easier to exploit on GPU,
-since it maintains block structure with fixed-height (as shown in Figure~\ref{fig:trellis}).
+This structured dropout is also easy to exploit on GPU,
+as it maintains block structure with fixed-height (as shown in Figure~\ref{fig:trellis}).
 
 
 \section{Experimental Setup}
