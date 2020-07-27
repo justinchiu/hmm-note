@@ -374,7 +374,7 @@ State dropout acts on each emission block $\mathbf{O}_1, \ldots, \mathbf{O}_M$ i
 For each block (with $k=|{\cal Z}| / M$ rows), we sample a binary dropout mask by sampling
 $ \lambda k$ dropped row indices uniformly without replacement,
 where $\lambda$ is the dropout rate.
-We concatenate these to a global vector $\mathbf{b}$, which, along with the previous constraints, 
+We concatenate these to a global vector $\mathbf{b}\in\set{0,1}^{|\mcZ|}$, which, along with the previous constraints, 
 ensures,
 \begin{equation}
 \label{eqn:state_dropout}
