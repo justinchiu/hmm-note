@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex main"] 0 "main.aux" "main.bbl" "main" 1597691294
-  "../acl_natbib.bst" 1571355934 47585 c671f071a8f3957857acb307a7173505 ""
-  "../anthology.bib" 1591235315 23080 a3bd11c1b8640cdf3988a9322b7e9943 ""
-  "../emnlp2020.bib" 1571355934 1974 4d7084b2f3a55753e2f48da8052bb437 ""
-  "main.aux" 1597691294 3129 cfe80479f739b7913edf3f06f7e38556 ""
+["bibtex main"] 1597691573 "main.aux" "main.bbl" "main" 1597691575
+  "./acl_natbib.bst" 1597691555 47585 c671f071a8f3957857acb307a7173505 ""
+  "anthology.bib" 1597691558 23080 a3bd11c1b8640cdf3988a9322b7e9943 ""
+  "emnlp2020.bib" 1597691563 1974 4d7084b2f3a55753e2f48da8052bb437 ""
+  "main.aux" 1597691575 3120 d118b3a78b951913b428d277984e3537 ""
   (generated)
   "main.blg"
   "main.bbl"
-["pdflatex"] 1597691293 "main.tex" "main.pdf" "main" 1597691294
+["pdflatex"] 1597691573 "main.tex" "main.pdf" "main" 1597691575
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1480098698 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm" 1480098698 1124 14ccf5552bc7f77ca02a8a402bea8bfb ""
@@ -310,17 +310,17 @@
   "img/mat.png" 1597688220 11951 de2f85512fa7864630713488982e12e6 ""
   "img/trellis.tex" 1597685965 35287 3901ed877a9a0357acd34c2c297e1fcc ""
   "img/trellis_nodrop.tex" 1597686940 64482 b1f403b61828f9acb3516c8cf5a22184 ""
-  "main.aux" 1597691294 3129 cfe80479f739b7913edf3f06f7e38556 ""
-  "main.bbl" 1597691086 303 d1554699132abd8c929c364ec074b601 "bibtex main"
-  "main.nav" 1597691294 1661 44b8cd3ff49ae6077a885a69fe30618d ""
-  "main.out" 1597691294 45 06e27b416b3b1946cd705c501ca5b3bd ""
-  "main.tex" 1597691291 5675 8f491c0ab49a403c68b14f9ce08eae72 ""
+  "main.aux" 1597691575 3120 d118b3a78b951913b428d277984e3537 ""
+  "main.bbl" 1597691573 303 d1554699132abd8c929c364ec074b601 "bibtex main"
+  "main.nav" 1597691575 1661 44b8cd3ff49ae6077a885a69fe30618d ""
+  "main.out" 1597691575 45 06e27b416b3b1946cd705c501ca5b3bd ""
+  "main.tex" 1597691547 5666 30b55aed7acdc17616473eb81f898c55 ""
   "mystyle.sty" 1597683535 2652 fe3aedaaee8f9af31c9739af53d2682d ""
   (generated)
-  "main.out"
-  "main.pdf"
-  "main.nav"
   "main.aux"
   "main.snm"
   "main.log"
   "main.toc"
+  "main.pdf"
+  "main.out"
+  "main.nav"
