@@ -25,13 +25,13 @@
 \begin{frame}
 \frametitle{Motivation for HMMs}
 \begin{itemize}
-\item Generative process separates the generation of the latent representations from the observed
+\item Generative process separates the generation of the latent states from the observed tokens
     \begin{itemize}
     \item LSTMs couple the two
     \end{itemize}
 \item Discrete latent representations
     \begin{itemize}
-    \item May improves data efficiency \citep{jin2020discretelv}
+    \item May improve data efficiency \citep{jin2020discretelv}
     \end{itemize}
 \end{itemize}
 \end{frame}
@@ -39,12 +39,15 @@
 \begin{frame}
 \frametitle{HMM LMs}
 \begin{itemize}
-\item Previously thought to be very poor language models 
+\item Previously, HMMs were thought to be very poor language models 
     \begin{itemize}
-    \item Past work improved performance by departing from HMM structure
+    \item Past work improved performance only by departing from the HMM structure
         and turning them into RNNs \citep{buys2018hmm}
     \end{itemize}
-\item HMMs performance can be vastly improved by scaling the number of hidden states
+\item We show that HMM performance can be vastly improved by scaling the number of hidden states
+    \begin{itemize}
+    \item While remaining faithful to the original structure!
+    \end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -88,15 +91,18 @@ We refer to the emission / observation matrix $p(x_t \mid z_t)$ as $\mathbf{O}$.
 \begin{frame}
 \frametitle{Training HMMs}
 \begin{itemize}
-\item Computing the likelihood of the observed sentence is $O(T|\mcZ|^2)$,
-    scaling poorly in the number of states
-\item Tabular parameterizations of distributions are difficult to optimize
-\item We present three tricks to mitigate these issues
+\item Computing the likelihood of the observed sentence
+$p(\bx) = \sum_{\bz}p(\bx,\bz)$ requires $O(T|\mcZ|^2)$ computation,
+which makes thousands of states infeasible
+\item Parameterization of the transitions and emissions may make optimization
+    difficult
+\item We present three tricks for training large HMMs
+    by targeting these issues
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{3 Tricks 4 Scaling HMMs}
+\frametitle{3 Tricks for Scaling HMMs}
 \begin{itemize}
 \item A block-sparse emission matrix reduces the computational cost of computing the likelihood
 \item A compact (neural) parameterization of the transitions and emissions
@@ -108,6 +114,8 @@ We refer to the emission / observation matrix $p(x_t \mid z_t)$ as $\mathbf{O}$.
 \begin{frame}
 \frametitle{Block-sparse Emissions}
 \begin{itemize}
+\item If each state $z$ represents a context, reasonable to assume that not every word
+    is appropriate in every context
 \item Constrain emissions to
 \[\mathbf{O} = \begin{bmatrix} \mathbf{O}^1 & 0 & 0 \\ 0 & $\dots$ & 0 \\ 0 & 0 & \mathbf{O}^M \\
 \end{bmatrix}\]
