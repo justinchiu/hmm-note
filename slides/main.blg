@@ -10,45 +10,45 @@ Database file #1: anthology.bib
 Database file #2: emnlp2020.bib
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
 Warning--empty booktitle in buys2018hmm
-You've used 1 entry,
+You've used 2 entries,
             3571 wiz_defined-function locations,
-            697 strings with 5593 characters,
-and the built_in function-call counts, 658 in all, are:
-= -- 47
-> -- 32
+            702 strings with 5756 characters,
+and the built_in function-call counts, 1351 in all, are:
+= -- 101
+> -- 73
 < -- 0
-+ -- 10
-- -- 9
-* -- 41
-:= -- 122
-add.period$ -- 3
-call.type$ -- 1
-change.case$ -- 8
-chr.to.int$ -- 1
-cite$ -- 2
-duplicate$ -- 46
-empty$ -- 47
-format.name$ -- 12
-if$ -- 132
++ -- 23
+- -- 21
+* -- 87
+:= -- 227
+add.period$ -- 7
+call.type$ -- 2
+change.case$ -- 19
+chr.to.int$ -- 2
+cite$ -- 3
+duplicate$ -- 96
+empty$ -- 96
+format.name$ -- 27
+if$ -- 280
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 10
-newline$ -- 8
-num.names$ -- 4
-pop$ -- 31
+missing$ -- 21
+newline$ -- 13
+num.names$ -- 8
+pop$ -- 61
 preamble$ -- 1
-purify$ -- 7
+purify$ -- 15
 quote$ -- 0
-skip$ -- 29
+skip$ -- 57
 stack$ -- 0
-substring$ -- 11
-swap$ -- 16
+substring$ -- 22
+swap$ -- 37
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 9
+type$ -- 18
 warning$ -- 1
-while$ -- 3
+while$ -- 6
 width$ -- 0
-write$ -- 13
+write$ -- 25
 (There was 1 warning)

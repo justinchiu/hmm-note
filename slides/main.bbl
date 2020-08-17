@@ -1,8 +1,15 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{2}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{Buys et~al.(2018)Buys, Bisk, and Choi}]{buys2018hmm}
 Jan Buys, Yonatan Bisk, and Yejin Choi. 2018.
 \newblock Bridging hmms and rnns through architectural transformations.
+
+\bibitem[{Jin et~al.(2020)Jin, Wiseman, Stratos, and
+  Livescu}]{jin2020discretelv}
+Shuning Jin, Sam Wiseman, Karl Stratos, and Karen Livescu. 2020.
+\newblock Discrete latent variable representations for low-resource text
+  classification.
+\newblock In \emph{ACL}.
 
 \end{thebibliography}

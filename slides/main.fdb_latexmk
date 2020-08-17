@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex main"] 1597691573 "main.aux" "main.bbl" "main" 1597691575
+["bibtex main"] 1597691839 "main.aux" "main.bbl" "main" 1597692525
   "./acl_natbib.bst" 1597691555 47585 c671f071a8f3957857acb307a7173505 ""
   "anthology.bib" 1597691558 23080 a3bd11c1b8640cdf3988a9322b7e9943 ""
-  "emnlp2020.bib" 1597691563 1974 4d7084b2f3a55753e2f48da8052bb437 ""
-  "main.aux" 1597691575 3120 d118b3a78b951913b428d277984e3537 ""
+  "emnlp2020.bib" 1597691821 2208 3fbd20b70e092c765df3c3cd3676a3b8 ""
+  "main.aux" 1597692509 3240 1691a64b9458d12d9e647e801aaa6240 ""
   (generated)
-  "main.blg"
   "main.bbl"
-["pdflatex"] 1597691573 "main.tex" "main.pdf" "main" 1597691575
+  "main.blg"
+["pdflatex"] 1597692508 "main.tex" "main.pdf" "main" 1597692525
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1480098698 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm" 1480098698 1124 14ccf5552bc7f77ca02a8a402bea8bfb ""
@@ -41,6 +41,7 @@
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmss12.tfm" 1480098701 1324 37b971caf729d7edd9cbb9f9b0ea76eb ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmss8.tfm" 1480098701 1296 d77f431d10d47c8ea2cc18cf45346274 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm" 1480098701 1272 e2d13f0df30bf3ad990bb9d028e37f34 ""
+  "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmssi10.tfm" 1480098701 1520 ca2bb4b78ac9800bd686e30c6d19ef95 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm" 1480098701 1124 6c73e740cf17375f03eec0ee63599741 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmsy6.tfm" 1480098701 1116 933a60c408fc0a863a92debe84b2d294 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmsy8.tfm" 1480098701 1120 8b7d695260f3cff42e636090a8002094 ""
@@ -310,17 +311,17 @@
   "img/mat.png" 1597688220 11951 de2f85512fa7864630713488982e12e6 ""
   "img/trellis.tex" 1597685965 35287 3901ed877a9a0357acd34c2c297e1fcc ""
   "img/trellis_nodrop.tex" 1597686940 64482 b1f403b61828f9acb3516c8cf5a22184 ""
-  "main.aux" 1597691575 3120 d118b3a78b951913b428d277984e3537 ""
-  "main.bbl" 1597691573 303 d1554699132abd8c929c364ec074b601 "bibtex main"
-  "main.nav" 1597691575 1661 44b8cd3ff49ae6077a885a69fe30618d ""
-  "main.out" 1597691575 45 06e27b416b3b1946cd705c501ca5b3bd ""
-  "main.tex" 1597691547 5666 30b55aed7acdc17616473eb81f898c55 ""
+  "main.aux" 1597692509 3240 1691a64b9458d12d9e647e801aaa6240 ""
+  "main.bbl" 1597691839 569 1c2622ce8bfb9a07a5fce05c58838697 "bibtex main"
+  "main.nav" 1597692509 1661 44b8cd3ff49ae6077a885a69fe30618d ""
+  "main.out" 1597692509 45 06e27b416b3b1946cd705c501ca5b3bd ""
+  "main.tex" 1597692524 5823 909e44efad3a079b212ba742c6a475aa ""
   "mystyle.sty" 1597683535 2652 fe3aedaaee8f9af31c9739af53d2682d ""
   (generated)
   "main.aux"
-  "main.snm"
   "main.log"
+  "main.nav"
+  "main.out"
+  "main.snm"
   "main.toc"
   "main.pdf"
-  "main.out"
-  "main.nav"

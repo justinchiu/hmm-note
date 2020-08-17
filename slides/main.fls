@@ -516,6 +516,7 @@ INPUT img/trellis.tex
 INPUT img/trellis.tex
 INPUT main.bbl
 INPUT main.bbl
+INPUT /usr/local/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmssi10.tfm
 OUTPUT main.nav
 OUTPUT main.toc
 OUTPUT main.snm

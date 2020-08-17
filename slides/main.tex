@@ -31,7 +31,7 @@
     \end{itemize}
 \item Discrete latent representations
     \begin{itemize}
-    \item Improves performance in low-resource classification (citation todo)
+    \item May improves data efficiency \citep{jin2020discretelv}
     \end{itemize}
 \end{itemize}
 \end{frame}
@@ -41,7 +41,8 @@
 \begin{itemize}
 \item Previously thought to be very poor language models 
     \begin{itemize}
-    \item Improved performance by departing from HMM structure and turning them into RNNs \citep{buys2018hmm}
+    \item Past work improved performance by departing from HMM structure
+        and turning them into RNNs \citep{buys2018hmm}
     \end{itemize}
 \item HMMs performance can be vastly improved by scaling the number of hidden states
 \end{itemize}
@@ -81,7 +82,7 @@ Joint distribution
 p(\bx, \bz; \theta)
 = \prod_{t=1}^T p(x_t\mid z_t)p(z_t \mid z_{t-1})
 \end{equation*}
-We shorten the emission matrix $p(x_t \mid z_t)$ to $\mathbf{O}$.
+We refer to the emission / observation matrix $p(x_t \mid z_t)$ as $\mathbf{O}$.
 \end{frame}
 
 \begin{frame}
@@ -117,8 +118,14 @@ We shorten the emission matrix $p(x_t \mid z_t)$ to $\mathbf{O}$.
 
 \begin{frame}
 \frametitle{Block-sparse Emissions}
-\centering
+\begin{center}
+\resizebox{2in}{2in}{
 \input{img/trellis_nodrop.tex}
+}
+\end{center}
+
+After observing $\bx$, only the states that emit each $x_t$ have nonzero probability
+of occurring
 \end{frame}
 
 \begin{frame}
@@ -228,7 +235,7 @@ Perplexity on PTB by state size $|\mcZ|$ ($\lambda =0.5$ and $M=128$)
 \end{frame}
 
 \begin{frame}
-\frametitle{Bibliography}
+\frametitle{Citations}
 \bibliographystyle{acl_natbib}
 \bibliography{anthology,emnlp2020}
 \end{frame}
