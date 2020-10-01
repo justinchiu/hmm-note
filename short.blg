@@ -13,45 +13,45 @@ Warning--empty booktitle in buys2018hmm
 Warning--empty journal in kuhn1994hmmlm
 Warning--empty journal in mikolov-2011
 Warning--empty journal in petrov2006splitmerge
-You've used 26 entries,
+You've used 27 entries,
             3571 wiz_defined-function locations,
-            875 strings with 10933 characters,
-and the built_in function-call counts, 19240 in all, are:
-= -- 1649
-> -- 941
+            882 strings with 11201 characters,
+and the built_in function-call counts, 20131 in all, are:
+= -- 1728
+> -- 983
 < -- 15
-+ -- 297
-- -- 267
-* -- 1284
-:= -- 2873
-add.period$ -- 104
-call.type$ -- 26
-change.case$ -- 227
-chr.to.int$ -- 26
-cite$ -- 30
-duplicate$ -- 1294
-empty$ -- 1377
-format.name$ -- 347
-if$ -- 4282
++ -- 308
+- -- 279
+* -- 1361
+:= -- 3008
+add.period$ -- 109
+call.type$ -- 27
+change.case$ -- 239
+chr.to.int$ -- 27
+cite$ -- 31
+duplicate$ -- 1344
+empty$ -- 1445
+format.name$ -- 362
+if$ -- 4469
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 252
-newline$ -- 130
-num.names$ -- 104
-pop$ -- 563
+missing$ -- 264
+newline$ -- 136
+num.names$ -- 108
+pop$ -- 580
 preamble$ -- 1
-purify$ -- 193
+purify$ -- 201
 quote$ -- 0
-skip$ -- 993
+skip$ -- 1022
 stack$ -- 0
-substring$ -- 612
-swap$ -- 676
+substring$ -- 668
+swap$ -- 704
 text.length$ -- 8
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 231
+type$ -- 243
 warning$ -- 4
-while$ -- 98
+while$ -- 105
 width$ -- 0
-write$ -- 334
+write$ -- 350
 (There were 4 warnings)

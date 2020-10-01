@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  26 JUL 2020 22:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  1 OCT 2020 13:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1011,27 +1011,27 @@ brarydecorations.pathmorphing.code.tex))
 )) (./short.aux)
 \openout1 = `short.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 66.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 65.
+LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 65.
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 \AtBeginShipoutBox=\box71
-Package hyperref Info: Link coloring ON on input line 66.
+Package hyperref Info: Link coloring ON on input line 65.
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
@@ -1041,9 +1041,9 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count167
 )
-LaTeX Info: Redefining \ref on input line 66.
-LaTeX Info: Redefining \pageref on input line 66.
-LaTeX Info: Redefining \nameref on input line 66.
+LaTeX Info: Redefining \ref on input line 65.
+LaTeX Info: Redefining \pageref on input line 65.
+LaTeX Info: Redefining \nameref on input line 65.
 
 (./short.out) (./short.out)
 \@outlinefile=\write5
@@ -1084,7 +1084,7 @@ ABD: EveryShipout initializing macros
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Info: Redefining \microtypecontext on input line 66.
+LaTeX Info: Redefining \microtypecontext on input line 65.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -1103,20 +1103,20 @@ ABD: EveryShipout initializing macros
 Package pgfplots Warning: running in backwards compatibility mode (unsuitable t
 ick labels; missing features). Consider writing \pgfplotsset{compat=1.16} into 
 your preamble.
- on input line 66.
+ on input line 65.
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 67.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 66.
 (/usr/local/texlive/2018/texmf-dist/tex/latex/microtype/mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-LaTeX Font Info:    Try loading font information for U+lasy on input line 67.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 66.
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 67.
+LaTeX Font Info:    Try loading font information for U+msa on input line 66.
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
@@ -1124,7 +1124,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 (/usr/local/texlive/2018/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 67.
+LaTeX Font Info:    Try loading font information for U+msb on input line 66.
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -1133,43 +1133,12 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <8> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 67.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 66.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <6> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 67.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 66.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 67.
-LaTeX Font Info:    Font shape `U/lasy/b/n' in size <9> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 155.
-LaTeX Font Info:    Font shape `U/lasy/b/n' in size <5> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 155.
- [1{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
-
-
-
-]
-Excluding 'comment' comment.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 250.
-
-
-pdfTeX warning: pdflatex (file ./img/mat.pdf): PDF inclusion: found PDF version
- <1.7>, but at most version <1.5> allowed
-<img/mat.pdf, id=94, 450.68375pt x 259.97125pt>
-File: img/mat.pdf Graphic file (type pdf)
-<use img/mat.pdf>
-Package pdftex.def Info: img/mat.pdf  used on input line 267.
-(pdftex.def)             Requested size: 212.98357pt x 122.85876pt.
-LaTeX Font Info:    Font shape `U/lasy/b/n' in size <7> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 273.
-(./img/trellis.tex
-Missing character: There is no k in font nullfont!
-Missing character: There is no k in font nullfont!
-) [2 <./img/mat.pdf>]
-Underfull \hbox (badness 1019) in paragraph at lines 373--379
-[]\OT1/ptm/m/n/10.95 (+20) State dropout acts on each emis-sion block
- []
-
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 402.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 66.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 66.
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
@@ -1178,17 +1147,57 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `pcr' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
- [3]
-Overfull \hbox (14.603pt too wide) in paragraph at lines 427--453
+LaTeX Font Info:    Try loading font information for OMS+pcr on input line 66.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/omspcr.fd
+File: omspcr.fd 
+)
+LaTeX Font Info:    Font shape `OMS/pcr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 66.
+LaTeX Font Info:    Font shape `U/lasy/b/n' in size <9> not available
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 143.
+LaTeX Font Info:    Font shape `U/lasy/b/n' in size <5> not available
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 143.
+ [1{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+
+
+
+]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 206.
+<img/blocksparse_mat_no_block.pdf, id=100, 409.53pt x 259.97125pt>
+File: img/blocksparse_mat_no_block.pdf Graphic file (type pdf)
+<use img/blocksparse_mat_no_block.pdf>
+Package pdftex.def Info: img/blocksparse_mat_no_block.pdf  used on input line 2
+31.
+(pdftex.def)             Requested size: 193.53519pt x 122.85876pt.
+LaTeX Font Info:    Font shape `U/lasy/b/n' in size <7> not available
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 238.
+ [2]
+Underfull \hbox (badness 1616) in paragraph at lines 269--277
+\OT1/ptm/b/n/10.95 Neural Pa-ram-e-ter-i-za-tion \OT1/ptm/m/n/10.95 (+20) Even 
+with blocked
+ []
+
+
+Underfull \hbox (badness 1019) in paragraph at lines 324--330
+[]\OT1/ptm/m/n/10.95 (+20) State dropout acts on each emis-sion block
+ []
+
+(./img/trellis.tex
+Missing character: There is no k in font nullfont!
+Missing character: There is no k in font nullfont!
+) [3 <./img/blocksparse_mat_no_block.pdf>]
+Overfull \hbox (3.6641pt too wide) in paragraph at lines 402--428
  [][] 
  []
 
 
-Overfull \hbox (9.2461pt too wide) in paragraph at lines 516--529
+Overfull \hbox (6.01643pt too wide) in paragraph at lines 492--506
  [][] 
  []
 
-(./short.bbl [4]
+[4] (./short.bbl
 Underfull \hbox (badness 2027) in paragraph at lines 6--9
 \OT1/ptm/m/n/10 and Chris-tian Jan-vin. 2003.  A neu-ral prob-a-
  []
@@ -1199,68 +1208,67 @@ Underfull \hbox (badness 2005) in paragraph at lines 52--58
  []
 
 
-Underfull \hbox (badness 3189) in paragraph at lines 78--83
+Underfull \hbox (badness 3189) in paragraph at lines 86--91
 \OT1/ptm/m/n/10 mod-els and poly-grams for lan-guage mod-el-ing.[][]
  []
 
 
-Underfull \hbox (badness 1264) in paragraph at lines 96--100
+Underfull \hbox (badness 1264) in paragraph at lines 104--108
 []\OT1/ptm/m/n/10 Ilya Loshchilov and Frank Hut-ter. 2017.  [][]Fix-ing
  []
 
 
-Underfull \hbox (badness 2564) in paragraph at lines 96--100
+Underfull \hbox (badness 2564) in paragraph at lines 104--108
 \OT1/ptm/m/n/10 weight de-cay reg-u-lar-iza-tion in adam[][].  \OT1/ptm/m/it/10
  CoRR\OT1/ptm/m/n/10 ,
  []
 
-
-Underfull \hbox (badness 1147) in paragraph at lines 127--134
+[5]
+Underfull \hbox (badness 1147) in paragraph at lines 141--148
 []\OT1/ptm/m/n/10 Tomas Mikolov, Anoop De-o-ras, Ste-fan Kom-brink,
  []
 
 
-Underfull \hbox (badness 1199) in paragraph at lines 171--175
+Underfull \hbox (badness 1199) in paragraph at lines 179--183
 \OT1/ptm/m/n/10 2014.  [][]Re-cur-rent neu-ral net-work reg-u-lar-iza-tion[][].
 
  []
 
-) [5]
-Overfull \hbox (5.48268pt too wide) detected at line 559
+) [6
+
+]
+Overfull \hbox (5.48268pt too wide) detected at line 537
 [][]
  []
 
-[6
+[7
 
 ]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Overfull \hbox (7.5928pt too wide) in paragraph at lines 743--756
+Overfull \hbox (4.36314pt too wide) in paragraph at lines 730--743
  [][] 
  []
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[7]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 779.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 779.
+[8]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 766.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 766.
  (./short.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 779.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 779.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 766.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 766.
 Package rerunfilecheck Info: File `short.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 779.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 766.
  )
 (\end occurred when \iffalse on line 352 was incomplete) 
 Here is how much of TeX's memory you used:
- 34822 strings out of 492649
- 825963 string characters out of 6129607
- 1181591 words of memory out of 5000000
- 37804 multiletter control sequences out of 15000+600000
- 50892 words of font info for 221 fonts, out of 8000000 for 9000
+ 34859 strings out of 492649
+ 826664 string characters out of 6129607
+ 1208641 words of memory out of 5000000
+ 37824 multiletter control sequences out of 15000+600000
+ 51758 words of font info for 229 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,19n,103p,1008b,2263s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/201
@@ -1282,14 +1290,13 @@ m/cmsy10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm
 /cmsy6.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/c
 msy8.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/symbol
 s/msbm10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/courier/ucrr8a
-.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></
-usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/
-texlive/2018/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/20
-18/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on short.pdf (7 pages, 369661 bytes).
+.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr
+/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/tex
+live/2018/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on short.pdf (8 pages, 348894 bytes).
 PDF statistics:
- 400 PDF objects out of 1000 (max. 8388607)
- 339 compressed objects within 4 object streams
- 73 named destinations out of 1000 (max. 500000)
- 32882 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 413 PDF objects out of 1000 (max. 8388607)
+ 354 compressed objects within 4 object streams
+ 76 named destinations out of 1000 (max. 500000)
+ 35442 words of extra memory for PDF output out of 35830 (max. 10000000)
 

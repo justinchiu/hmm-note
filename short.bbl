@@ -1,4 +1,4 @@
-\begin{thebibliography}{26}
+\begin{thebibliography}{27}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{Bengio et~al.(2003)Bengio, Ducharme, Vincent, and
@@ -62,6 +62,14 @@ Zhongqiang Huang. 2011.
   Dependencies in Natural Languages with Latent Variables}}.
 \newblock Ph.D. thesis, University of Maryland.
 
+\bibitem[{Jin et~al.(2020)Jin, Wiseman, Stratos, and Livescu}]{jin2020discrete}
+Shuning Jin, Sam Wiseman, Karl Stratos, and Karen Livescu. 2020.
+\newblock \href {https://doi.org/10.18653/v1/2020.acl-main.437} {Discrete
+  latent variable representations for low-resource text classification}.
+\newblock In \emph{Proceedings of the 58th Annual Meeting of the Association
+  for Computational Linguistics}, pages 4831--4842, Online. Association for
+  Computational Linguistics.
+
 \bibitem[{Kim et~al.(2019)Kim, Dyer, and Rush}]{kim2019cpcfg}
 Yoon Kim, Chris Dyer, and Alexander~M. Rush. 2019.
 \newblock \href {http://arxiv.org/abs/1906.10225} {Compound probabilistic
@@ -104,6 +112,12 @@ Mitchell~P. Marcus, Beatrice Santorini, and Mary~Ann Marcinkiewicz. 1993.
   annotated corpus of {E}nglish: The {P}enn {T}reebank}.
 \newblock \emph{Computational Linguistics}, 19(2):313--330.
 
+\bibitem[{Merialdo(1994)}]{merialdo1994tagging}
+Bernard Merialdo. 1994.
+\newblock \href {https://www.aclweb.org/anthology/J94-2001} {Tagging {E}nglish
+  text with a probabilistic model}.
+\newblock \emph{Computational Linguistics}, 20(2):155--171.
+
 \bibitem[{Merity et~al.(2017)Merity, Keskar, and Socher}]{merity2017awdlstm}
 Stephen Merity, Nitish~Shirish Keskar, and Richard Socher. 2017.
 \newblock \href {http://arxiv.org/abs/1708.02182} {Regularizing and optimizing
@@ -138,12 +152,6 @@ Slav Petrov, Leon Barrett, Romain Thibaux, and Dan Klein. 2006.
 \newblock \href {https://doi.org/10.3115/1220175.1220230} {Learning accurate,
   compact, and interpretable tree annotation}.
 \newblock page 433–440.
-
-\bibitem[{Rabiner(1990)}]{rabiner1990tut}
-Lawrence~R. Rabiner. 1990.
-\newblock \emph{A Tutorial on Hidden Markov Models and Selected Applications in
-  Speech Recognition}, page 267–296. Morgan Kaufmann Publishers Inc., San
-  Francisco, CA, USA.
 
 \bibitem[{Tran et~al.(2016)Tran, Bisk, Vaswani, Marcu, and
   Knight}]{tran2016hmm}
