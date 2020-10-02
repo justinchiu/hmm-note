@@ -77,7 +77,7 @@ while maintaining efficient exact inference, a compact parameterization,
 and effective regularization.
 Experiments show that this approach leads to models that are much more accurate
 than previous HMMs and n-gram-based methods,
-making progress towards the performance of state-of-the-art NN models. 
+making progress towards the performance of state-of-the-art neural models.
 \end{abstract}
 
 \section{Introduction}
@@ -462,6 +462,7 @@ with the VLNHMM outperforming the FF model but underperforming an LSTM.
 
 Fig.~\ref{tbl:states-ablation} examines the effect of state size:
 We find that performance continuously improves significantly as we grow to $2^{16}$ states.
+The marginal improvement as the number of states decreases, implying that the current approach has limitations in scaling to even larger state spaces.
 
 Table~\ref{tbl:dropout-param-ablation} considers other ablations:
 Although neural and scalar parameterizations reach similar training perplexity,
