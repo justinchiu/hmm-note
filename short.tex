@@ -84,7 +84,7 @@ making progress towards the performance of state-of-the-art NN models.
 
 Hidden Markov models (HMMs) are a fundamental latent-variable model for sequential data,
 with a rich history in NLP.
-Historically they have been used extensively in NLP for tasks such as
+They have been used extensively in NLP tasks such as
 tagging \citep{merialdo1994tagging}, alignment \citep{vogel1996hmm},
 and even, in a few cases, language modeling \citep{kuhn1994hmmlm,huang2011thesis}. 
 Compared to other sequence models, HMMs are naturally appealing since they 
@@ -103,8 +103,6 @@ can have the same probabilistic structure as an n-gram model while performing si
 
 We revisit HMMs for language modeling,
 positing that competitive performance may require very large models. 
-%To scale to large state-spaces,
-%we need scalable parameterizations, efficient inference, and  effective regularization.
 Our contributions are as follows:
 We demonstrate large improvements in an HMM language model by scaling the state space.
 Towards that goal, we introduce three techniques:
@@ -184,16 +182,18 @@ and emissions $\phi \in \mathbb{R}^{|\mcZ| \times |\mcX|}$.
 These are the distributional parameters of an HMM.
 We refer to emissions $p(x_t \mid z_t)$ as $\mathbf{O}$.
 
-We distinguish between two types of parameterizations: \textit{scalar} and \textit{neural}.
-The distinction lies in the model parameters $\theta$.
+We distinguish between two types of model parameterizations: \textit{scalar} and \textit{neural},
+where the model parameters are given by $\theta$.
 A scalar parameterization sets the model parameters equal to the distributional
 parameters, so that $\theta = \set{\phi,\psi}$,
 resulting in $O(|\mcZ|^2 + |\mcZ||\mcX|)$ model parameters.
 A neural parameterization instead generates the distributional parameters
 from a neural network (with parameters $\theta$),
 decoupling the size of $\theta$ from $\phi,\psi$.
-In the neural parameterization, we have $\phi,\psi = f(\theta)$,
-where $f$ is a neural network with parameters $\theta$.
+This decoupling gives us the ability to choose
+between compact or overparameterized $\theta$ (relative to $\phi,\psi$).
+As we will use large state spaces,
+we take advantage of compact neural parameterizations.
 
 In order to fit an HMM to data $\bx$,
 we must marginalize over the latent states to obtain the likelihood
@@ -202,6 +202,7 @@ This sum can be computed in time $O(T|\mcZ|^2)$ via dynamic programming,
 which becomes prohibitive if the number of latent states $|\mcZ|$ is large.
 We can then optimize the likelihood 
 with gradient ascent (or alternative variants of expectation maximization).
+See the appendix for more details on inference and optimization in HMMs.
 
 \noindent \textbf{HMMs and RNNs}
 Although the forward algorithm resembles that of the forward pass in a recurrent neural network (RNN)
@@ -232,9 +233,10 @@ work well in low-resource regimes \citep{jin2020discrete}.
 \caption{\label{fig:emit}
 The emission matrix as a set of blocks $\mathbf{O}_1, \ldots, \mathbf{O}_4$
 with fixed height $k$.
+The width of each block may vary, as there is no constraint on the number of words
+a state can emit.
 Each active cell is constructed from word $\mathbf{E}_x$ and state $\mathbf{E}_z$
 embeddings.
-%and block $\mathbf{E}_m$ embeddings. 
 }
 \end{figure}
 
@@ -262,7 +264,14 @@ p(\bx) &= \sum_{z_1 \in \mcZ_{x_1}} p(z_1\mid z_0)p(x_1 \mid z_1) \times\\
     \sum_{z_T \in \mcZ_{x_T}} p(z_T \mid z_{T-1})p(x_T \mid z_T)
 \end{aligned}
 \end{equation}
-This gives a serial complexity of $O(Tk^2)$.
+Since there are only $k$ states with nonzero probability of occurring
+at every timestep, we only need to consider transitioning from the $|\mcZ_{x_t}| = k$
+previous states to the next $|\mcZ_{x_{t+1}}|=k$ states,
+resulting in $O(k^2)$ operations per timestep.
+This gives a serial complexity of $O(Tk^2)$.\footnote{
+This can be sped up on a parallel machine to $O(\log(T)k^2)$
+via a binary reduction.
+}
 
 \vspace{0.2cm}
 
@@ -276,7 +285,8 @@ From these we can create representations for leaving and entering a state,
 and emitting a word: 
 \[ \mathbf{H}_{\textrm{out}},\mathbf{H}_{\textrm{in}},\mathbf{H}_\textrm{emit}
  = \text{MLP}( \mathbf{E}_z ) \] 
-The HMM distributional parameters are given by,
+with all $\mathbf{H}_{\bullet} \in \mathbb{R}^{|\mcZ|\times h}$.
+The HMM distributional parameters are given by
 \begin{equation}
 \begin{aligned}
 \phi = \mathbf{H}_\textrm{emit}\mathbf{E}_x ^\top \qquad 
@@ -365,10 +375,13 @@ Brown clusters are obtained by assigning every token type in $\mcX$ a state in a
 then merging states until a desired number of partitions $M$ is reached.
 We construct the Brown clusters on the training portions of the datasets
 and assume the vocabulary remains identical at test time (OOV words mapped to unk).
+We include more background on Brown Clusters in the appendix.
 
 \noindent\textbf{State Dropout}
 We use a dropout rate of $\lambda = 0.5$ at training time. 
-For each block of size $|\mcX_m|$, we sample $|\mcX_m|/2$ states to use in that block each batch.
+For each block of size $|\mcX_m|$, we sample $\lambda|\mcX_m|$ states to use in that block each batch.
+We draw states from each block from a multivariate hypergeometric distribution
+using the Gumbel Top-k trick for sampling without replacement \citep{vieira2014gumbel}.
 At test time we use the full state distribution without dropout.
 
 \noindent \textbf{Datasets}
@@ -411,7 +424,8 @@ AWD-LSTM               & 24M  & 60.0 & 57.3\\
 2x256 dim LSTM         & 3.6M & 93.6       & 88.8   \\
 HMM+RNN                & 10M  & 142.3 & -\\
 HMM $|\mcZ|=900$       & 10M  & 284.6 & -\\
-VLNHMM $|\mcZ|=2^{15}$ & 7.7M & 125.0      & 115.8  \\
+%VLNHMM $|\mcZ|=2^{15}$ (factored) & 7.7M & 125.0      & 115.8  \\
+VLNHMM $|\mcZ|=2^{15}$ & 11.4M & 125.0      & 116.0  \\
 \midrule
 \texttt{WikiText}\\
 \midrule
@@ -419,8 +433,8 @@ KN 5-gram               & 5.7M    & 248.7 & 234.3\\
 AWD-LSTM                & 33M     & 68.6  & 65.8\\
 256 FF 5-gram           & 8.8M    & 210.9 & 195.0\\
 2x256  LSTM             & 9.6M    & 124.5 & 117.5\\
-%32k state HMM (no fac)   & 17.3M   & 166.7  & -\\
-VLNHMM $|\mcZ|=2^{15}$  & 13.7M   & 169.0 & 158.2\\
+VLNHMM $|\mcZ|=2^{15}$  & 17.3M   & 166.6  & 158.2\\
+%VLNHMM $|\mcZ|=2^{15}$ (factored emb)  & 13.7M   & 169.0 & 158.2\\
 \bottomrule
 \end{tabular}
 \caption{\label{tbl:ppl}
@@ -455,7 +469,8 @@ the neural model generalizes better on validation
 with almost 100x fewer parameters.
 We find that state dropout results in both an improvement in perplexity and
 a large improvement in computational speed.
-See the appendix for emission sparsity constraint ablations.
+See the appendix for emission sparsity constraint ablations,
+as well as experiments on further reducing the number of parameters.
 
 \begin{figure}[!t]
 \centering
@@ -482,7 +497,6 @@ See the appendix for emission sparsity constraint ablations.
 \end{tikzpicture}
 \caption{\label{tbl:states-ablation}
 Perplexity on \texttt{PTB} by state size $|\mcZ|$ ($\lambda =0.5$ and $M=128$).
-TODO: rerun with IND embeddings.
 }
 \end{figure}
 
@@ -493,16 +507,15 @@ TODO: rerun with IND embeddings.
 \toprule
 Model                & Param & Train  & Val  &  Time \\
 \midrule
-VLNHMM ($2^{14}$)   & 7.2M & 115    & 134  & 40\\
+VLNHMM ($2^{14}$)    & 7.2M & 115    & 134  & 40\\
 \quad - neural param & 423M & 119    & 169  & 14\\
-\quad - dropout      & 5.6M & 89     & 145  & 100\\
-\quad + block emb    & 5.6M & 122    & 136  & 48\\
+\quad - dropout      & 7.2M & 88     & 157  & 100\\
+%\quad + block emb    & 5.6M & 122    & 136  & 48\\
 \bottomrule
 \end{tabular}
 \caption{\label{tbl:dropout-param-ablation}
 Ablations on \texttt{PTB} ($\lambda =0.5$ and $M=128$). 
 Time is ms per eval batch (Run on RTX 2080).
-TODO: RERUN DROPOUT ABLATION WITH IND EMBEDDINGS.
 }
 \end{table}
 
@@ -516,13 +529,56 @@ Once scaled up to take advantage of modern hardware,
 very large HMMs demonstrate meaningful improvements over smaller HMMs
 and are worthy of consideration for NLP tasks. 
 
+\section*{Acknowledgements}
+We are grateful to
+Yuntian Deng, Yoon Kim, and Sam Wiseman
+for insightful conversations and suggestions.
+
 \bibliographystyle{acl_natbib}
 \bibliography{anthology,emnlp2020}
 
-\clearpage
+%\clearpage
 \appendix
 
 \section{Appendices}
+\subsection{Inference and Learning in HMMs}
+In this section we review the computation of the evidence of observed words $p(\bx)$ in an HMM.
+Recall that the evidence is given by
+\begin{equation}
+\begin{aligned}
+p(\bx) &= \sum_\bz p(\bx, \bz)\\
+&= \sum_{\bz} \prod_{t=1}^T p(z_t \mid z_{t-1})p(x_t \mid z_t) \\
+&= \sum_{z_1} \cdots \sum_{z_T} p(z_1 \mid z_0)p(x_1 \mid z_1)\\
+&\qquad \cdots p(z_T \mid z_{T-1})p(x_t \mid z_T)
+\end{aligned}
+\end{equation}
+where $p(z_0=\epsilon)=1$ is a dummy state for ease of notation.
+Now consider matrices $\bF_t$ with
+elements $F_{ij} = p(z_t = j \mid z_{t-1} = i) p(x_t \mid z_t = j)$.
+Note that $\mathbf{f}_1 \in \R^{|\mcZ|}$ since there is only a single starting state $z_0 = \epsilon$,
+while $\bF_t \in \R^{|\mcZ|\times|\mcZ|}$ for $t \in [2, \ldots, T]$.
+Repeated application of the distributive rule allows us to express the above in 
+matrix notation
+\begin{equation}
+\label{eqn:mat_ev}
+p(\bx) = \mathbf{f}_1^T \bF_2 \cdots \bF_{T-1}\bF_{T}\mathbf{1}
+\end{equation}
+where $\mathbf{1}$ is a column vector with all entries equal to 1.
+In this form the runtime is explicit: there are $O(T)$ matrix-vector products
+resulting in $O(T |\mcZ|^2)$ computation.\footnote{
+One can apply the associative property of matrix multiplication
+to perform Eqn.~\ref{eqn:mat_ev} as a binary tree reduction,
+resulting in $O(\log(T)|\mcZ|^3)$ runtime on a parallel machine.
+}
+Additionally, computing gradients with respect to each $\bF_t$ can be done with
+any automatic differentiation library, as all operations in Eqn.~\ref{eqn:mat_ev} are differentiable.
+
+The block-sparse emissions and state dropout serve to zero out entries of each $\bF_t$,
+allowing us to only consider dense submatrices of each matrix $\bF_t$ in Eqn.~\ref{eqn:mat_ev}.
+
+\subsection{Brown Clustering}
+TODO: finish
+
 \subsection{Hyperparameters}
 \label{sec:hyperparams}
 
@@ -546,7 +602,7 @@ Both models use a hidden dimension of 256 throughout.
 These same hyperparameters were applied on both \texttt{Penn Treebank} and \texttt{Wikitext-2}.
 
 For the HMMs we use a batch size of 16 and a BPTT length of 32.
-We use state dropout with $\lambda = 0.5$.
+We use state dropout with rate $\lambda = 0.5$.
 We use AdamW \citep{adamw} with a learning rate of 1e-2 for \texttt{Penn Treebank},
 and a learning rate of 1e-3 for \texttt{Wikitext-2}.
 
@@ -731,10 +787,10 @@ Perplexity on \texttt{PTB} by number of blocks $M$ ($\lambda =0.5$ and $|\mcZ|=2
 \toprule
 Model                & Size & Train  & Val & Time \\
 \midrule
-VLNHMM ($2^{14}$)   & 5.6M & 122    & 136 & 48\\
+VLNHMM ($2^{14}$)    & 7.2M & 115    & 134 & 40\\
 \quad - neural param & 423M & 119    & 169 & 14\\
-\quad - dropout      & 5.6M & 89     & 145 & 100\\
-\quad - block emb    & 7.2M & 115    & 134 & 40\\
+\quad - dropout      & 7.2M & 88     & 157 & 100\\
+\quad + block emb    & 5.6M & 122    & 136 & 48\\
 \bottomrule
 \end{tabular}
 \caption{\label{tbl:dropout-param-ablation-repeat}

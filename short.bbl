@@ -1,4 +1,4 @@
-\begin{thebibliography}{27}
+\begin{thebibliography}{28}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{Bengio et~al.(2003)Bengio, Ducharme, Vincent, and
@@ -159,6 +159,12 @@ Ke~M. Tran, Yonatan Bisk, Ashish Vaswani, Daniel Marcu, and Kevin Knight. 2016.
 \newblock \href {http://arxiv.org/abs/1609.09007} {Unsupervised neural hidden
   markov models}.
 \newblock \emph{CoRR}, abs/1609.09007.
+
+\bibitem[{Vieira(2014)}]{vieira2014gumbel}
+Tim Vieira. 2014.
+\newblock \href
+  {https://timvieira.github.io/blog/post/2014/08/01/gumbel-max-trick-and-weighted-reservoir-sampling}
+  {Gumbel-max trick and weighted reservoir sampling}.
 
 \bibitem[{Vogel et~al.(1996)Vogel, Ney, and Tillmann}]{vogel1996hmm}
 Stephan Vogel, Hermann Ney, and Christoph Tillmann. 1996.
