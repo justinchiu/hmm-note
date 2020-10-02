@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex emnlp2020"] 1601611719 "emnlp2020.aux" "emnlp2020.bbl" "emnlp2020" 1601662342
+["bibtex emnlp2020"] 1601611719 "emnlp2020.aux" "emnlp2020.bbl" "emnlp2020" 1601665661
   "./acl_natbib.bst" 1571355934 47585 c671f071a8f3957857acb307a7173505 ""
   "anthology.bib" 1601611169 26037 eaadbc0268d4f52ce362bbf66fa65c5d ""
   "emnlp2020.aux" 1601612688 7197 008d7daf200c5e476d4ef682ba0b5532 ""
   "emnlp2020.bib" 1571355934 1974 4d7084b2f3a55753e2f48da8052bb437 ""
   (generated)
-  "emnlp2020.bbl"
   "emnlp2020.blg"
-["pdflatex"] 1601612687 "emnlp2020.tex" "emnlp2020.pdf" "emnlp2020" 1601662342
+  "emnlp2020.bbl"
+["pdflatex"] 1601612687 "emnlp2020.tex" "emnlp2020.pdf" "emnlp2020" 1601665661
   "/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1480098688 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -322,11 +322,11 @@
   "img/trellis.tex" 1590915002 35287 3901ed877a9a0357acd34c2c297e1fcc ""
   "mystyle.sty" 1601612686 2749 1d5b83ec9e46a02bd3e17acf8c0f3817 ""
   (generated)
-  "emnlp2020.x.gnuplot"
-  "emnlp2020.pdf"
-  "trellis.aux"
-  "emnlp2020.log"
-  "emnlp2020.sin.gnuplot"
-  "emnlp2020.aux"
   "emnlp2020.out"
+  "emnlp2020.log"
+  "emnlp2020.x.gnuplot"
+  "trellis.aux"
+  "emnlp2020.aux"
+  "emnlp2020.sin.gnuplot"
   "emnlp2020.exp.gnuplot"
+  "emnlp2020.pdf"
