@@ -94,7 +94,7 @@ while allowing for exact posterior inference.
 State-of-the-art systems in NLP have moved away from utilizing latent hidden states
 and toward deterministic deep neural models.
 We take several lessons from the success of neural models for NLP tasks:
-(a) model size is critical for finding better local optima,
+(a) model size is critical for accuracy,
 e.g. large LSTMs \cite{zaremba2014lstm} show marked improvements in performance;
 (b) the right factorization is critically important for representation learning,
 e.g. a feedforward model \cite{bengio2003nlm}
@@ -179,8 +179,8 @@ p(z_t \mid z_{t-1}) \propto e^{\psi_{z_{t-1}z_t}} \quad \ p(x_t \mid z_t) \propt
 \end{equation}
 with transitions $\psi \in \mathbb{R}^{|\mcZ|\times|\mcZ|}$
 and emissions $\phi \in \mathbb{R}^{|\mcZ| \times |\mcX|}$.
-These are the distributional parameters of an HMM.
-We refer to emissions $p(x_t \mid z_t)$ as $\mathbf{O}$.
+These are the distributional parameters of an HMM,
+and we refer to the emission matrix with entries $p(x_t \mid z_t)$ as $\mathbf{O}$.
 
 We distinguish between two types of model parameterizations: \textit{scalar} and \textit{neural},
 where the model parameters are given by $\theta$.
@@ -198,7 +198,7 @@ we take advantage of compact neural parameterizations.
 In order to fit an HMM to data $\bx$,
 we must marginalize over the latent states to obtain the likelihood
 $p(\bx) = \sum_{\bz}p(\bx,\bz)$.
-This sum can be computed in time $O(T|\mcZ|^2)$ via dynamic programming,
+This sum can be computed in time $O(T|\mcZ|^2)$ via the forward algorithm,
 which becomes prohibitive if the number of latent states $|\mcZ|$ is large.
 We can then optimize the likelihood 
 with gradient ascent (or alternative variants of expectation maximization).
@@ -374,7 +374,7 @@ is Brown clusters \citep{brown1992,liang2005brown} which are also based on HMMs.
 Brown clusters are obtained by assigning every token type in $\mcX$ a state in an HMM,
 then merging states until a desired number of partitions $M$ is reached.
 We construct the Brown clusters on the training portions of the datasets
-and assume the vocabulary remains identical at test time (OOV words mapped to unk).
+and assume the vocabulary remains identical at test time (with OOV words mapped to unk).
 We include more background on Brown Clusters in the appendix.
 
 \noindent\textbf{State Dropout}
@@ -382,7 +382,7 @@ We use a dropout rate of $\lambda = 0.5$ at training time.
 For each block of size $|\mcX_m|$, we sample $\lambda|\mcX_m|$ states to use in that block each batch.
 We draw states from each block from a multivariate hypergeometric distribution
 using the Gumbel Top-k trick for sampling without replacement \citep{vieira2014gumbel}.
-At test time we use the full state distribution without dropout.
+At test time we use all states without dropout.
 
 \noindent \textbf{Datasets}
 We evaluate on the \texttt{Penn Treebank} \citep{ptb} (929k train tokens, 10k vocab)
@@ -510,7 +510,6 @@ Model                & Param & Train  & Val  &  Time \\
 VLNHMM ($2^{14}$)    & 7.2M & 115    & 134  & 40\\
 \quad - neural param & 423M & 119    & 169  & 14\\
 \quad - dropout      & 7.2M & 88     & 157  & 100\\
-%\quad + block emb    & 5.6M & 122    & 136  & 48\\
 \bottomrule
 \end{tabular}
 \caption{\label{tbl:dropout-param-ablation}
@@ -531,7 +530,7 @@ and are worthy of consideration for NLP tasks.
 
 \section*{Acknowledgements}
 We are grateful to
-Yuntian Deng, Yoon Kim, and Sam Wiseman
+Yuntian Deng, Daniel Fried, Yoon Kim, and Sam Wiseman
 for insightful conversations and suggestions.
 
 \bibliographystyle{acl_natbib}
@@ -573,7 +572,7 @@ resulting in $O(\log(T)|\mcZ|^3)$ runtime on a parallel machine.
 Additionally, computing gradients with respect to each $\bF_t$ can be done with
 any automatic differentiation library, as all operations in Eqn.~\ref{eqn:mat_ev} are differentiable.
 
-The block-sparse emissions and state dropout serve to zero out entries of each $\bF_t$,
+Block-sparse emissions and state dropout serve to zero out entries of each $\bF_t$,
 allowing us to only consider dense submatrices of each matrix $\bF_t$ in Eqn.~\ref{eqn:mat_ev}.
 
 \subsection{Brown Clustering}
