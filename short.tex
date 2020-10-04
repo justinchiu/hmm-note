@@ -394,10 +394,12 @@ F_{tij}, & i\in\mcZ_{x_{t-1}}\cap \mcD_{\mcZ_x}^C \wedge j\in\mcZ_{x_t} \cap\mat
 0, & \textrm{otherwise}
 \end{cases}
 \end{equation}
+The resulting sparsity in the likelihood computation using these factors is shown in 
+Figure~\ref{fig:trellis}.
 State dropout gives a large practical speed up for both parameter computation and inference.
 For $\lambda=0.5$ we get a $4\times$ speed improvement for both.
 This structured dropout is also easy to exploit on GPU,
-as it maintains block structure with fixed-height (as shown in Figure~\ref{fig:trellis}).
+as it maintains block structure with fixed-height.
 
 \begin{figure}[!t]
 \begin{center}
@@ -614,7 +616,7 @@ while $\bF_t \in \R^{|\mcZ|\times|\mcZ|}$ for $t \in [2, \ldots, T]$.
 Repeated application of the distributive rule allows us to express the above in 
 matrix notation
 \begin{equation}
-\label{eqn:mat_ev}
+\label{eqn:sparse_mat_ev}
 p(\bx) = \mathbf{f}_1^T \bF_2 \cdots \bF_{T-1}\bF_{T}\mathbf{1}
 \end{equation}
 where $\mathbf{1}$ is a column vector with all entries equal to 1.
