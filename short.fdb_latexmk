@@ -1,5 +1,5 @@
 # Fdb version 3
-["bibtex short"] 1601839388 "short.aux" "short.bbl" "short" 1601839591
+["bibtex short"] 1601839388 "short.aux" "short.bbl" "short" 1601839699
   "./acl_natbib.bst" 1571355934 47585 c671f071a8f3957857acb307a7173505 ""
   "anthology.bib" 1601780576 26020 35d0b2d39f665a60ca0387ccf8bd3223 ""
   "emnlp2020.bib" 0 -1 0 ""
@@ -7,7 +7,7 @@
   (generated)
   "short.bbl"
   "short.blg"
-["pdflatex"] 1601839590 "short.tex" "short.pdf" "short" 1601839591
+["pdflatex"] 1601839590 "short.tex" "short.pdf" "short" 1601839699
   "/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1480098688 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -314,9 +314,9 @@
   "short.aux" 1601839591 6978 68cd0ee605779aaafc6aed802aad0f0c ""
   "short.bbl" 1601832137 8713 3aa096022e25bb5a14c18b67c09b7a2e "bibtex short"
   "short.out" 1601839590 0 d41d8cd98f00b204e9800998ecf8427e ""
-  "short.tex" 1601839587 35953 0bab3f26483254ee4c59bfcfbf6ca4de ""
+  "short.tex" 1601839697 35953 0bab3f26483254ee4c59bfcfbf6ca4de ""
   (generated)
-  "short.aux"
-  "short.log"
   "short.out"
+  "short.log"
+  "short.aux"
   "short.pdf"
