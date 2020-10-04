@@ -223,7 +223,7 @@ p(\bx) = \mathbf{F}_1 \bF_2 \cdots \bF_{T-1}\bF_{T}\mathbf{1}
 \end{equation}
 where $\mathbf{1}$ is a column vector of ones.
 In this form the runtime is explicit: there are $O(T)$ matrix-vector products,
-requiring $O(T |\mcZ|^2)$ computation.
+requiring $O(T |\mcZ|^2)$ computation in total.
 We can then optimize the likelihood 
 with gradient ascent (or alternative variants of expectation maximization).
 
