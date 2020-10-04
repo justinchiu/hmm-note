@@ -438,7 +438,7 @@ We use a dropout rate of $\lambda = 0.5$ at training time.
 For each block of size $|\mcX_m|$, we sample $\lambda|\mcX_m|$ states to use in that block each batch.
 We draw states from each block from a multivariate hypergeometric distribution
 using the Gumbel Top-k trick for sampling without replacement \citep{vieira2014gumbel}.
-At test time we use all states without dropout.
+At test time we do not use state dropout.
 
 \noindent \textbf{Datasets}
 We evaluate on the \texttt{Penn Treebank} \citep{ptb} (929k train tokens, 10k vocab)
