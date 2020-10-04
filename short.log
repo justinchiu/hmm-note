@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  4 OCT 2020 13:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  4 OCT 2020 13:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1178,11 +1178,6 @@ Package pdftex.def Info: img/blocksparse_mat_no_block.pdf  used on input line 2
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <7> not available
 (Font)              Font shape `U/lasy/m/n' tried instead on input line 263.
  [2]
-
-LaTeX Warning: Reference `eqn:likelihood' on page 3 undefined on input line 308
-.
-
-
 Underfull \hbox (badness 1616) in paragraph at lines 314--322
 \OT1/ptm/b/n/10.95 Neural Pa-ram-e-ter-i-za-tion \OT1/ptm/m/n/10.95 (+20) Even 
 with blocked
@@ -1275,19 +1270,16 @@ Package rerunfilecheck Info: File `short.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
 
-LaTeX Warning: There were undefined references.
-
-
 LaTeX Warning: There were multiply-defined labels.
 
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 871.
  )
 (\end occurred when \iffalse on line 352 was incomplete) 
 Here is how much of TeX's memory you used:
- 34885 strings out of 492649
- 826988 string characters out of 6129607
- 1181682 words of memory out of 5000000
- 37835 multiletter control sequences out of 15000+600000
+ 34884 strings out of 492649
+ 826972 string characters out of 6129607
+ 1181646 words of memory out of 5000000
+ 37834 multiletter control sequences out of 15000+600000
  51911 words of font info for 232 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,19n,103p,1008b,2263s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1314,7 +1306,7 @@ msbm10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/courier/ucrr8a.p
 fb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/l
 ocal/texlive/2018/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texli
 ve/2018/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on short.pdf (9 pages, 366506 bytes).
+Output written on short.pdf (9 pages, 365902 bytes).
 PDF statistics:
  441 PDF objects out of 1000 (max. 8388607)
  380 compressed objects within 4 object streams
