@@ -386,7 +386,7 @@ p(x \mid z) \propto 1(z \in \mcZ_x \cap \mcD_{\mcZ_x}^C)e^{\phi_{zx}}
 \end{equation}
 This allows us to introduce further sparsity into the computation of the likelihood.
 Let $\mathbf{F}_t^d$ be the sparse factors after applying both the block emission constraints
-and dropout:
+and dropout, such that
 \begin{equation}
 \label{eqn:dropout_factors}
 F_{tij}^d \propto \begin{cases}
@@ -394,12 +394,6 @@ F_{tij}, & i\in\mcZ_{x_{t-1}}\cap \mcD_{\mcZ_x}^C \wedge j\in\mcZ_{x_t} \cap\mat
 0, & \textrm{otherwise}
 \end{cases}
 \end{equation}
-
-\begin{comment}
-We concatenate these to a global vector $\mathbf{b}\in\set{0,1}^{|\mcZ|}$,
-which, along with the previous constraints, 
-ensures
-\end{comment}
 State dropout gives a large practical speed up for both parameter computation and inference.
 For $\lambda=0.5$ we get a $4\times$ speed improvement for both.
 This structured dropout is also easy to exploit on GPU,

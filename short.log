@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  4 OCT 2020 15:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  4 OCT 2020 15:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1196,19 +1196,19 @@ Overfull \hbox (4.73312pt too wide) detected at line 396
 \OML/cmm/m/it/10.95 F[] \OMS/cmsy/m/n/10.95 / []
  []
 
-Excluding 'comment' comment. (./img/trellis.tex
+(./img/trellis.tex
 Missing character: There is no k in font nullfont!
 Missing character: There is no k in font nullfont!
 )
 Underfull \vbox (badness 5696) has occurred while \output is active []
 
  [4]
-Overfull \hbox (3.6641pt too wide) in paragraph at lines 475--502
+Overfull \hbox (3.6641pt too wide) in paragraph at lines 469--496
  [][] 
  []
 
 
-Overfull \hbox (6.01643pt too wide) in paragraph at lines 567--579
+Overfull \hbox (6.01643pt too wide) in paragraph at lines 561--573
  [][] 
  []
 
@@ -1245,13 +1245,13 @@ Underfull \hbox (badness 1199) in paragraph at lines 185--189
  []
 
 ) [6]
-Underfull \hbox (badness 1132) in paragraph at lines 625--635
+Underfull \hbox (badness 1132) in paragraph at lines 619--629
 \OT1/ptm/m/n/10.95 (+20) where $\OT1/cmr/bx/n/10.95 1$ \OT1/ptm/m/n/10.95 (+20)
  is a col-umn vec-tor with all en-tries
  []
 
 
-Overfull \hbox (5.48268pt too wide) detected at line 653
+Overfull \hbox (5.48268pt too wide) detected at line 647
 [][]
  []
 
@@ -1260,7 +1260,7 @@ Overfull \hbox (5.48268pt too wide) detected at line 653
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Overfull \hbox (4.36314pt too wide) in paragraph at lines 846--859
+Overfull \hbox (4.36314pt too wide) in paragraph at lines 840--853
  [][] 
  []
 
@@ -1268,27 +1268,27 @@ Overfull \hbox (4.36314pt too wide) in paragraph at lines 846--859
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [8]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 882.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 876.
  [9
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 882.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 876.
  (./short.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 882.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 882.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 876.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 876.
 Package rerunfilecheck Info: File `short.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 882.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 876.
  )
 (\end occurred when \iffalse on line 352 was incomplete) 
 Here is how much of TeX's memory you used:
  34890 strings out of 492649
  827068 string characters out of 6129607
- 1172339 words of memory out of 5000000
+ 1172348 words of memory out of 5000000
  37839 multiletter control sequences out of 15000+600000
  51911 words of font info for 232 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1316,7 +1316,7 @@ msbm10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/courier/ucrr8a.p
 fb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/l
 ocal/texlive/2018/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texli
 ve/2018/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on short.pdf (9 pages, 364878 bytes).
+Output written on short.pdf (9 pages, 364882 bytes).
 PDF statistics:
  442 PDF objects out of 1000 (max. 8388607)
  381 compressed objects within 4 object streams
