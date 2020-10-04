@@ -61,6 +61,7 @@
   %\texttt{arush@cornell.edu} \\}
 
 \date{}
+%\raggedbottom
 
 \begin{document}
 \maketitle
@@ -102,7 +103,9 @@ can have the same probabilistic structure as an n-gram model while performing si
 (c) dropout is key to achieving strong performance \citep{zaremba2014lstm,merity2017awdlstm}.
 
 We revisit HMMs for language modeling,
-positing that competitive performance may require very large models. 
+as they are models with a long history in NLP 
+and structure complementary to modern neural models.
+We posit that competitive performance requires very large models. 
 Our contributions are as follows:
 We demonstrate large improvements in an HMM language model by scaling the state space.
 Towards that goal, we introduce three techniques:
@@ -201,7 +204,7 @@ from a neural network (with parameters $\theta$),
 decoupling the size of $\theta$ from $\phi,\psi$.
 This decoupling gives us the ability to choose
 between compact or overparameterized $\theta$ (relative to $\phi,\psi$).
-As we will use large state spaces,
+As we scale to large state spaces,
 we take advantage of compact neural parameterizations.
 
 In order to fit an HMM to data $\bx$,
@@ -264,7 +267,7 @@ embeddings.
 \end{figure}
 
 \noindent
-\textbf{Blocked Emissions} Efficiency of marginal inference inherently limits 
+\textbf{Blocked Emissions} The efficiency of marginal inference inherently limits 
 the state space of general HMMs.
 However, we can improve inference complexity in special cases.
 As states in an HMM are used to represent context, a reasonable assumption
@@ -344,10 +347,10 @@ while RNNs and similar models recompute emissions every token.
 \begin{algorithmic}
 \State{Given: block structure and model parameters}
     \State{Sample block-wise dropout set $\mcD$}
-    \State{Compute $\phi,\psi$}
+    \State{Compute $\phi,\psi$, ignoring states in $\mcD$}
     \ForAll{examples $\bx$ in batch}
         \ForAll{timesteps $t \in [T]$}
-            \State{$\bF_t^d = \Call{MakeFactor}{\phi,\psi,x_t,\mcZ_{x_t},\mcD}$}
+            \State{$\bF_t^d = \Call{MakeFactor}{\phi,\psi,\bx,\mcZ_{\bx}}$}
         \EndFor
         \State{$p(\bx) = \bF_1^d\bF_2^d\cdots\bF_t^d\mathbf{1}$}
     \EndFor
