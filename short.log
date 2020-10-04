@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  2 OCT 2020 15:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  4 OCT 2020 13:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1008,7 +1008,11 @@ brarydecorations.pathmorphing.code.tex))
 \pgfplots@ymax@reg=\dimen265
 \pgfplots@zmin@reg=\dimen266
 \pgfplots@zmax@reg=\dimen267
-)) (./short.aux)
+)) (./short.aux
+
+LaTeX Warning: Label `eqn:mat_ev' multiply defined.
+
+)
 \openout1 = `short.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 65.
@@ -1026,8 +1030,7 @@ LaTeX Font Info:    ... okay on input line 65.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 65.
 LaTeX Font Info:    ... okay on input line 65.
 LaTeX Font Info:    Try loading font information for OT1+ptm on input line 65.
-
-(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+ (/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 \AtBeginShipoutBox=\box71
@@ -1163,62 +1166,57 @@ LaTeX Font Info:    Font shape `U/lasy/b/n' in size <5> not available
 
 
 ]
+Excluding 'comment' comment.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 207.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 230.
 <img/blocksparse_mat_no_block.pdf, id=99, 409.53pt x 259.97125pt>
 File: img/blocksparse_mat_no_block.pdf Graphic file (type pdf)
 <use img/blocksparse_mat_no_block.pdf>
 Package pdftex.def Info: img/blocksparse_mat_no_block.pdf  used on input line 2
-32.
+55.
 (pdftex.def)             Requested size: 193.53519pt x 122.85876pt.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <7> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 240.
-
-Underfull \vbox (badness 1831) has occurred while \output is active []
-
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 263.
  [2]
-Underfull \hbox (badness 2158) in paragraph at lines 274--274
-[][][] \OT1/ptm/m/n/9 (+20) This can be sped up on a par-al-lel ma-chine to
- []
+
+LaTeX Warning: Reference `eqn:likelihood' on page 3 undefined on input line 308
+.
 
 
-Underfull \hbox (badness 1616) in paragraph at lines 278--286
+Underfull \hbox (badness 1616) in paragraph at lines 314--322
 \OT1/ptm/b/n/10.95 Neural Pa-ram-e-ter-i-za-tion \OT1/ptm/m/n/10.95 (+20) Even 
 with blocked
  []
 
 
-Underfull \hbox (badness 1019) in paragraph at lines 334--340
+Underfull \hbox (badness 1019) in paragraph at lines 370--377
 []\OT1/ptm/m/n/10.95 (+20) State dropout acts on each emis-sion block
  []
 
+[3 <./img/blocksparse_mat_no_block.pdf>] Excluding 'comment' comment.
 (./img/trellis.tex
 Missing character: There is no k in font nullfont!
 Missing character: There is no k in font nullfont!
 )
-Underfull \vbox (badness 1515) has occurred while \output is active []
-
- [3 <./img/blocksparse_mat_no_block.pdf>]
-Overfull \hbox (3.6641pt too wide) in paragraph at lines 415--442
+Overfull \hbox (3.6641pt too wide) in paragraph at lines 464--491
  [][] 
  []
 
 [4]
-Overfull \hbox (6.01643pt too wide) in paragraph at lines 506--518
+Overfull \hbox (6.01643pt too wide) in paragraph at lines 556--568
  [][] 
  []
 
-(./short.bbl
-Underfull \hbox (badness 2027) in paragraph at lines 6--9
-\OT1/ptm/m/n/10 and Chris-tian Jan-vin. 2003.  A neu-ral prob-a-
- []
+
+Underfull \vbox (badness 3118) has occurred while \output is active []
 
 
+(./short.bbl [5]
 Underfull \hbox (badness 2005) in paragraph at lines 52--58
 []\OT1/ptm/m/n/10 Kenneth Heafield, Ivan Pouzyrevsky, Jonathan H.
  []
 
-[5]
+
 Underfull \hbox (badness 3189) in paragraph at lines 86--91
 \OT1/ptm/m/n/10 mod-els and poly-grams for lan-guage mod-el-ing.[][]
  []
@@ -1245,45 +1243,52 @@ Underfull \hbox (badness 1199) in paragraph at lines 185--189
 
  []
 
-)
-Underfull \hbox (badness 1132) in paragraph at lines 564--574
+) [6]
+Underfull \hbox (badness 1132) in paragraph at lines 614--624
 \OT1/ptm/m/n/10.95 (+20) where $\OT1/cmr/bx/n/10.95 1$ \OT1/ptm/m/n/10.95 (+20)
  is a col-umn vec-tor with all en-tries
  []
 
-[6]
-Overfull \hbox (5.48268pt too wide) detected at line 592
+
+Overfull \hbox (5.48268pt too wide) detected at line 642
 [][]
  []
 
 [7]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (4.36314pt too wide) in paragraph at lines 785--798
+Overfull \hbox (4.36314pt too wide) in paragraph at lines 835--848
  [][] 
  []
 
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
 [8]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 821.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 871.
  [9
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 821.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 871.
  (./short.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 821.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 821.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 871.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 871.
 Package rerunfilecheck Info: File `short.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 821.
+
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 871.
  )
 (\end occurred when \iffalse on line 352 was incomplete) 
 Here is how much of TeX's memory you used:
- 34876 strings out of 492649
- 826872 string characters out of 6129607
- 1184867 words of memory out of 5000000
- 37831 multiletter control sequences out of 15000+600000
- 51792 words of font info for 230 fonts, out of 8000000 for 9000
+ 34885 strings out of 492649
+ 826988 string characters out of 6129607
+ 1181682 words of memory out of 5000000
+ 37835 multiletter control sequences out of 15000+600000
+ 51911 words of font info for 232 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,19n,103p,1008b,2263s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/201
@@ -1309,10 +1314,10 @@ msbm10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/courier/ucrr8a.p
 fb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/l
 ocal/texlive/2018/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texli
 ve/2018/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on short.pdf (9 pages, 363542 bytes).
+Output written on short.pdf (9 pages, 366508 bytes).
 PDF statistics:
- 439 PDF objects out of 1000 (max. 8388607)
- 378 compressed objects within 4 object streams
- 85 named destinations out of 1000 (max. 500000)
+ 441 PDF objects out of 1000 (max. 8388607)
+ 380 compressed objects within 4 object streams
+ 87 named destinations out of 1000 (max. 500000)
  35442 words of extra memory for PDF output out of 35830 (max. 10000000)
 

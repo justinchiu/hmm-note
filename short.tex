@@ -179,8 +179,17 @@ p(z_t \mid z_{t-1}) \propto e^{\psi_{z_{t-1}z_t}} \quad \ p(x_t \mid z_t) \propt
 \end{equation}
 with transitions $\psi \in \mathbb{R}^{|\mcZ|\times|\mcZ|}$
 and emissions $\phi \in \mathbb{R}^{|\mcZ| \times |\mcX|}$.
-These are the distributional parameters of an HMM,
-and we refer to the emission matrix with entries $p(x_t \mid z_t)$ as $\mathbf{O}$.
+These are the distributional parameters of an HMM.
+We refer to the
+and the emission matrix with entries $p(x_t \mid z_t)$ as
+$\mathbf{O} \in\R^{|\mcZ|\times|\mcX|}$.
+\begin{comment}
+transition matrix with entries $p(z_t \mid z_{t-1})$ as $\mathbf{S} \in\R^{|\mcZ|\times|\mcZ|}$
+(for state transition)
+and the emission matrix with entries $p(x_t \mid z_t)$ as
+$\mathbf{O} \in\R^{|\mcZ|\times|\mcX|}$
+(for observation).
+\end{comment}
 
 We distinguish between two types of model parameterizations: \textit{scalar} and \textit{neural},
 where the model parameters are given by $\theta$.
@@ -196,13 +205,27 @@ As we will use large state spaces,
 we take advantage of compact neural parameterizations.
 
 In order to fit an HMM to data $\bx$,
-we must marginalize over the latent states to obtain the likelihood
+we must perform inference by marginalizing over the latent states to obtain the likelihood
 $p(\bx) = \sum_{\bz}p(\bx,\bz)$.
-This sum can be computed in time $O(T|\mcZ|^2)$ via the forward algorithm,
-which becomes prohibitive if the number of latent states $|\mcZ|$ is large.
+%This sum can be computed in time $O(T|\mcZ|^2)$ via the forward algorithm,
+%which becomes prohibitive if the number of latent states $|\mcZ|$ is large.
+The summation on the right hand side can be expressed as a series of matrix-vector products:
+For each $t \in [1, \ldots, T]$ let each matrix
+\begin{equation}
+\label{eqn:factors}
+F_{tij} = p(z_t = j \mid z_{t-1} = i) p(x_t \mid z_t = j),
+\end{equation}
+where $p(z_1 \mid z_0)$ is only nonzero for $z_0 = \epsilon$.
+We can then rewrite the likelihood as
+\begin{equation}
+\label{eqn:mat_ev}
+p(\bx) = \mathbf{F}_1 \bF_2 \cdots \bF_{T-1}\bF_{T}\mathbf{1}
+\end{equation}
+where $\bF_t\in\R^{|\mcZ|\times|\mcZ|}$ and $\mathbf{1}$ is a column vector of ones.
+In this form the runtime is explicit: there are $O(T)$ matrix-vector products,
+requiring $O(T |\mcZ|^2)$ computation.
 We can then optimize the likelihood 
 with gradient ascent (or alternative variants of expectation maximization).
-See the appendix for more details on inference and optimization in HMMs.
 
 \noindent \textbf{HMMs and RNNs}
 Although the forward algorithm resembles that of the forward pass in a recurrent neural network (RNN)
@@ -264,14 +287,27 @@ p(\bx) &= \sum_{z_1 \in \mcZ_{x_1}} p(z_1\mid z_0)p(x_1 \mid z_1) \times\\
     \sum_{z_T \in \mcZ_{x_T}} p(z_T \mid z_{T-1})p(x_T \mid z_T)
 \end{aligned}
 \end{equation}
-Since there are only $k$ states with nonzero probability of occurring
-at every timestep, we only need to consider transitioning from the $|\mcZ_{x_t}| = k$
-previous states to the next $|\mcZ_{x_{t+1}}|=k$ states,
-resulting in $O(k^2)$ operations per timestep.
-This gives a serial complexity of $O(Tk^2)$.\footnote{
-This can be sped up on a parallel machine to $O(\log(T)k^2)$
-via a binary reduction.
-}
+To make the computationals gains more explicit, we also present the above in matrix form.
+Recall the definition of the unconstrained factors
+$\mathbf{F}_t$ from Eqn.~\ref{eqn:factors}.
+We introduce the sparse factors $\mathbf{F}_t^b$ induced by the blocked emission constraints.
+The emission constraints cause $p(x_t \mid z_t=j) = 0$ if $j\notin\mcZ_{x_t}$.
+Additionally, if a previous state has zero probability of occurring, the probability
+of transitioning from that state $p(z_t = j \mid z_{t-1} = i) = 0$ if $i\notin\mcZ_{x_{t-1}}$.
+This yields the following:
+\begin{equation}
+\label{eqn:sparse_factors}
+F_{tij}^b \propto \begin{cases}
+F_{tij} & i\in\mcZ_{x_{t-1}} \wedge j\in\mcZ_{x_t}\\
+0 & \textrm{otherwise}
+\end{cases}
+\end{equation}
+Importantly, the nonzero elements of $\mathbf{F}_t^b$ are proportional to
+dense $k \times k$ submatrices of $\mathbf{F}_t$.
+The sparsity in each $\mathbf{F}_t^b$
+reduces the cost of each matrix-vector product in Eqn.~\ref{eqn:likelihood}
+from $|\mcZ|^2$ to $k^2$,
+resulting in a serial complexity of $O(Tk^2)$.
 
 \vspace{0.2cm}
 
@@ -335,12 +371,25 @@ State dropout acts on each emission block $\mathbf{O}_1, \ldots, \mathbf{O}_M$ i
 For each block (with $k=|{\cal Z}| / M$ rows), we sample a binary dropout mask by sampling
 $ \lambda k$ dropped row indices uniformly without replacement,
 where $\lambda$ is the dropout rate.
-We concatenate these to a global vector $\mathbf{b}\in\set{0,1}^{|\mcZ|}$, which, along with the previous constraints, 
-ensures,
+This allows us to introduce further sparsity into the computation of the likelihood.
+Let $\mathbf{F}_t^d$ be the sparse factors after applying both the block emission constraints
+and dropout, with $\mathcal{D}$ the set of dropped states:
+\begin{equation}
+\label{eqn:dropout_factors}
+F_{tij}^d = \begin{cases}
+F_{tij} & i\in\mcZ_{x_{t-1}}\cap \mathcal{D}^C \wedge j\in\mcZ_{x_t} \cap\mathcal{D}^C\\
+0 & \textrm{otherwise}
+\end{cases}
+\end{equation}
+\begin{comment}
+We concatenate these to a global vector $\mathbf{b}\in\set{0,1}^{|\mcZ|}$,
+which, along with the previous constraints, 
+ensures
 \begin{equation}
 \label{eqn:state_dropout}
 p(x \mid z) \propto b_{z}1(z \in \mcZ_x)e^{\phi_{zx}}
 \end{equation}
+\end{comment}
 State dropout gives a large practical speed up for both parameter computation and inference.
 For $\lambda=0.5$ we get a $4\times$ speed improvement for both,
 due to the reduction in possible transitions.

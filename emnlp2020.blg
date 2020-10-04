@@ -17,37 +17,37 @@ Warning--empty journal in petrov2006splitmerge
 Warning--empty journal in radford2019language
 You've used 26 entries,
             3571 wiz_defined-function locations,
-            873 strings with 10916 characters,
-and the built_in function-call counts, 19157 in all, are:
+            872 strings with 10912 characters,
+and the built_in function-call counts, 19146 in all, are:
 = -- 1636
 > -- 945
 < -- 14
 + -- 297
 - -- 267
-* -- 1291
+* -- 1289
 := -- 2863
 add.period$ -- 102
 call.type$ -- 26
 change.case$ -- 223
 chr.to.int$ -- 26
 cite$ -- 32
-duplicate$ -- 1283
-empty$ -- 1359
+duplicate$ -- 1281
+empty$ -- 1357
 format.name$ -- 349
-if$ -- 4257
+if$ -- 4255
 int.to.chr$ -- 1
 int.to.str$ -- 1
 missing$ -- 248
 newline$ -- 129
 num.names$ -- 104
-pop$ -- 561
+pop$ -- 562
 preamble$ -- 1
 purify$ -- 193
 quote$ -- 0
 skip$ -- 994
 stack$ -- 0
 substring$ -- 616
-swap$ -- 668
+swap$ -- 664
 text.length$ -- 8
 text.prefix$ -- 0
 top$ -- 0

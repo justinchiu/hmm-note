@@ -38,14 +38,16 @@
 \citation{jin2020discrete}
 \citation{dedieu2019learning}
 \newlabel{param}{{2}{2}{Background: HMMs}{equation.3.2}{}}
+\newlabel{eqn:factors}{{3}{2}{Background: HMMs}{equation.3.3}{}}
+\newlabel{eqn:mat_ev}{{4}{2}{Background: HMMs}{equation.3.4}{}}
 \newlabel{sec:methods}{{4}{2}{Scaling HMMs}{section.4}{}}
 \citation{kim2019cpcfg}
-\citation{brown1992,liang2005brown}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{fig:emit}{{1}{3}{The emission matrix as a set of blocks $\mathbf {O}_1, \ldots , \mathbf {O}_4$ with fixed height $k$. The width of each block may vary, as there is no constraint on the number of words a state can emit. Each active cell is constructed from word $\mathbf {E}_x$ and state $\mathbf {E}_z$ embeddings. \relax }{figure.caption.1}{}}
-\newlabel{eqn:sparse_marginalization}{{3}{3}{Scaling HMMs}{equation.4.3}{}}
+\newlabel{eqn:sparse_marginalization}{{5}{3}{Scaling HMMs}{equation.4.5}{}}
+\newlabel{eqn:sparse_factors}{{6}{3}{Scaling HMMs}{equation.4.6}{}}
 \newlabel{fig:algo}{{1}{3}{HMM Training (a single batch) \relax }{algorithm.1}{}}
-\newlabel{eqn:state_dropout}{{5}{3}{Scaling HMMs}{equation.4.5}{}}
+\citation{brown1992,liang2005brown}
 \citation{vieira2014gumbel}
 \citation{ptb}
 \citation{wikitext}
@@ -58,8 +60,8 @@
 \citation{buys2018hmm}
 \citation{buys2018hmm}
 \newlabel{fig:trellis}{{2}{4}{The computation of $p(\bx )$ is greatly reduced by blocked emissions and state dropout. In the above trellis, each row corresponds to a latent state. Blocked emissions result in a small subset of all states emitting a given word, as shown by the rectangles, thus only states in the rectangles may occur with nonzero probability after conditioning on observed words. State dropout (leftmost column) allows us to further reduce the number of states we consider, halving the number of (white) states that have nonzero probability in each rectangle. \relax }{figure.caption.2}{}}
+\newlabel{eqn:dropout_factors}{{8}{4}{Scaling HMMs}{equation.4.8}{}}
 \newlabel{sec:experiments}{{5}{4}{Experimental Setup}{section.5}{}}
-\newlabel{tbl:ppl}{{1}{4}{Perplexities on \texttt {PTB / Wikitext-2}. \relax }{table.caption.3}{}}
 \bibstyle{acl_natbib}
 \bibdata{anthology,emnlp2020}
 \bibcite{bengio2003nlm}{{1}{2003}{{Bengio et~al.}}{{Bengio, Ducharme, Vincent, and Janvin}}}
@@ -67,12 +69,13 @@
 \bibcite{brown1992}{{3}{1992}{{Brown et~al.}}{{Brown, deSouza, Mercer, Pietra, and Lai}}}
 \bibcite{buys2018hmm}{{4}{2018}{{Buys et~al.}}{{Buys, Bisk, and Choi}}}
 \bibcite{tvm}{{5}{2018}{{Chen et~al.}}{{Chen, Moreau, Jiang, Shen, Yan, Wang, Hu, Ceze, Guestrin, and Krishnamurthy}}}
+\newlabel{tbl:ppl}{{1}{5}{Perplexities on \texttt {PTB / Wikitext-2}. \relax }{table.caption.3}{}}
+\newlabel{tbl:dropout-param-ablation}{{2}{5}{Ablations on \texttt {PTB} ($\lambda =0.5$ and $M=128$). Time is ms per eval batch (Run on RTX 2080). \relax }{table.caption.5}{}}
+\newlabel{tbl:states-ablation}{{3}{5}{Perplexity on \texttt {PTB} by state size $|\mcZ |$ ($\lambda =0.5$ and $M=128$). \relax }{figure.caption.4}{}}
 \bibcite{dedieu2019learning}{{6}{2019}{{Dedieu et~al.}}{{Dedieu, Gothoskar, Swingle, Lehrach, L\IeC {\'a}zaro-Gredilla, and George}}}
 \bibcite{han2017dependency}{{7}{2017}{{Han et~al.}}{{Han, Jiang, and Tu}}}
 \bibcite{kenlm}{{8}{2013}{{Heafield et~al.}}{{Heafield, Pouzyrevsky, Clark, and Koehn}}}
 \bibcite{huang2011thesis}{{9}{2011}{{Huang}}{{}}}
-\newlabel{tbl:states-ablation}{{3}{5}{Perplexity on \texttt {PTB} by state size $|\mcZ |$ ($\lambda =0.5$ and $M=128$). \relax }{figure.caption.4}{}}
-\newlabel{tbl:dropout-param-ablation}{{2}{5}{Ablations on \texttt {PTB} ($\lambda =0.5$ and $M=128$). Time is ms per eval batch (Run on RTX 2080). \relax }{table.caption.5}{}}
 \bibcite{jin2020discrete}{{10}{2020}{{Jin et~al.}}{{Jin, Wiseman, Stratos, and Livescu}}}
 \bibcite{kim2019cpcfg}{{11}{2019}{{Kim et~al.}}{{Kim, Dyer, and Rush}}}
 \bibcite{krakovna2016hmm}{{12}{2016}{{Krakovna and Doshi-Velez}}{{}}}
@@ -92,12 +95,12 @@
 \bibcite{vogel1996hmm}{{26}{1996}{{Vogel et~al.}}{{Vogel, Ney, and Tillmann}}}
 \bibcite{wiseman2018hsmm}{{27}{2018}{{Wiseman et~al.}}{{Wiseman, Shieber, and Rush}}}
 \bibcite{zaremba2014lstm}{{28}{2014}{{Zaremba et~al.}}{{Zaremba, Sutskever, and Vinyals}}}
-\newlabel{eqn:mat_ev}{{7}{6}{Inference and Learning in HMMs}{equation.A.7}{}}
 \citation{adamw}
 \citation{adamw}
 \citation{tvm}
+\newlabel{eqn:mat_ev}{{10}{7}{Inference and Learning in HMMs}{equation.A.10}{}}
 \newlabel{sec:hyperparams}{{A.3}{7}{Hyperparameters}{subsection.A.3}{}}
-\newlabel{eqn:res}{{9}{7}{HMM Parameterization}{equation.A.9}{}}
+\newlabel{eqn:res}{{12}{7}{HMM Parameterization}{equation.A.12}{}}
 \newlabel{tbl:constraint-ablation}{{3}{8}{Emission constraint ablations on \texttt {Penn Treebank}. \relax }{table.caption.8}{}}
 \newlabel{fig:fac-ablation}{{4}{8}{Perplexity on \texttt {PTB} by number of blocks $M$ ($\lambda =0.5$ and $|\mcZ |=2^{14}$). \relax }{figure.caption.9}{}}
-\newlabel{tbl:dropout-param-ablation-repeat}{{4}{8}{Ablations on \texttt {PTB} ($\lambda =0.5$ and $M=128$). Time is ms per eval batch (Run on RTX 2080). \relax }{table.caption.10}{}}
+\newlabel{tbl:dropout-param-ablation-repeat}{{4}{9}{Ablations on \texttt {PTB} ($\lambda =0.5$ and $M=128$). Time is ms per eval batch (Run on RTX 2080). \relax }{table.caption.10}{}}

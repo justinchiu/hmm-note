@@ -5,7 +5,7 @@
   Janvin}]{bengio2003nlm}
 Yoshua Bengio, R\'{e}jean Ducharme, Pascal Vincent, and Christian Janvin. 2003.
 \newblock A neural probabilistic language model.
-\newblock \emph{J. Mach. Learn. Res.}, 3(null):1137–1155.
+\newblock \emph{J. Mach. Learn. Res.}, 3:1137–1155.
 
 \bibitem[{Bradbury et~al.(2016)Bradbury, Merity, Xiong, and
   Socher}]{bradbury2016qrnn}

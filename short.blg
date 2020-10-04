@@ -16,37 +16,37 @@ Warning--empty journal in petrov2006splitmerge
 Warning--empty journal in vieira2014gumbel
 You've used 28 entries,
             3571 wiz_defined-function locations,
-            886 strings with 11373 characters,
-and the built_in function-call counts, 20599 in all, are:
+            885 strings with 11369 characters,
+and the built_in function-call counts, 20588 in all, are:
 = -- 1767
 > -- 996
 < -- 16
 + -- 312
 - -- 282
-* -- 1384
+* -- 1382
 := -- 3086
 add.period$ -- 112
 call.type$ -- 28
 change.case$ -- 245
 chr.to.int$ -- 28
 cite$ -- 33
-duplicate$ -- 1376
-empty$ -- 1486
+duplicate$ -- 1374
+empty$ -- 1484
 format.name$ -- 366
-if$ -- 4575
+if$ -- 4573
 int.to.chr$ -- 1
 int.to.str$ -- 1
 missing$ -- 270
 newline$ -- 140
 num.names$ -- 112
-pop$ -- 596
+pop$ -- 597
 preamble$ -- 1
 purify$ -- 206
 quote$ -- 0
 skip$ -- 1054
 stack$ -- 0
 substring$ -- 679
-swap$ -- 714
+swap$ -- 710
 text.length$ -- 8
 text.prefix$ -- 0
 top$ -- 0

@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex emnlp2020"] 1601611719 "emnlp2020.aux" "emnlp2020.bbl" "emnlp2020" 1601665787
+["bibtex emnlp2020"] 1601780578 "emnlp2020.aux" "emnlp2020.bbl" "emnlp2020" 1601832601
   "./acl_natbib.bst" 1571355934 47585 c671f071a8f3957857acb307a7173505 ""
-  "anthology.bib" 1601611169 26037 eaadbc0268d4f52ce362bbf66fa65c5d ""
-  "emnlp2020.aux" 1601612688 7197 008d7daf200c5e476d4ef682ba0b5532 ""
+  "anthology.bib" 1601780576 26020 35d0b2d39f665a60ca0387ccf8bd3223 ""
+  "emnlp2020.aux" 1601780579 7197 008d7daf200c5e476d4ef682ba0b5532 ""
   "emnlp2020.bib" 1571355934 1974 4d7084b2f3a55753e2f48da8052bb437 ""
   (generated)
-  "emnlp2020.bbl"
   "emnlp2020.blg"
-["pdflatex"] 1601612687 "emnlp2020.tex" "emnlp2020.pdf" "emnlp2020" 1601665787
+  "emnlp2020.bbl"
+["pdflatex"] 1601780578 "emnlp2020.tex" "emnlp2020.pdf" "emnlp2020" 1601832601
   "/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1480098688 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -314,19 +314,19 @@
   "/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1526780433 2803735 8410db0ed74a2504fc3708922651cf03 ""
   "/usr/local/texlive/2018/texmf-var/web2c/pdftex/pdflatex.fmt" 1526780453 4219895 d646d013bf99294ff1d974bf7a525ca5 ""
   "/usr/local/texlive/2018/texmf.cnf" 1526780430 455 5b996dcaa0eb4ef14a83b026bc0a008c ""
-  "emnlp2020.aux" 1601612688 7197 008d7daf200c5e476d4ef682ba0b5532 ""
-  "emnlp2020.bbl" 1601611719 7856 d961a66e3fdd4c364bbd45c5d047e865 "bibtex emnlp2020"
-  "emnlp2020.out" 1601612687 0 d41d8cd98f00b204e9800998ecf8427e ""
+  "emnlp2020.aux" 1601780579 7197 008d7daf200c5e476d4ef682ba0b5532 ""
+  "emnlp2020.bbl" 1601780578 7850 994a09c8315410265c3c44c537ec4a07 "bibtex emnlp2020"
+  "emnlp2020.out" 1601780578 0 d41d8cd98f00b204e9800998ecf8427e ""
   "emnlp2020.sty" 1577480256 22046 23868bb911b26009f0fd06fe069f4c26 ""
   "emnlp2020.tex" 1591069566 51387 fa34748cf69c1942b97278db5fcd392a ""
   "img/trellis.tex" 1590915002 35287 3901ed877a9a0357acd34c2c297e1fcc ""
   "mystyle.sty" 1601612686 2749 1d5b83ec9e46a02bd3e17acf8c0f3817 ""
   (generated)
-  "emnlp2020.x.gnuplot"
-  "emnlp2020.exp.gnuplot"
-  "emnlp2020.log"
-  "emnlp2020.out"
-  "emnlp2020.pdf"
-  "emnlp2020.sin.gnuplot"
-  "emnlp2020.aux"
   "trellis.aux"
+  "emnlp2020.x.gnuplot"
+  "emnlp2020.aux"
+  "emnlp2020.pdf"
+  "emnlp2020.log"
+  "emnlp2020.sin.gnuplot"
+  "emnlp2020.exp.gnuplot"
+  "emnlp2020.out"
