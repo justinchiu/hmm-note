@@ -376,7 +376,7 @@ Let $\mathbf{F}_t^d$ be the sparse factors after applying both the block emissio
 and dropout, with $\mathcal{D}$ the set of dropped states:
 \begin{equation}
 \label{eqn:dropout_factors}
-F_{tij}^d = \begin{cases}
+F_{tij}^d \propto \begin{cases}
 F_{tij} & i\in\mcZ_{x_{t-1}}\cap \mathcal{D}^C \wedge j\in\mcZ_{x_t} \cap\mathcal{D}^C\\
 0 & \textrm{otherwise}
 \end{cases}
