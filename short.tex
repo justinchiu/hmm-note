@@ -306,9 +306,10 @@ F_{tij}, & i\in\mcZ_{x_{t-1}} \wedge j\in\mcZ_{x_t}\\
 \end{cases}
 \end{equation}
 Importantly, the nonzero elements of $\mathbf{F}_t^b$ are proportional to
-dense $k \times k$ submatrices of $\mathbf{F}_t$.
-The sparsity in each $\mathbf{F}_t^b$
+a dense $k \times k$ submatrix of $\mathbf{F}_t$.
+This sparsity in each $\mathbf{F}_t^b$
 reduces the cost of each matrix-vector product in the likelihood
+$p(\bx) = \bF_1^b\bF_2^b\cdots\bF_T^b$
 from $|\mcZ|^2$ to $k^2$,
 resulting in a serial complexity of $O(Tk^2)$.
 
