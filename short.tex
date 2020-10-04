@@ -210,18 +210,18 @@ $p(\bx) = \sum_{\bz}p(\bx,\bz)$.
 %This sum can be computed in time $O(T|\mcZ|^2)$ via the forward algorithm,
 %which becomes prohibitive if the number of latent states $|\mcZ|$ is large.
 The summation on the right hand side can be expressed as a series of matrix-vector products:
-For each $t \in [1, \ldots, T]$ let each matrix
+For each $t \in [1, \ldots, T]$ let each factor
 \begin{equation}
 \label{eqn:factors}
 F_{tij} = p(z_t = j \mid z_{t-1} = i) p(x_t \mid z_t = j),
 \end{equation}
-where $p(z_1 \mid z_0)$ is only nonzero for $z_0 = \epsilon$.
+where $\bF_t\in\R^{|\mcZ|\times|\mcZ|}$ and $p(z_1 \mid z_0)$ is only nonzero for $z_0 = \epsilon$.
 We can then rewrite the likelihood as
 \begin{equation}
 \label{eqn:mat_ev}
 p(\bx) = \mathbf{F}_1 \bF_2 \cdots \bF_{T-1}\bF_{T}\mathbf{1}
 \end{equation}
-where $\bF_t\in\R^{|\mcZ|\times|\mcZ|}$ and $\mathbf{1}$ is a column vector of ones.
+where $\mathbf{1}$ is a column vector of ones.
 In this form the runtime is explicit: there are $O(T)$ matrix-vector products,
 requiring $O(T |\mcZ|^2)$ computation.
 We can then optimize the likelihood 
@@ -298,8 +298,8 @@ This yields the following:
 \begin{equation}
 \label{eqn:sparse_factors}
 F_{tij}^b \propto \begin{cases}
-F_{tij} & i\in\mcZ_{x_{t-1}} \wedge j\in\mcZ_{x_t}\\
-0 & \textrm{otherwise}
+F_{tij}, & i\in\mcZ_{x_{t-1}} \wedge j\in\mcZ_{x_t}\\
+0, & \textrm{otherwise}
 \end{cases}
 \end{equation}
 Importantly, the nonzero elements of $\mathbf{F}_t^b$ are proportional to
@@ -343,11 +343,13 @@ while RNNs and similar models recompute emissions every token.
 \begin{algorithm}[t]
 \begin{algorithmic}
 \State{Given: block structure and model parameters}
-    \State{Sample block-wise dropout mask $\bb$}
-    \State{Compute $\phi,\psi$ ignoring $b_z = 0$}
+    \State{Sample block-wise dropout set $\mcD$}
+    \State{Compute $\phi,\psi$}
     \ForAll{examples $\bx$ in batch}
-        \State{$\Phi = \Call{LogPotentials}{\phi,\psi,\bx,\bb}$}
-        \State{$\log p(\bx) = \Call{Forward}{\Phi}$}
+        \ForAll{timesteps $t \in [T]$}
+            \State{$\bF_t^d = \Call{MakeFactor}{\phi,\psi,x_t,\mcZ_{x_t},\mcD}$}
+        \EndFor
+        \State{$p(\bx) = \bF_1^d\bF_2^d\cdots\bF_t^d\mathbf{1}$}
     \EndFor
     \State{Update embeddings $\mathbf{E_z, E_x}$ and MLP}
 \end{algorithmic}
@@ -377,8 +379,8 @@ and dropout, with $\mathcal{D}$ the set of dropped states:
 \begin{equation}
 \label{eqn:dropout_factors}
 F_{tij}^d \propto \begin{cases}
-F_{tij} & i\in\mcZ_{x_{t-1}}\cap \mathcal{D}^C \wedge j\in\mcZ_{x_t} \cap\mathcal{D}^C\\
-0 & \textrm{otherwise}
+F_{tij}, & i\in\mcZ_{x_{t-1}}\cap \mathcal{D}^C \wedge j\in\mcZ_{x_t} \cap\mathcal{D}^C\\
+0, & \textrm{otherwise}
 \end{cases}
 \end{equation}
 \begin{comment}
@@ -391,8 +393,7 @@ p(x \mid z) \propto b_{z}1(z \in \mcZ_x)e^{\phi_{zx}}
 \end{equation}
 \end{comment}
 State dropout gives a large practical speed up for both parameter computation and inference.
-For $\lambda=0.5$ we get a $4\times$ speed improvement for both,
-due to the reduction in possible transitions.
+For $\lambda=0.5$ we get a $4\times$ speed improvement for both.
 This structured dropout is also easy to exploit on GPU,
 as it maintains block structure with fixed-height (as shown in Figure~\ref{fig:trellis}).
 
@@ -403,7 +404,9 @@ as it maintains block structure with fixed-height (as shown in Figure~\ref{fig:t
 \caption{
 \label{fig:trellis}
 The computation of $p(\bx)$ is greatly reduced by blocked emissions and state dropout.
-In the above trellis, each row corresponds to a latent state.
+In the above trellis, each row corresponds to a latent state and each column after 
+the first to a timestep.
+Each edge between nodes corresponds to a nonzero entry of $\bF_t^d$.
 Blocked emissions result in a small subset of all states emitting a given word,
 as shown by the rectangles, thus only states in the rectangles may occur
 with nonzero probability after conditioning on observed words.

@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex short"] 1601832716 "short.aux" "short.bbl" "short" 1601832750
+["bibtex short"] 1601833781 "short.aux" "short.bbl" "short" 1601833987
   "./acl_natbib.bst" 1571355934 47585 c671f071a8f3957857acb307a7173505 ""
   "anthology.bib" 1601780576 26020 35d0b2d39f665a60ca0387ccf8bd3223 ""
   "emnlp2020.bib" 0 -1 0 ""
-  "short.aux" 1601832750 6788 ed200e9890b674c82424522590d37ef5 ""
+  "short.aux" 1601833987 6904 82d864cc39440d241506edc8f94f5710 ""
   (generated)
   "short.blg"
   "short.bbl"
-["pdflatex"] 1601832749 "short.tex" "short.pdf" "short" 1601832750
+["pdflatex"] 1601833986 "short.tex" "short.pdf" "short" 1601833987
   "/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1480098688 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -309,14 +309,14 @@
   "/usr/local/texlive/2018/texmf.cnf" 1526780430 455 5b996dcaa0eb4ef14a83b026bc0a008c ""
   "emnlp2020.sty" 1577480256 22046 23868bb911b26009f0fd06fe069f4c26 ""
   "img/blocksparse_mat_no_block.pdf" 1601516926 79033 aedd588056374f9f0b4eed6112dd3ef9 ""
-  "img/trellis.tex" 1590915002 35287 3901ed877a9a0357acd34c2c297e1fcc ""
+  "img/trellis.tex" 1601833776 35288 0ce4921d63537daed83d856c62e89f16 ""
   "mystyle.sty" 1601612686 2749 1d5b83ec9e46a02bd3e17acf8c0f3817 ""
-  "short.aux" 1601832750 6788 ed200e9890b674c82424522590d37ef5 ""
+  "short.aux" 1601833987 6904 82d864cc39440d241506edc8f94f5710 ""
   "short.bbl" 1601832137 8713 3aa096022e25bb5a14c18b67c09b7a2e "bibtex short"
-  "short.out" 1601832749 0 d41d8cd98f00b204e9800998ecf8427e ""
-  "short.tex" 1601832748 35587 143acdbf7efba9d1817d8616168f75a3 ""
+  "short.out" 1601833986 0 d41d8cd98f00b204e9800998ecf8427e ""
+  "short.tex" 1601833983 35725 5d0a22f1cea8fc8c077b49523a17dd6c ""
   (generated)
+  "short.out"
   "short.aux"
   "short.log"
   "short.pdf"
-  "short.out"
