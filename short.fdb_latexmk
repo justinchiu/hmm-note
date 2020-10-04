@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex short"] 1601838491 "short.aux" "short.bbl" "short" 1601838552
+["bibtex short"] 1601839055 "short.aux" "short.bbl" "short" 1601839170
   "./acl_natbib.bst" 1571355934 47585 c671f071a8f3957857acb307a7173505 ""
   "anthology.bib" 1601780576 26020 35d0b2d39f665a60ca0387ccf8bd3223 ""
   "emnlp2020.bib" 0 -1 0 ""
-  "short.aux" 1601838492 6904 6cb10764a075fa982beab9751fa65c3e ""
+  "short.aux" 1601839114 6971 51a06246fa3d9a61c21eeff7d61b2357 ""
   (generated)
   "short.blg"
   "short.bbl"
-["pdflatex"] 1601838491 "short.tex" "short.pdf" "short" 1601838552
+["pdflatex"] 1601839113 "short.tex" "short.pdf" "short" 1601839170
   "/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1480098688 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -311,12 +311,12 @@
   "img/blocksparse_mat_no_block.pdf" 1601516926 79033 aedd588056374f9f0b4eed6112dd3ef9 ""
   "img/trellis.tex" 1601833776 35288 0ce4921d63537daed83d856c62e89f16 ""
   "mystyle.sty" 1601612686 2749 1d5b83ec9e46a02bd3e17acf8c0f3817 ""
-  "short.aux" 1601838492 6904 6cb10764a075fa982beab9751fa65c3e ""
+  "short.aux" 1601839114 6971 51a06246fa3d9a61c21eeff7d61b2357 ""
   "short.bbl" 1601832137 8713 3aa096022e25bb5a14c18b67c09b7a2e "bibtex short"
-  "short.out" 1601838492 0 d41d8cd98f00b204e9800998ecf8427e ""
-  "short.tex" 1601838548 35912 dbd2d34af91f722816d1b171c563e2a3 ""
+  "short.out" 1601839113 0 d41d8cd98f00b204e9800998ecf8427e ""
+  "short.tex" 1601839168 36031 90e1b691449fec9124ada303476a370d ""
   (generated)
+  "short.pdf"
   "short.out"
   "short.log"
-  "short.pdf"
   "short.aux"

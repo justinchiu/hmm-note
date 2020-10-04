@@ -317,12 +317,13 @@ resulting in a serial complexity of $O(Tk^2)$.
 
 \noindent
 \textbf{Neural Parameterization}
-Even with blocked emissions, the scalar parameterization of an HMM grows as $O(|\mcZ|^2)$.
-We instead employ a neural parameterization.
-The approach is to embed each state in $\mcZ$ ($\mathbf{E}_z \in \mathbb{R}^{|\mcZ| \times h}$)
-and each token in $\cal X$ ($\mathbf{E}_x \in \mathbb{R}^{|\mcX| \times h}$).
+Even with blocked emissions, the scalar model parameterization of an HMM grows as $O(|\mcZ|^2)$
+due to the transition matrix.
+We instead employ a neural parameterization by
+embedding each state in $\mcZ$ ($\mathbf{E}_z \in \mathbb{R}^{|\mcZ| \times h}$)
+and each token in $\mcX$ ($\mathbf{E}_x \in \mathbb{R}^{|\mcX| \times h}$).
 From these we can create representations for leaving and entering a state,
-and emitting a word: 
+as well as emitting a word: 
 \[ \mathbf{H}_{\textrm{out}},\mathbf{H}_{\textrm{in}},\mathbf{H}_\textrm{emit}
  = \text{MLP}( \mathbf{E}_z ) \] 
 with all $\mathbf{H}_{\bullet} \in \mathbb{R}^{|\mcZ|\times h}$.
@@ -341,7 +342,7 @@ This neural parameterization takes $O(h^2 + h|\mcZ| + h|\mcX|)$ parameters
 
 Note that parameter computation is independent of inference
 and can be cached completely at test-time.
-For training, we compute them once per batch (shown in Alg~\ref{fig:algo}),
+For training, we compute them once per batch (shown in Alg~\ref{fig:algo})
 while RNNs and similar models recompute emissions every token.
 
 \begin{algorithm}[t]
@@ -377,24 +378,27 @@ State dropout acts on each emission block $\mathbf{O}_1, \ldots, \mathbf{O}_M$ i
 For each block (with $k=|{\cal Z}| / M$ rows), we sample a binary dropout mask by sampling
 $ \lambda k$ dropped row indices uniformly without replacement,
 where $\lambda$ is the dropout rate.
+Given the set of dropped states for the emission block of a given word $\mathcal{D}_{Z_x}$,
+the emission probability is
+\begin{equation}
+\label{eqn:state_dropout}
+p(x \mid z) \propto 1(z \in \mcZ_x \cap \mcD_{\mcZ_x}^C)e^{\phi_{zx}}
+\end{equation}
 This allows us to introduce further sparsity into the computation of the likelihood.
 Let $\mathbf{F}_t^d$ be the sparse factors after applying both the block emission constraints
-and dropout, with $\mathcal{D}$ the set of dropped states:
+and dropout:
 \begin{equation}
 \label{eqn:dropout_factors}
 F_{tij}^d \propto \begin{cases}
-F_{tij}, & i\in\mcZ_{x_{t-1}}\cap \mathcal{D}^C \wedge j\in\mcZ_{x_t} \cap\mathcal{D}^C\\
+F_{tij}, & i\in\mcZ_{x_{t-1}}\cap \mcD_{\mcZ_x}^C \wedge j\in\mcZ_{x_t} \cap\mathcal{D}^C\\
 0, & \textrm{otherwise}
 \end{cases}
 \end{equation}
+
 \begin{comment}
 We concatenate these to a global vector $\mathbf{b}\in\set{0,1}^{|\mcZ|}$,
 which, along with the previous constraints, 
 ensures
-\begin{equation}
-\label{eqn:state_dropout}
-p(x \mid z) \propto b_{z}1(z \in \mcZ_x)e^{\phi_{zx}}
-\end{equation}
 \end{comment}
 State dropout gives a large practical speed up for both parameter computation and inference.
 For $\lambda=0.5$ we get a $4\times$ speed improvement for both.
