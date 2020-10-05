@@ -97,14 +97,14 @@ and toward deterministic deep neural models.
 We take several lessons from the success of neural models for NLP tasks:
 (a) model size is critical for accuracy,
 e.g. large LSTMs \cite{zaremba2014lstm} show marked improvements in performance;
-(b) the right factorization is critically important for representation learning,
+(b) the right parameterization is critically important for representation learning,
 e.g. a feedforward model \cite{bengio2003nlm}
-can have the same probabilistic structure as an n-gram model while performing significantly better;
+can have the same distributional assumptions as an n-gram model while performing significantly better;
 (c) dropout is key to achieving strong performance \citep{zaremba2014lstm,merity2017awdlstm}.
 
 We revisit HMMs for language modeling,
 as they are models with a long history in NLP 
-and structure complementary to modern neural models.
+and have structure complementary to modern neural models.
 We posit that competitive performance requires very large models. 
 Our contributions are as follows:
 We demonstrate large improvements in an HMM language model by scaling the state space.
@@ -115,7 +115,7 @@ a neural parameterization that improves
 generalization while remaining faithful to the
 probabilistic structure of the HMM,
 and a variant of dropout that both improves accuracy
-and halves the computational overhead during training. 
+and halves the computational overhead during training.
 
 Experiments employ HMMs on two language modeling datasets.
 Our three techniques allow us to train an HMM with tens of thousands of states,
@@ -126,7 +126,7 @@ significantly outperforming past HMMs as well as n-gram models.
 In order to improve the performance of HMMs on language modeling,
 several recent papers have combined HMMs with neural networks.
 \citet{buys2018hmm} develop an approach to relax HMMs,
-but their models either perform poorly or alters the probabilistic structure to resemble an RNN. 
+but their models either perform poorly or alter the probabilistic structure to resemble an RNN. 
 \citet{krakovna2016hmm} utilize model combination with an RNN to connect both approaches in a
 20 state model.
 We instead improve pure HMMs by scaling to many states.
@@ -222,7 +222,7 @@ where $\bF_t\in\R^{|\mcZ|\times|\mcZ|}$ and $p(z_1 \mid z_0)$ is only nonzero fo
 We can then rewrite the likelihood as
 \begin{equation}
 \label{eqn:mat_ev}
-p(\bx) = \mathbf{F}_1 \bF_2 \cdots \bF_{T-1}\bF_{T}\mathbf{1}
+p(\bx) = \mathbf{1}^\top\mathbf{F}_1 \bF_2 \cdots \bF_{T-1}\bF_{T}\mathbf{1}
 \end{equation}
 where $\mathbf{1}$ is a column vector of ones.
 In this form the runtime is explicit: there are $O(T)$ matrix-vector products,
@@ -290,17 +290,16 @@ p(\bx) &= \sum_{z_1 \in \mcZ_{x_1}} p(z_1\mid z_0)p(x_1 \mid z_1) \times\\
     \sum_{z_T \in \mcZ_{x_T}} p(z_T \mid z_{T-1})p(x_T \mid z_T)
 \end{aligned}
 \end{equation}
-To make the computationals gains more explicit, we also present the above in matrix form.
+To make the computational gains more explicit, we also present the above in matrix form.
 Recall the definition of the unconstrained factors
 $\mathbf{F}_t$ from Eqn.~\ref{eqn:factors}.
 We introduce the sparse factors $\mathbf{F}_t^b$ induced by the blocked emission constraints.
 The emission constraints cause $p(x_t \mid z_t=j) = 0$ if $j\notin\mcZ_{x_t}$.
-Additionally, if a previous state has zero probability of occurring, the probability
-of transitioning from that state $p(z_t = j \mid z_{t-1} = i) = 0$ if $i\notin\mcZ_{x_{t-1}}$.
-This yields the following:
+Additionally, if $z_{t-1}$ is not contained in the corresponding emission block corresponding to $x_{t-1}$ ($z_{t-1}\notin\mcZ_{x_{t-1}}$) then it has zero probability of occurring. We can therefore ignore any outgoing transitions from that state.
+Combining these two observations yields the following, where we only consider transitions from $\mcZ_{x_{t-1}}$ to $\mcZ_{x_t}$:
 \begin{equation}
 \label{eqn:sparse_factors}
-F_{tij}^b \propto \begin{cases}
+F_{tij}^b = \begin{cases}
 F_{tij}, & i\in\mcZ_{x_{t-1}} \wedge j\in\mcZ_{x_t}\\
 0, & \textrm{otherwise}
 \end{cases}
@@ -309,7 +308,7 @@ Importantly, the nonzero elements of $\mathbf{F}_t^b$ are proportional to
 a dense $k \times k$ submatrix of $\mathbf{F}_t$.
 This sparsity in each $\mathbf{F}_t^b$
 reduces the cost of each matrix-vector product in the likelihood
-$p(\bx) = \bF_1^b\bF_2^b\cdots\bF_T^b$
+$p(\bx) = \mathbf{1}^\top\bF_1^b\bF_2^b\cdots\bF_T^b\mathbf{1}$
 from $|\mcZ|^2$ to $k^2$,
 resulting in a serial complexity of $O(Tk^2)$.
 
@@ -379,14 +378,17 @@ For each block (with $k=|{\cal Z}| / M$ rows), we sample a binary dropout mask b
 $ \lambda k$ dropped row indices uniformly without replacement,
 where $\lambda$ is the dropout rate.
 Given the set of of all dropped states $\mcD$,
-the emission probability is
+the emission and transmission probabilities are
 \begin{equation}
 \label{eqn:state_dropout}
-p(x \mid z) \propto 1(z \in \mcZ_x \cap \mcD^C)e^{\phi_{zx}}
+\begin{aligned}
+p(z_t \mid z_{t-1}) &\propto 1(z_t,z_{t-1}\in \mcD^C )e^{\psi_{z_{t-1}z_t}}\\
+p(x_t \mid z_t) &\propto 1(z_t \in \mcZ_{x_t} \cap \mcD^C)e^{\phi_{z_tx_t}}
+\end{aligned}
 \end{equation}
 This allows us to introduce further sparsity into the computation of the likelihood.
 Let $\mathbf{F}_t^d$ be a sparse factor after applying both the block emission constraints
-and dropout, such that
+and state dropout, such that
 \begin{equation}
 \label{eqn:dropout_factors}
 F_{tij}^d \propto \begin{cases}
@@ -394,8 +396,7 @@ F_{tij}, & i\in\mcZ_{x_{t-1}}\cap \mcD^C \wedge j\in\mcZ_{x_t} \cap\mathcal{D}^C
 0, & \textrm{otherwise}
 \end{cases}
 \end{equation}
-The resulting sparsity in the likelihood computation using these factors is shown in 
-Figure~\ref{fig:trellis}.
+The resulting sparsity pattern in the likelihood computation is shown in Fig.~\ref{fig:trellis}.
 State dropout gives a large practical speed up for both parameter computation and inference.
 For $\lambda=0.5$ we get a $4\times$ speed improvement for both.
 This structured dropout is also easy to exploit on GPU,
@@ -518,7 +519,7 @@ with the VLNHMM outperforming the FF model but underperforming an LSTM.
 
 Fig.~\ref{tbl:states-ablation} examines the effect of state size:
 We find that performance continuously improves significantly as we grow to $2^{16}$ states.
-The marginal improvement as the number of states decreases, implying that the current approach has limitations in scaling to even larger state spaces.
+The marginal improvement as the number of states decreases, implying that the current approach may have limitations in scaling to even larger state spaces.
 
 Table~\ref{tbl:dropout-param-ablation} considers other ablations:
 Although neural and scalar parameterizations reach similar training perplexity,
@@ -613,17 +614,25 @@ The FF model is given by the following:
 \begin{equation}
 \begin{aligned}
 p(w_t \mid \bw_{<t})
-&= W_x\textrm{ReLU}(\textrm{Conv}(\mathbf{E}_w(\bw_{t-4:t-1})))
+&= W_x\textrm{ReLU}(W_h\mathbf{E}_w(\bw_{t-4:t-1}))
 \end{aligned}
 \end{equation}
-where $\mathbf{E}_w$ gives the word embeddings and
-$W_x\in\mathbb{R}^{|\mcX|\times h}$ is weight-tied to the embeddings.
+where $\mathbf{E}_w$ gives the word embeddings,
+$W_h\in\R^{h\times 4h}$, and
+$W_x\in\mathbb{R}^{|\mcX|\times h}$ is weight-tied to the word embeddings.
+The LSTM model is given by:
+\begin{equation}
+p(w_t \mid \bw_{<t})
+= W_x \textrm{LSTM}(\mathbf{E}_w(\bw_{<t}))
+\end{equation}
+with a 2-layer LSTM
+that has weight-tied $W_x$ and $\mathbf{E}_w$.
 
 For the (5-gram) FF model we use a batch size of 128 and a bptt length of 64,
 as we found the model needed a larger batch size to achieve decent performance.
 For the LSTM, we use a batch size of 16 and a BPTT length of 32.
 For both baseline models we use AdamW \citep{adamw} with a learning rate of 1e-3 and a dropout rate of 0.3 on the activations in the model.
-Both models use a hidden dimension of 256 throughout.
+Both models use a hidden dimension of $h=256$ throughout.
 These same hyperparameters were applied on both \texttt{Penn Treebank} and \texttt{Wikitext-2}.
 
 For the HMMs we use a batch size of 16 and a BPTT length of 32.
@@ -635,7 +644,7 @@ All weights are initialized with the Kaiming uniform initialization.
 The FF model was trained for 100 epochs, while all other models were trained for 50.
 Validation likelihood was checked 4 times per epoch, and
 learning rates were decayed by a factor of 4 if the validation performance
-did not improve after 8 checks.
+did not improve after 8 consecutive checks.
 
 Hyperparameter search was performed manually, using the best
 validation perplexity achieved in a run.
@@ -673,28 +682,27 @@ The state embeddings are then obtained by
 \begin{equation}
 \begin{aligned}
 \mathbf{H}_\textrm{out} &= f_\textrm{out}(\mathbf{E}_z)\\
-\mathbf{H}_\textrm{in} &= f_\textrm{in}(\mathbf{E}_z])\\
-\mathbf{H}_\textrm{emit} &= f_\textrm{emit}(\mathbf{E}_m,\mathbf{E}_z)
+\mathbf{H}_\textrm{in} &= f_\textrm{in}(\mathbf{E}_z)\\
+\mathbf{H}_\textrm{emit} &= f_\textrm{emit}(\mathbf{E}_z)
 \end{aligned}
 \end{equation}
 
-We additionally experiment with factored state embeddings.
-TODO: finish.
-We introduce residual networks $f_j,j\in\set{o,i,e}$
-to compose block and state embeddings, yielding
+In order to reduce the number of parameters further, we experiment with factored state embeddings. We factor the state embeddings into a composition of smaller steate embeddings ($\mathbf{E}_z'\in\R^{|\mcZ|\times h/2}$) as well as block embeddings ($\mathbf{E}_m\in\R^{|\mcZ|\times h/2}$), which are shared across all states within the same emission block, i.e. all $z \in \mcZ_x$ share a block embedding.
+To compose these embeddings, we introduce new residual networks $f_j,j\in\set{o,i,e}$ similar to the above, yielding
 \begin{equation}
 \begin{aligned}
-\mathbf{H}_\textrm{out} &= f_\textrm{out}(f_o([\mathbf{E}_m,\mathbf{E}_z]))\\
-\mathbf{H}_\textrm{in} &= f_\textrm{in}(f_i([\mathbf{E}_m,\mathbf{E}_z]))\\
-\mathbf{H}_\textrm{emit} &= f_\textrm{emit}(f_e([\mathbf{E}_m,\mathbf{E}_z]))
+\mathbf{H}_\textrm{out} &= f_\textrm{out}(f_o([\mathbf{E}_m,\mathbf{E}_z']))\\
+\mathbf{H}_\textrm{in} &= f_\textrm{in}(f_i([\mathbf{E}_m,\mathbf{E}_z']))\\
+\mathbf{H}_\textrm{emit} &= f_\textrm{emit}(f_e([\mathbf{E}_m,\mathbf{E}_z']))
 \end{aligned}
 \end{equation}
+We ablate the factored state embeddings in Sec.~\ref{sec:fac_ablation}.
 
 \begin{table}[t]
 \centering
 \begin{tabular}{lllll}
 \toprule
-Constraint & $|\mcZ|$ & $|\mcC_x|$ & $m$ & Val PPL\\
+Constraint & $|\mcZ|$ & $|\mcZ_x|$ & $M$ & Val PPL\\
 \midrule
 Brown & 16384 & 512 & 32  & 137\\
 Brown & 16384 & 256 & 64  & 138\\
@@ -713,6 +721,7 @@ Brown      & 16384   & 128    & 128 & 136\\
 \end{tabular}
 \caption{\label{tbl:constraint-ablation}
 Emission constraint ablations on \texttt{Penn Treebank}.
+$|\mcZ|$ is the size of the hidden space, $|\mcZ_x|$ is the size number of hidden states in each block, and $M$ is the number of blocks.
 }
 \end{table}
 
@@ -720,16 +729,9 @@ Emission constraint ablations on \texttt{Penn Treebank}.
 \subsection{Emission Constraint Ablation}
 Tbl.~\ref{tbl:constraint-ablation} shows the results from 
 emission constraint ablations.
-For the ablations in this section,
-we do not use the factored state embedding
-and instead directly learn embeddings $\mathbf{E}_z\in\mathbb{R}^{|\mcZ|\times h}$.
-We examine the effect of factored state embeddings in the next section.
-
 With a VLNHMM that has $|\mcZ|=2^{14}$ states,
-the model is insensitive to the number of blocks $M$.
-However, with fewer states $|\mcZ|=2^{10}$ where we are able to
-able to use fewer blocks to examine whether the block-sparsity
-of the emission results in a performance loss.
+the model is insensitive to the number of blocks $M$ explorable given computational constraints.
+However, with fewer states $|\mcZ|=2^{10}$ we are able to explore a lower number of blocks.
 With $M=4$ blocks, the block-sparse HMM matches an unconstrained HMM
 with the same number of states.
 When $M=8$, the block-sparse model underperforms,
@@ -746,7 +748,7 @@ In the bottom of Tbl.~\ref{tbl:constraint-ablation},
 we find that models with uniform constraints
 are consistently outperformed by models with Brown cluster constraints
 as measured by validation perplexity.
-The models with uniform constraints also had poor validation performance
+The models with uniform constraints also have poor validation performance
 despite better training performance, a symptom of overfitting.
 
 These ablations demonstrate that the constraints based on
@@ -754,24 +756,17 @@ Brown clusters used in this work may not be optimal,
 motivating future work that learns sparsity structure.
 
 \subsection{Factored State Representation Ablation}
+\label{sec:fac_ablation}
 We examine the effect of factoring state representations into block embeddings
 and independent state embeddings.
-Recall that factored state representations were parameterized via 
-\[ \mathbf{H}_{\textrm{out}},\mathbf{H}_{\textrm{in}},\mathbf{H}_\textrm{emit}
- = \text{MLP}(\mathbf{E}_m, \mathbf{E}_z ) \] 
-with the block and state embeddings 
-$\mathbf{E}_m,\mathbf{E}_z \in \mathbb{R}^{|\mcZ| \times h/2}$).
-We ablate this by comparing to the following independent state representation:
-\[ \mathbf{H}_{\textrm{out}},\mathbf{H}_{\textrm{in}},\mathbf{H}_\textrm{emit}
- = \mathbf{E}_z' \] 
-with $\mathbf{E_z'}\in\mathbb{R}^{|\mcZ| \times h}$.
 The results of the factored state ablation are in Fig.~\ref{fig:fac-ablation},
 
 We find that the performance of independent state embeddings with
 is similar to a model with factored embeddings,
-until the number of blocks is $\le 64$.
+but performs slightly worse in perplexity.
+In Tbl.~\ref{tbl:dropout-param-ablation-repeat} we see that although the factored state embeddings reduce the total number of parameters, but the computation time and perplexity both get worse.
 
-\begin{figure}[h]
+\begin{figure}[t]
 \centering
 \begin{tikzpicture}
 \begin{axis}[
@@ -801,12 +796,13 @@ until the number of blocks is $\le 64$.
 \end{tikzpicture}
 \caption{\label{fig:fac-ablation}
 Perplexity on \texttt{PTB} by number of blocks $M$ ($\lambda =0.5$ and $|\mcZ|=2^{14}$).
+The independent embeddings (ind) represent state embeddings by directly parameterizing $\mathbf{E}_z$, while the factored embeddings (fac) compose a smaller state embeddings matrix with block embeddings.
 }
 \end{figure}
 
 \subsection{Computational Considerations}
 
-\begin{table}[h]
+\begin{table}[t]
 \centering
 \begin{tabular}{llrrr}
 \toprule
@@ -819,29 +815,22 @@ VLNHMM ($2^{14}$)    & 7.2M & 115    & 134 & 40\\
 \bottomrule
 \end{tabular}
 \caption{\label{tbl:dropout-param-ablation-repeat}
-Ablations on \texttt{PTB} ($\lambda =0.5$ and $M=128$). 
+Ablations on \texttt{PTB} ($\lambda =0.5$ and $M=128$). Size is the number of parameters, while train and val give the corresponding perplexities.
 Time is ms per eval batch (Run on RTX 2080).
 }
 \end{table}
 
-We reproduce the technique ablation table here in
+We reproduce the technique ablation table in
 Tbl.~\ref{tbl:dropout-param-ablation-repeat} for reference.
 As we remove neural components, 
 the number of parameters increases but the time of the
 forward pass decreases.
 This is because generating parameters from a neural network
-takes strictly more time than having those parameters available,
-similar to a hierarchical Bayesian model.
+takes strictly more time than having those parameters available.
 
-When block embeddings are removed and the state representations are
+When block embeddings are removed and the full state representations are
 directly parameterized,
-the model is faster due to not needing to recompute state representations.
-This contrast is even more pronounced when removing neural components altogether,
-with an almost 3x speedup.
-However, we note that the drop in generalization is large,
-indicating the neural parameterization helps with learning.
-Therefore we use the neural parameterization at training time,
-then cache the resulting HMM parameters (the transition and emission matrices)
-for use during inference.
+the model is faster due to not needing to recompute the full state representations.
+This contrast is even more pronounced when removing neural components altogether and using a scalar parameterization, with an almost 3x speedup. This is because the distributional parameters do not need to be regenerated by a neural network if they are parameterized directly.
 
 \end{document}
