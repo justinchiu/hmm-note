@@ -1,1 +1,6 @@
 *.tar.gz
+*.log
+*.aux
+*.fls
+*.fdb_latexmk
+*.out
