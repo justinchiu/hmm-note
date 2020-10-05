@@ -247,7 +247,7 @@ NLP has a long history of utilizing discrete representations,
 and returning to explore discrete representations may yield interesting results.
 For example, recent work has found that discrete latent variables
 work well in low-resource regimes \citep{jin2020discrete}.
-
+% This citation is broken on overleaf but works on my local build
 
 \section{Scaling HMMs}
 \label{sec:methods}
@@ -378,11 +378,11 @@ State dropout acts on each emission block $\mathbf{O}_1, \ldots, \mathbf{O}_M$ i
 For each block (with $k=|{\cal Z}| / M$ rows), we sample a binary dropout mask by sampling
 $ \lambda k$ dropped row indices uniformly without replacement,
 where $\lambda$ is the dropout rate.
-Given the set of dropped states for the emission block of a given word $\mathcal{D}_{Z_x}$,
+Given the set of of all dropped states $\mcD$,
 the emission probability is
 \begin{equation}
 \label{eqn:state_dropout}
-p(x \mid z) \propto 1(z \in \mcZ_x \cap \mcD_{\mcZ_x}^C)e^{\phi_{zx}}
+p(x \mid z) \propto 1(z \in \mcZ_x \cap \mcD^C)e^{\phi_{zx}}
 \end{equation}
 This allows us to introduce further sparsity into the computation of the likelihood.
 Let $\mathbf{F}_t^d$ be a sparse factor after applying both the block emission constraints
@@ -390,7 +390,7 @@ and dropout, such that
 \begin{equation}
 \label{eqn:dropout_factors}
 F_{tij}^d \propto \begin{cases}
-F_{tij}, & i\in\mcZ_{x_{t-1}}\cap \mcD_{\mcZ_x}^C \wedge j\in\mcZ_{x_t} \cap\mathcal{D}^C\\
+F_{tij}, & i\in\mcZ_{x_{t-1}}\cap \mcD^C \wedge j\in\mcZ_{x_t} \cap\mathcal{D}^C\\
 0, & \textrm{otherwise}
 \end{cases}
 \end{equation}
@@ -587,7 +587,7 @@ and are worthy of consideration for NLP tasks.
 
 \section*{Acknowledgements}
 We are grateful to
-Yuntian Deng, Daniel Fried, Yao Fu, Yoon Kim, Victor Sanh, and Sam Wiseman
+Yuntian Deng, Daniel Fried, Yao Fu, Yoon Kim, Victor Sanh, Sam Wiseman, and Jiawei Zhou
 for insightful conversations and suggestions.
 
 \bibliographystyle{acl_natbib}
@@ -597,43 +597,12 @@ for insightful conversations and suggestions.
 \appendix
 
 \section{Appendices}
-\subsection{Inference and Learning in HMMs}
-In this section we review the computation of the evidence of observed words $p(\bx)$ in an HMM.
-Recall that the evidence is given by
-\begin{equation}
-\begin{aligned}
-p(\bx) &= \sum_\bz p(\bx, \bz)\\
-&= \sum_{\bz} \prod_{t=1}^T p(z_t \mid z_{t-1})p(x_t \mid z_t) \\
-&= \sum_{z_1} \cdots \sum_{z_T} p(z_1 \mid z_0)p(x_1 \mid z_1)\\
-&\qquad \cdots p(z_T \mid z_{T-1})p(x_t \mid z_T)
-\end{aligned}
-\end{equation}
-where $p(z_0=\epsilon)=1$ is a dummy state for ease of notation.
-Now consider matrices $\bF_t$ with
-elements $F_{ij} = p(z_t = j \mid z_{t-1} = i) p(x_t \mid z_t = j)$.
-Note that $\mathbf{f}_1 \in \R^{|\mcZ|}$ since there is only a single starting state $z_0 = \epsilon$,
-while $\bF_t \in \R^{|\mcZ|\times|\mcZ|}$ for $t \in [2, \ldots, T]$.
-Repeated application of the distributive rule allows us to express the above in 
-matrix notation
-\begin{equation}
-\label{eqn:sparse_mat_ev}
-p(\bx) = \mathbf{f}_1^T \bF_2 \cdots \bF_{T-1}\bF_{T}\mathbf{1}
-\end{equation}
-where $\mathbf{1}$ is a column vector with all entries equal to 1.
-In this form the runtime is explicit: there are $O(T)$ matrix-vector products
-resulting in $O(T |\mcZ|^2)$ computation.\footnote{
-One can apply the associative property of matrix multiplication
-to perform Eqn.~\ref{eqn:mat_ev} as a binary tree reduction,
-resulting in $O(\log(T)|\mcZ|^3)$ runtime on a parallel machine.
-}
-Additionally, computing gradients with respect to each $\bF_t$ can be done with
-any automatic differentiation library, as all operations in Eqn.~\ref{eqn:mat_ev} are differentiable.
-
-Block-sparse emissions and state dropout serve to zero out entries of each $\bF_t$,
-allowing us to only consider dense submatrices of each matrix $\bF_t$ in Eqn.~\ref{eqn:mat_ev}.
 
 \subsection{Brown Clustering}
-TODO: finish
+Brown clustering is an agglomerative clustering approach \citep{brown1992,liang2005brown} that assigns every token type a single cluster.
+The Brown clustering model aims to find an HMM that maximizes the likelihood of an observed corpora under the constraint that every token type can only be emit by a single latent class. The cluster for the word is given by the singular latent class that emits that token type.
+
+Clusters are initialized by assigning every token type a unique latent state in an HMM. States are then merged iteratively until a desired number $M$ is reached. \citet{liang2005brown} propose an algorithm that chooses a pair of states to merge at every iteration based on state bigram statistics within a window.
 
 \subsection{Hyperparameters}
 \label{sec:hyperparams}
