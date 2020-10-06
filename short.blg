@@ -1,0 +1,57 @@
+This is BibTeX, Version 0.99d (TeX Live 2018)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: short.aux
+The style file: acl_natbib.bst
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=20001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: anthology.bib
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Warning--empty booktitle in buys2018hmm
+Warning--empty journal in kuhn1994hmmlm
+Warning--empty journal in mikolov-2011
+Warning--empty journal in petrov2006splitmerge
+Warning--empty journal in vieira2014gumbel
+You've used 28 entries,
+            3571 wiz_defined-function locations,
+            884 strings with 11360 characters,
+and the built_in function-call counts, 20588 in all, are:
+= -- 1767
+> -- 996
+< -- 16
++ -- 312
+- -- 282
+* -- 1382
+:= -- 3086
+add.period$ -- 112
+call.type$ -- 28
+change.case$ -- 245
+chr.to.int$ -- 28
+cite$ -- 33
+duplicate$ -- 1374
+empty$ -- 1484
+format.name$ -- 366
+if$ -- 4573
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 270
+newline$ -- 140
+num.names$ -- 112
+pop$ -- 597
+preamble$ -- 1
+purify$ -- 206
+quote$ -- 0
+skip$ -- 1054
+stack$ -- 0
+substring$ -- 679
+swap$ -- 710
+text.length$ -- 8
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 252
+warning$ -- 5
+while$ -- 108
+width$ -- 0
+write$ -- 360
+(There were 5 warnings)
