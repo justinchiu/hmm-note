@@ -86,14 +86,14 @@ making progress towards the performance of state-of-the-art neural models.
 \end{abstract}
 
 
-%\blfootnote{Code available at \url{https://github.com/harvardnlp/hmm-lm}}
+\blfootnote{Code available at \href{https://github.com/harvardnlp/hmm-lm}{github.com/harvardnlp/hmm-lm}}
 \section{Introduction}
 Hidden Markov models (HMMs) are a fundamental latent-variable model for sequential data,
 with a rich history in NLP.
 They have been used extensively in tasks such as
 tagging \citep{merialdo1994tagging}, alignment \citep{vogel1996hmm},
 and even, in a few cases, language modeling \citep{kuhn1994hmmlm,huang2011thesis}. 
-Compared to other sequence models, HMMs are naturally appealing since they 
+Compared to other sequence models, HMMs are appealing since they 
 fully separate the process of generating hidden states from observations,
 while allowing for exact posterior inference. 
 
@@ -108,7 +108,8 @@ can have the same distributional assumptions as an n-gram model while performing
 (c) dropout is key to achieving strong performance \citep{zaremba2014lstm,merity2017awdlstm}.
 
 We revisit HMMs for language modeling
-as an alternative structure to modern neural models, while taking into account key empirical lessons from these approaches. 
+as an alternative to modern neural models,
+while considering key empirical lessons from these approaches. 
 %Our contributions are as follows:
 %We demonstrate large improvements in an HMM language model by scaling the state space.
 Towards that goal, we introduce three techniques:
@@ -121,7 +122,8 @@ and a variant of dropout that both improves accuracy
 and halves the computational overhead during training.
 
 Experiments employ HMMs on two language modeling datasets.
-Our approach allows us to train an HMM with tens of thousands of states while maintaining efficiency and
+Our approach allows us to train an HMM with tens of thousands of states
+while maintaining efficiency and
 significantly outperforming past HMMs as well as n-gram models.
 
 \section{Related Work}
@@ -131,7 +133,8 @@ several recent papers have combined HMMs with neural networks.
 \citet{buys2018hmm} develop an approach to relax HMMs,
 but their models either perform poorly or alter the probabilistic structure to resemble an RNN. 
 \citet{krakovna2016hmm} utilize model combination with an RNN to connect both approaches in a
-small state-space model. Our method differs in that we focus on pure HMMs which we scale to a large number of states.
+small state-space model.
+Our method instead focuses on scaling pure HMMs to a large number of states.
 
 % Prior work has tried neural parameterizations, but with small state spaces.
 Prior work has also considered neural parameterizations of HMMs. 
