@@ -810,7 +810,7 @@ The independent embeddings (ind) represent state embeddings by directly paramete
 \centering
 \begin{tabular}{llrrr}
 \toprule
-Model                & Size & Train  & Val & Time \\
+Model                & Param & Train  & Val & Time \\
 \midrule
 VL-HMM ($2^{14}$)    & 7.2M & 115    & 134 & 40\\
 \quad - neural param & 423M & 119    & 169 & 14\\
@@ -819,7 +819,8 @@ VL-HMM ($2^{14}$)    & 7.2M & 115    & 134 & 40\\
 \bottomrule
 \end{tabular}
 \caption{\label{tbl:dropout-param-ablation-repeat}
-Ablations on \textsc{PTB} ($\lambda =0.5$ and $M=128$). Size is the number of parameters, while train and val give the corresponding perplexities.
+Ablations on \textsc{PTB} ($\lambda =0.5$ and $M=128$).
+Param is the number of parameters, while train and val give the corresponding perplexities.
 Time is ms per eval batch (Run on RTX 2080).
 }
 \end{table}
