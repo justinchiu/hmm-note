@@ -18,6 +18,10 @@
 \usepackage{latexsym}
 \renewcommand{\UrlFont}{\ttfamily\small}
 
+\makeatletter
+\def\blfootnote{\xdef\@thefnmark{}\@footnotetext}
+\makeatother
+
 % This is not strictly necessary, and may be commented out,
 % but it will improve the layout of the manuscript,
 % and will typically save some space.
@@ -81,8 +85,9 @@ than previous HMM and n-gram-based methods,
 making progress towards the performance of state-of-the-art neural models.
 \end{abstract}
 
-\section{Introduction}
+\blfootnote{Code available at \url{https://github.com/harvardnlp/hmm-lm}}
 
+\section{Introduction}
 Hidden Markov models (HMMs) are a fundamental latent-variable model for sequential data,
 with a rich history in NLP.
 They have been used extensively in tasks such as
