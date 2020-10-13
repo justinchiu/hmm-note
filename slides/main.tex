@@ -195,7 +195,7 @@ p(\bx) = \sum_\bz p(\bx,\bz)
 }
 \end{center}
 
-After observed each $x_t$, only the states in the corresponding group have nonzero probability
+After observing each $x_t$, only the states in the corresponding group have nonzero probability
 of occurring
 \end{frame}
 
@@ -203,7 +203,7 @@ of occurring
 \frametitle{Neural Parameterization}
 Generate transition and emission distributions using a neural network
 \begin{itemize}
-\item State embeddings $\mathbf{E}_z \in \mathbb{R}^{|\mcZ| \times h/2}$
+\item State embeddings $\mathbf{E}_z \in \mathbb{R}^{|\mcZ| \times h}$
 \item Token embeddings $\mathbf{E}_x \in \mathbb{R}^{|\mcX| \times h}$
 \end{itemize}
 \vspace{0.5em}
