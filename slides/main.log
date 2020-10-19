@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  13 OCT 2020 15:16
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  19 OCT 2020 13:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1375,7 +1375,11 @@ Package pdftex.def Info: img/blocksparse_mat_no_block.pdf  used on input line 2
 ] [16
 
 ]
-(./main.bbl
+[17
+
+] [18
+
+] (./main.bbl
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `\translate ' on input line 1.
@@ -1383,7 +1387,7 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 
 Package natbib Warning: Empty `thebibliography' environment on input line 4.
 
-) [17
+) [19
 
 ]
 \tf@nav=\write7
@@ -1395,22 +1399,22 @@ Package natbib Warning: Empty `thebibliography' environment on input line 4.
 \tf@snm=\write9
 \openout9 = `main.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 353.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 353.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 403.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 403.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 353.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 353.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 403.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 403.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 06E27B416B3B1946CD705C501CA5B3BD;45.
  ) 
 Here is how much of TeX's memory you used:
- 34922 strings out of 492649
- 855951 string characters out of 6129607
- 1231871 words of memory out of 5000000
- 38034 multiletter control sequences out of 15000+600000
+ 35035 strings out of 492649
+ 858357 string characters out of 6129607
+ 1231943 words of memory out of 5000000
+ 38143 multiletter control sequences out of 15000+600000
  25801 words of font info for 82 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 64i,15n,105p,771b,1926s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 64i,18n,105p,771b,2275s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
 ></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
 </usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb><
@@ -1424,10 +1428,10 @@ r/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr
 ocal/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></u
 sr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 >
-Output written on main.pdf (17 pages, 249046 bytes).
+Output written on main.pdf (19 pages, 253892 bytes).
 PDF statistics:
- 563 PDF objects out of 1000 (max. 8388607)
- 496 compressed objects within 5 object streams
- 36 named destinations out of 1000 (max. 500000)
+ 618 PDF objects out of 1000 (max. 8388607)
+ 548 compressed objects within 6 object streams
+ 40 named destinations out of 1000 (max. 500000)
  158 words of extra memory for PDF output out of 10000 (max. 10000000)
 

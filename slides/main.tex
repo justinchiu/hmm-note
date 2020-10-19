@@ -242,6 +242,56 @@ At each batch, sample dropout mask $\mathbf{b} \in \set{0,1}^{|\mcZ|}$
 \end{frame}
 
 \begin{frame}
+\frametitle{Results on PTB and WT2}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    enlargelimits=0.15,
+    legend style={at={(0.5,-0.15)},
+      anchor=north,legend columns=-1},
+    ylabel={Perplexity},
+    symbolic x coords={KN, FF, LSTM, HMM},
+    xtick=data,
+    nodes near coords,
+    nodes near coords align={vertical},
+    ]
+\addplot coordinates {(KN,141.2) (FF,152.0) (LSTM,88.8) (HMM,115.8)};
+\addplot coordinates {(KN,234.3) (FF,195.0) (LSTM,117.5) (HMM,158.2)};
+\legend{PTB,WikiText2}
+\end{axis}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+\frametitle{Results on PTB and WT2}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar=5pt,
+    x=4cm,
+    enlarge x limits=0.6,
+    legend style={at={(0.5,-0.15)},
+      anchor=north,legend columns=-1},
+    ylabel={Perplexity},
+    symbolic x coords={PTB, WikiText2},
+    xtick=data,
+    %nodes near coords,
+    %nodes near coords align={vertical},
+    bar width=10 pt,
+    ]
+
+\addplot coordinates {(PTB,141.2) (WikiText2,234.3)};
+\addplot coordinates {(PTB,152.0) (WikiText2,195.0)};
+\addplot coordinates {(PTB,88.8) (WikiText2,117.5)};
+\addplot coordinates {(PTB,115.8) (WikiText2,158.2)};
+
+\legend{KN, FF, LSTM, HMM}
+\end{axis}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
 \frametitle{Results on PTB}
 
 \begin{table}[!t]
