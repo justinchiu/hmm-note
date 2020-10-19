@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex main"] 1603132954 "main.aux" "main.bbl" "main" 1603134475
+["bibtex main"] 1603132954 "main.aux" "main.bbl" "main" 1603135919
   "./acl_natbib.bst" 1597691555 47585 c671f071a8f3957857acb307a7173505 ""
   "anthology.bib" 1597691558 23080 a3bd11c1b8640cdf3988a9322b7e9943 ""
   "emnlp2020.bib" 1597691821 2208 3fbd20b70e092c765df3c3cd3676a3b8 ""
-  "main.aux" 1603134475 3283 ba6260b10f8ed11d421a751bc381fbfe ""
+  "main.aux" 1603135919 3283 ba6260b10f8ed11d421a751bc381fbfe ""
   (generated)
-  "main.blg"
   "main.bbl"
-["pdflatex"] 1603134469 "main.tex" "main.pdf" "main" 1603134475
+  "main.blg"
+["pdflatex"] 1603135913 "main.tex" "main.pdf" "main" 1603135919
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1480098698 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm" 1480098698 1124 14ccf5552bc7f77ca02a8a402bea8bfb ""
@@ -312,17 +312,17 @@
   "img/diagram_full.tex" 1603132690 687343 7a52c0958d55ed8edf6b2b4b60651047 ""
   "img/trellis.tex" 1602203827 35285 898a865e0cf68b980f6a625fd4c4cbd7 ""
   "img/trellis_nodrop.tex" 1597686940 64482 b1f403b61828f9acb3516c8cf5a22184 ""
-  "main.aux" 1603134475 3283 ba6260b10f8ed11d421a751bc381fbfe ""
+  "main.aux" 1603135919 3283 ba6260b10f8ed11d421a751bc381fbfe ""
   "main.bbl" 1603132954 121 176ef3ab05ccef1cd7a1f3b4a71ca9dc "bibtex main"
-  "main.nav" 1603134475 1847 344a63b85c48aa2fe73318e161cd2be8 ""
-  "main.out" 1603134475 45 06e27b416b3b1946cd705c501ca5b3bd ""
-  "main.tex" 1603134468 11646 76352267880911e0c363830e34a915b0 ""
+  "main.nav" 1603135919 1847 344a63b85c48aa2fe73318e161cd2be8 ""
+  "main.out" 1603135919 45 06e27b416b3b1946cd705c501ca5b3bd ""
+  "main.tex" 1603135912 11696 154723856ccfae8e89804372ed04b5ff ""
   "mystyle.sty" 1602203264 2711 3f9b8506611eb816ff9e76d81d46dfae ""
   (generated)
   "main.toc"
-  "main.out"
   "main.pdf"
-  "main.snm"
-  "main.nav"
   "main.aux"
+  "main.out"
+  "main.snm"
   "main.log"
+  "main.nav"
