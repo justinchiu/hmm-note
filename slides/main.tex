@@ -10,6 +10,7 @@
 \usepackage{natbib}
 \usepackage{tikz}
 \usepackage{pgfplots}
+\usepackage{subcaption}
 
 \usepackage{tikz-dependency}
 \usetikzlibrary{shapes.arrows, positioning, fit, bayesnet,
@@ -107,7 +108,6 @@ p(\bx) = \sum_\bz p(\bx,\bz)
 \end{equation*}
 \end{frame}
 
-
 \begin{frame}
 \frametitle{3 Tricks for Training Large HMMs}
 \begin{itemize}
@@ -189,11 +189,25 @@ p(\bx) = \sum_\bz p(\bx,\bz)
 
 \begin{frame}
 \frametitle{Block-sparse Emissions: Effect on Inference}
+
+\begin{figure}
 \begin{center}
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
+\resizebox{0.75\width}{0.75\height}{
+\input{img/diagram_full.tex}
+}
+\caption{No constraints}
+\end{subfigure}
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
 \resizebox{0.75\width}{0.75\height}{
 \input{img/trellis_nodrop.tex}
 }
+\caption{Block emission constraints}
+\end{subfigure}
 \end{center}
+\end{figure}
 
 After observing each $x_t$, only the states in the corresponding group have nonzero probability
 of occurring
