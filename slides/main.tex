@@ -252,13 +252,13 @@ At each batch, sample dropout mask $\mathbf{b} \in \set{0,1}^{|\mcZ|}$
     legend style={at={(0.5,-0.15)},
       anchor=north,legend columns=-1},
     ylabel={Perplexity},
-    symbolic x coords={KN, FF, LSTM, HMM},
+    symbolic x coords={KN, FF, LSTM, VL-HMM},
     xtick=data,
     nodes near coords,
     nodes near coords align={vertical},
     ]
-\addplot coordinates {(KN,141.2) (FF,152.0) (LSTM,88.8) (HMM,115.8)};
-\addplot coordinates {(KN,234.3) (FF,195.0) (LSTM,117.5) (HMM,158.2)};
+\addplot coordinates {(KN,141.2) (FF,152.0) (LSTM,88.8) (VL-HMM,115.8)};
+\addplot coordinates {(KN,234.3) (FF,195.0) (LSTM,117.5) (VL-HMM,158.2)};
 \legend{PTB,WikiText2}
 \end{axis}
 \end{tikzpicture}
