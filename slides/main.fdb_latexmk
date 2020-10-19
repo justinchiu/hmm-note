@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex main"] 1603130035 "main.aux" "main.bbl" "main" 1603130320
+["bibtex main"] 1603130366 "main.aux" "main.bbl" "main" 1603130368
   "./acl_natbib.bst" 1597691555 47585 c671f071a8f3957857acb307a7173505 ""
   "anthology.bib" 1597691558 23080 a3bd11c1b8640cdf3988a9322b7e9943 ""
   "emnlp2020.bib" 1597691821 2208 3fbd20b70e092c765df3c3cd3676a3b8 ""
-  "main.aux" 1603130292 3670 146907403aa74ef08a3260643de70bac ""
+  "main.aux" 1603130368 3541 711d15a8153c96a323e2176349f6c23c ""
   (generated)
   "main.blg"
   "main.bbl"
-["pdflatex"] 1603130290 "main.tex" "main.pdf" "main" 1603130320
+["pdflatex"] 1603130366 "main.tex" "main.pdf" "main" 1603130368
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1480098698 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm" 1480098698 1124 14ccf5552bc7f77ca02a8a402bea8bfb ""
@@ -308,17 +308,17 @@
   "img/blocksparse_mat_no_block.pdf" 1602203827 79033 aedd588056374f9f0b4eed6112dd3ef9 ""
   "img/trellis.tex" 1602203827 35285 898a865e0cf68b980f6a625fd4c4cbd7 ""
   "img/trellis_nodrop.tex" 1597686940 64482 b1f403b61828f9acb3516c8cf5a22184 ""
-  "main.aux" 1603130292 3670 146907403aa74ef08a3260643de70bac ""
-  "main.bbl" 1603130035 121 176ef3ab05ccef1cd7a1f3b4a71ca9dc "bibtex main"
-  "main.nav" 1603130292 2126 99f359d4baf3e9a9365a6602c2626bad ""
-  "main.out" 1603130292 45 06e27b416b3b1946cd705c501ca5b3bd ""
-  "main.tex" 1603130317 11255 f05423fcc3d7503a69136b6e46144ae4 ""
+  "main.aux" 1603130368 3541 711d15a8153c96a323e2176349f6c23c ""
+  "main.bbl" 1603130366 121 176ef3ab05ccef1cd7a1f3b4a71ca9dc "bibtex main"
+  "main.nav" 1603130368 2033 a4da59259d4eb01a0fceb10b11bb9c33 ""
+  "main.out" 1603130368 45 06e27b416b3b1946cd705c501ca5b3bd ""
+  "main.tex" 1603130366 11285 a69b59fe8acb6c31af87c6f0109c331c ""
   "mystyle.sty" 1602203264 2711 3f9b8506611eb816ff9e76d81d46dfae ""
   (generated)
-  "main.nav"
-  "main.toc"
-  "main.snm"
-  "main.log"
-  "main.out"
-  "main.pdf"
   "main.aux"
+  "main.snm"
+  "main.out"
+  "main.nav"
+  "main.log"
+  "main.toc"
+  "main.pdf"
