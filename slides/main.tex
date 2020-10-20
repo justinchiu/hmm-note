@@ -28,10 +28,10 @@ ysep=0.2em,transform shape,line width=0.05em,top color=red,bottom color=red!50!b
 
 %Information to be included in the title page:
 \title{Scaling Hidden Markov Language Models}
-\author{Anonymous}
-\date{2020}
+\author{Justin T Chiu and Alexander Rush\\Cornell Tech}
+\date{EMNLP 2020}
 
-
+\setbeamertemplate{navigation symbols}{} 
 
 \begin{document}
 
@@ -41,13 +41,10 @@ ysep=0.2em,transform shape,line width=0.05em,top color=red,bottom color=red!50!b
 \frametitle{Hidden Markov Models in NLP}
 \begin{itemize}
 \item Historically significant latent variable models
-    \begin{itemize}
-    \item Applied to tagging, alignment, and language modeling in the 90s
-    \end{itemize}
+\vspace{2em}
 \item Are thought to be very poor language models
-    \begin{itemize}
-    \item We show they are not!
-    \end{itemize}
+\vspace{2em}
+\item We show they are not!
 \end{itemize}
 \end{frame}
 
@@ -55,28 +52,20 @@ ysep=0.2em,transform shape,line width=0.05em,top color=red,bottom color=red!50!b
 \frametitle{Lessons from Large Neural Language Models}
 
 Large models perform better but are \ldots
-
-\begin{itemize}
+\vspace{1em}
+\begin{enumerate}
 \item Slow to train
-    \begin{itemize}
-    \item Parallelize computation and use GPUs
-    \end{itemize}
+\vspace{1em}
 \item Prone to overfitting
-    \begin{itemize}
-    \item Regularize
-    \end{itemize}
-\end{itemize}
-
-Apply this to scaling HMMs
-% Before we get into how we apply these lessons to HMMs,
-% lets briefly review HMMs to see why they present different challenges than
-% other neural language models
+\end{enumerate}
+\vspace{1em}
+We must overcome these issues when scaling HMMs
 \end{frame}
 
 \begin{frame}
 \frametitle{HMMs}
 
-For times $t \in [T]$, model states $z_t \in \mcZ$ and tokens $x_t \in \mcX$
+For times $t$, model states $z_t \in \mcZ$, and tokens $x_t \in \mcX$,
 
 \begin{center}
 \begin{tikzpicture}[]
@@ -101,7 +90,7 @@ For times $t \in [T]$, model states $z_t \in \mcZ$ and tokens $x_t \in \mcX$
     %\underbrace{p(z_t \mid z_{t-1})}_{\textrm{transition}}
     %\underbrace{p(x_t\mid z_t)}_{\textrm{emission}}
 %\end{equation*}
-
+\vspace{1em}
 We wish optimize
 \begin{equation*}
 p(\bx) = \sum_\bz p(\bx,\bz)
@@ -109,27 +98,35 @@ p(\bx) = \sum_\bz p(\bx,\bz)
 \end{frame}
 
 \begin{frame}
-\frametitle{3 Tricks for Training Large HMMs}
+\frametitle{3 Techniques for Training Large HMMs}
 \begin{itemize}
 \item Block-sparse emission constraints
+\vspace{1em}
     \begin{itemize}
     \item[] \FancyUpArrow~Speed
     \end{itemize}
+\vspace{1em}
 \item Compact neural parameterization
+\vspace{1em}
     \begin{itemize}
     \item[] \FancyUpArrow~Generalization
     \end{itemize}
+\vspace{1em}
 \item State dropout
+\vspace{1em}
     \begin{itemize}
-    \item[] \FancyUpArrow~Speed \FancyUpArrow~Generalization
+    \item[] \FancyUpArrow~Speed \quad \FancyUpArrow~Generalization
     \end{itemize}
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Block-Sparse Emission Constraints}
+\frametitle{Technique 1: Block-Sparse Emission Constraints}
 \begin{itemize}
+\item Reduce cost of marginalization by enforcing structure
+\vspace{0.5em}
 \item Partition words and states jointly
+\vspace{0.5em}
 \item Words can only be emit by states in same group
 \end{itemize}
 \begin{center}
@@ -190,6 +187,9 @@ p(\bx) = \sum_\bz p(\bx,\bz)
 \begin{frame}
 \frametitle{Block-Sparse Emissions: Effect on Inference}
 
+Given each word $x_t$, only the states in the correct group can occur
+\vspace{1em} 
+
 \begin{figure}
 \captionsetup[subfigure]{justification=centering}
 \begin{center}
@@ -210,26 +210,26 @@ p(\bx) = \sum_\bz p(\bx,\bz)
 \end{center}
 \end{figure}
 
-After observing each $x_t$, only the states in the corresponding group have nonzero probability
-of occurring
 \end{frame}
 
 \begin{frame}
-\frametitle{Neural Parameterization}
-Generate transition and emission distributions using a neural network
+\frametitle{Technique 2: Neural Parameterization}
 \begin{itemize}
-\item State embeddings $\mathbf{E}_z \in \mathbb{R}^{|\mcZ| \times h}$
-\item Token embeddings $\mathbf{E}_x \in \mathbb{R}^{|\mcX| \times h}$
+\item A neural parameterization allows for parameter sharing
+\item Generate conditional distributions from
+state $\mathbf{E}_z$ and token representations $\mathbf{E}_x$
 \end{itemize}
-\vspace{0.5em}
-\centering
+\begin{center}
 \includegraphics[height=1.7in]{img/blocksparse_mat_no_block.pdf}
+\end{center}
 \end{frame}
 
 \begin{frame}
-\frametitle{State Dropout}
-At each batch, sample dropout mask $\mathbf{b} \in \set{0,1}^{|\mcZ|}$
-\vspace{1em}
+\frametitle{Technique 3: State Dropout}
+\begin{itemize}
+\item State dropout encourages broad state usage
+\item At each batch, sample dropout mask $\mathbf{b} \in \set{0,1}^{|\mcZ|}$
+\end{itemize}
 \begin{center}
 \resizebox{0.75\width}{0.75\height}{
 \input{img/trellis.tex}
@@ -241,12 +241,14 @@ At each batch, sample dropout mask $\mathbf{b} \in \set{0,1}^{|\mcZ|}$
 \frametitle{Experiments}
 \begin{itemize}
 \item Language modeling on Penn Treebank and Wikitext-2
+\vspace{1em}
 \item Baselines
     \begin{itemize}
-    \item Knesey-Ney 5-gram model
     \item Feedforward 5-gram model
     \item 2-layer LSTM
+    \item A 900 state HMM (Buys et al 2018)
     \end{itemize}
+\vspace{1em}
 \item Model
     \begin{itemize}
     \item $2^{15}$ (32k) state very large HMM (VL-HMM)
@@ -256,41 +258,52 @@ At each batch, sample dropout mask $\mathbf{b} \in \set{0,1}^{|\mcZ|}$
 \end{itemize}
 \end{frame}
 
-\begin{comment}
 \begin{frame}
-\frametitle{Results on PTB and WT2}
+\frametitle{Results on PTB Validation Data}
 \centering
 \begin{tikzpicture}
 \begin{axis}[
-    ybar,
-    enlargelimits=0.15,
-    legend style={at={(0.5,-0.15)},
-      anchor=north,legend columns=-1},
-    ylabel={Perplexity},
-    symbolic x coords={KN, FF, LSTM, VL-HMM},
-    xtick=data,
+    ybar=5pt,
+    %x=4cm,
+    %enlarge x limits=0.6,
+    ylabel={Validation Perplexity},
+    symbolic x coords={FF, LSTM, VL-HMM, HMM},
+    xticklabels={FF, LSTM, VL-HMM, HMM},
+    xtick={FF, LSTM, VL-HMM, HMM},
+    every axis plot/.append style={
+      ybar,
+      bar shift=0pt,
+      fill
+    },
     nodes near coords,
     nodes near coords align={vertical},
     ]
-\addplot coordinates {(KN,141.2) (FF,152.0) (LSTM,88.8) (VL-HMM,115.8)};
-\addplot coordinates {(KN,234.3) (FF,195.0) (LSTM,117.5) (VL-HMM,158.2)};
-\legend{PTB,WikiText2}
+
+\addplot coordinates {(FF,159.9)};
+\addplot coordinates {(LSTM,93.6)};
+\addplot coordinates {(VL-HMM,115.8)};
+\addplot coordinates {(HMM,284.6)};
+
 \end{axis}
 \end{tikzpicture}
 \end{frame}
-\end{comment}
+
 
 \begin{frame}
-\frametitle{Results on PTB and WT2}
+\frametitle{Results on PTB and WT2 Test Data}
 \centering
 \begin{tikzpicture}
 \begin{axis}[
     ybar=5pt,
     x=4cm,
     enlarge x limits=0.6,
-    legend style={at={(0.5,-0.15)},
-      anchor=north,legend columns=-1},
-    ylabel={Perplexity},
+    legend style={
+        at={(0.5,-0.15)},
+        anchor=north,
+        legend columns=-1,
+        minimum width=5em
+    },
+    ylabel={Test Perplexity},
     symbolic x coords={PTB, WikiText2},
     xtick=data,
     %nodes near coords,
@@ -298,12 +311,12 @@ At each batch, sample dropout mask $\mathbf{b} \in \set{0,1}^{|\mcZ|}$
     bar width=10 pt,
     ]
 
-\addplot coordinates {(PTB,141.2) (WikiText2,234.3)};
+%\addplot coordinates {(PTB,141.2) (WikiText2,234.3)};
 \addplot coordinates {(PTB,152.0) (WikiText2,195.0)};
 \addplot coordinates {(PTB,88.8) (WikiText2,117.5)};
 \addplot coordinates {(PTB,115.8) (WikiText2,158.2)};
 
-\legend{KN, FF, LSTM, VL-HMM}
+\legend{FF, LSTM, VL-HMM}
 \end{axis}
 \end{tikzpicture}
 \end{frame}
@@ -358,8 +371,8 @@ VL-HMM ($|\mcZ|=2^{15}$)           & 13.7M   & 169.0      & 158.2\\
 \centering
 \begin{tikzpicture}
 \begin{axis}[
-    xlabel=$|\mcZ|$,
-    ylabel=PPL,
+    xlabel=State Size $|\mcZ|$,
+    ylabel=Validation PPL,
     xmode=log,
     log basis x={2},
     xtick={},
@@ -378,20 +391,22 @@ VL-HMM ($|\mcZ|=2^{15}$)           & 13.7M   & 169.0      & 158.2\\
 \end{axis}
 \end{tikzpicture}
 
-Perplexity on PTB by state size $|\mcZ|$ ($\lambda =0.5$ and $M=128$)
+\vspace{2em}
+
+Validation perplexity on PTB by state size ($\lambda =0.5$ and $M=128$)
 \end{frame}
 
 \begin{frame}
 \frametitle{Other Ablations}
 
 \begin{center}
-\begin{tabular}{lrrrr}
+\begin{tabular}{lrrr}
 \toprule
-Model                & Param & Train  & Val  &  Time \\
+Model                 & Param & Train & Val\\
 \midrule
-VL-HMM ($2^{14}$)    & 7.2M & 115    & 134  & 40\\
-\quad - neural param & 423M & 119    & 169  & 14\\
-\quad - state dropout      & 7.2M & 88     & 157  & 100\\
+VL-HMM ($2^{14}$)     & 7.2M & 115    & 134 \\
+\quad - neural param  & 423M & 119    & 169 \\
+\quad - state dropout & 7.2M & 88     & 157 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -401,9 +416,11 @@ VL-HMM ($2^{14}$)    & 7.2M & 115    & 134  & 40\\
 \begin{frame}
 \frametitle{Conclusion}
 \begin{itemize}
-\item HMMs can be scaled up to be competitive language models
-\item Introduced 3 tricks for tackling speed and overfitting
-\item HMMs are cool!
+\item HMMs are competitive language models
+\vspace{2em}
+\item Introduced 3 techniques for tackling speed and overfitting
+\vspace{2em}
+\item A great time to revisit other discrete latent variable models
 \end{itemize}
 \end{frame}
 

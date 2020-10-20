@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  19 OCT 2020 15:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.19)  19 OCT 2020 23:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1143,6 +1143,10 @@ Package caption Info: Hyperref support is turned off
 \c@subfigure=\count183
 \c@subtable=\count184
 )
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\\' on input line 31.
+
 (./main.aux)
 \openout1 = `main.aux'.
 
@@ -1335,17 +1339,17 @@ Package caption Info: End \AtBeginDocument code.
 (./main.nav) [1
 
 {/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for U+msa on input line 52.
+LaTeX Font Info:    Try loading font information for U+msa on input line 49.
  (/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 52.
+LaTeX Font Info:    Try loading font information for U+msb on input line 49.
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Try loading font information for OT1+mathkerncmss on input 
-line 52.
+line 49.
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
 File: ot1mathkerncmss.fd 2013/03/27 Fontinst v1.933 font definitions for OT1/ma
@@ -1380,11 +1384,11 @@ Missing character: There is no ; in font nullfont!
 [7
 
 ]
-<img/blocksparse_mat_no_block.pdf, id=233, 409.53pt x 259.97125pt>
+<img/blocksparse_mat_no_block.pdf, id=90, 409.53pt x 259.97125pt>
 File: img/blocksparse_mat_no_block.pdf Graphic file (type pdf)
 <use img/blocksparse_mat_no_block.pdf>
 Package pdftex.def Info: img/blocksparse_mat_no_block.pdf  used on input line 2
-27.
+25.
 (pdftex.def)             Requested size: 193.53519pt x 122.85876pt.
  [8
 
@@ -1393,16 +1397,17 @@ Package pdftex.def Info: img/blocksparse_mat_no_block.pdf  used on input line 2
 ] [10
 
 ]
-Excluding 'comment' comment. [11
+[11
 
-] Excluding 'comment' comment. [12
+] [12
 
-] [13
+] Excluding 'comment' comment. [13
 
-]
-[14
+] [14
 
 ] [15
+
+] [16
 
 ] (./main.bbl
 
@@ -1412,7 +1417,7 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 
 Package natbib Warning: Empty `thebibliography' environment on input line 4.
 
-) [16
+) [17
 
 ]
 \tf@nav=\write7
@@ -1424,22 +1429,22 @@ Package natbib Warning: Empty `thebibliography' environment on input line 4.
 \tf@snm=\write9
 \openout9 = `main.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 421.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 421.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 438.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 438.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 421.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 421.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 438.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 438.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 06E27B416B3B1946CD705C501CA5B3BD;45.
  ) 
 Here is how much of TeX's memory you used:
- 36114 strings out of 492649
- 878196 string characters out of 6129607
- 2522498 words of memory out of 5000000
- 39216 multiletter control sequences out of 15000+600000
+ 36136 strings out of 492649
+ 878634 string characters out of 6129607
+ 2522512 words of memory out of 5000000
+ 39236 multiletter control sequences out of 15000+600000
  25801 words of font info for 82 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 64i,18n,105p,771b,2249s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 64i,18n,105p,771b,2283s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
 ></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
 </usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb><
@@ -1450,13 +1455,11 @@ sr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></u
 sr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb></us
 r/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr
 /local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/l
-ocal/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></u
-sr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
->
-Output written on main.pdf (16 pages, 294574 bytes).
+ocal/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
+Output written on main.pdf (17 pages, 278015 bytes).
 PDF statistics:
- 538 PDF objects out of 1000 (max. 8388607)
- 472 compressed objects within 5 object streams
- 34 named destinations out of 1000 (max. 500000)
+ 216 PDF objects out of 1000 (max. 8388607)
+ 153 compressed objects within 2 object streams
+ 36 named destinations out of 1000 (max. 500000)
  158 words of extra memory for PDF output out of 10000 (max. 10000000)
 
